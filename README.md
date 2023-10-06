@@ -1,6 +1,6 @@
 # The KDAbet Application Stack
 
-KDAbet is an opensource repository for the kdabet sportsbook betting dapp runnign on the Kadena Blockchain network.
+KDAbet is an opensource repository for the kdabet sportsbook betting dapp running on the Kadena Blockchain network.
 The Umbrella application holds all of the necessary microservices as state independant applications with sub processes that can be compiled into various production runtimes in this folder.
 To observe the possible runtimes please check mix.exs
 
