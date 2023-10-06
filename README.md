@@ -4,7 +4,9 @@ KDAbet is an opensource repository for the kdabet sportsbook betting dapp runnig
 The Umbrella application holds all of the necessary microservices as state independant applications with sub processes that can be compiled into various production runtimes in this folder.
 To observe the possible runtimes please check mix.exs
 
-eg: <br /> iex(1)> mix release fullstack<br /> iex(2)> _build/dev/rel/fullstack/bin/fullstack start_iex
+eg:__ 
+iex(1)> mix release fullstack__
+iex(2)> _build/dev/rel/fullstack/bin/fullstack start_iex
 
 # Languages
 
