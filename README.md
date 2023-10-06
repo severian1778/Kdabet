@@ -23,4 +23,5 @@ We use the Kommiters Library to interact with the blockchain smart contract.  ht
 # Code Checking
 
 We use credo to check the health of the code base in the production level folder.
-Please try:  *mix credo* in bash to check the state of the umbrella.
+Please try:  *mix credo* 
+in bash to check the state of the umbrella.
