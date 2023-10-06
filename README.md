@@ -9,10 +9,10 @@ eg:  iex(1)> mix release fullstack
 
 # Languages
 
-##Main Language: 
+## Main Language: 
   Elixir
 
-##Substack:  
+## Substack:  
   Phoenix, Erlang, Tailwind, Alpine, Liveview, Surface-UI, Postgres
 
 # Blockchain
