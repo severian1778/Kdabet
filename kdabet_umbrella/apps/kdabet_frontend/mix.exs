@@ -53,7 +53,7 @@ defmodule KdabetFrontend.MixProject do
       {:ex_fontawesome, "~> 0.7.2"},
       {:surface, "~> 0.11.0"},
       {:surface_catalogue, "~> 0.6.0"},
-      ##currently this is a stop gap fix for Sourceror. https://github.com/surface-ui/surface/issues/707
+      ## currently this is a stop gap fix for Sourceror. https://github.com/surface-ui/surface/issues/707
       {:sourceror, "~> 0.12.0"},
       {:tesla, "~> 1.4"},
       {:hackney, "~> 1.17"},

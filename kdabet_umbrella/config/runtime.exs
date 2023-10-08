@@ -1,11 +1,11 @@
 import Config
 
 ## configure repos
-#config :fcore, ecto_repos: [FCore.Repo]
-#config :btctimesapi, ecto_repos: [FCore.Repo]
+# config :fcore, ecto_repos: [FCore.Repo]
+# config :btctimesapi, ecto_repos: [FCore.Repo]
 
 # Core Database 
-#config :fcore, FCore.Repo,
+# config :fcore, FCore.Repo,
 #  username: "postgres",
 #  password: "postgres",
 #  database: "fcore",
