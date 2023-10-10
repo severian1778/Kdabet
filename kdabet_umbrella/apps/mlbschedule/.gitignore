@@ -19,8 +19,8 @@ erl_crash.dump
 # Also ignore archive artifacts (built via "mix archive.build").
 *.ez
 
+# Ignore package tarball (built via "mix hex.build").
+mlbschedule-*.tar
+
 # Temporary files, for example, from tests.
 /tmp/
-
-#Leave out Elixir-ls as it is a programming aide
-/elixir-ls/
