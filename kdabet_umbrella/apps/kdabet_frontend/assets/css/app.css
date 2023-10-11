@@ -8,7 +8,7 @@
 /* This file is for your main application CSS */
 @import url('https://fonts.googleapis.com/css2?family=Londrina+Outline&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Londrina+Outline&family=Pacifico&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
 html{
   box-sizing: border-box;
   height: 100vh;
@@ -68,7 +68,9 @@ body{
   font-family: 'Open Sans', sans-serif;
   font-size: 2rem;
   font-weight: 600;
-  padding: 8px 16px;
+  background: rgb(0,0,0,0.7);
+  padding-top: 8px;
+  padding-bottom: 8px;
   text-align: center;
   text-transform: uppercase;
   text-shadow: #a48ff2 2px 2px 10px;
@@ -82,12 +84,13 @@ body{
   padding: 8px 16px;
   text-align: center;
   text-transform: uppercase;
-  text-shadow: #a48ff2 2px 2px 10px;
+  text-shadow: #3c0064 2px 2px 10px;
 }
 .subtitle > .letter{
   margin: 0 5px;
 }
 .subtitle > .sep{
+  display: inline-block;
   margin: 0 10px; 
 }
 .subtitle > .sl1{
@@ -162,9 +165,17 @@ body{
 }
 
 .social-icon{
-  filter: drop-shadow(0 0 50px rgba(237, 250, 255, 0.50));
+  filter: drop-shadow(0 0 50px rgba(195, 55, 80, 0.50));
 }
-
+.social-icon2{
+  width: 100%;
+  height: 100%;
+  fill: #3b82f6; 
+  filter: drop-shadow(0 0 50px rgba(195, 55, 80, 0.50));
+}
+.social-icon2:hover{
+  fill: #ec4899;  
+}
 /* Box Animation */
 .bg-bubbles {
   position: absolute;
@@ -185,6 +196,9 @@ body{
   -webkit-animation: square 25s infinite;
   animation: square 25s infinite;
   transition-timing-function: linear;
+  border-radius: 5px;
+  overflow: hidden;
+  filter: drop-shadow(0 0 50px rgba(237, 250, 255, 0.50));
 }
 .bg-bubbles li:nth-child(1) {
   left: 10%;
@@ -223,7 +237,7 @@ body{
   background-color: rgba(255, 255, 255, 0.2);
 }
 .bg-bubbles li:nth-child(7) {
-  left: 32%;
+  left: 22%;
   width: 160px;
   height: 160px;
   -webkit-animation-delay: 7s;
@@ -231,17 +245,17 @@ body{
 }
 .bg-bubbles li:nth-child(8) {
   left: 55%;
-  width: 20px;
-  height: 20px;
+  width: 34px;
+  height: 34px;
   -webkit-animation-delay: 15s;
           animation-delay: 15s;
   -webkit-animation-duration: 40s;
           animation-duration: 40s;
 }
 .bg-bubbles li:nth-child(9) {
-  left: 25%;
-  width: 10px;
-  height: 10px;
+  left: 45%;
+  width: 50px;
+  height: 50px;
   -webkit-animation-delay: 2s;
           animation-delay: 2s;
   -webkit-animation-duration: 40s;
@@ -255,12 +269,22 @@ body{
   -webkit-animation-delay: 11s;
           animation-delay: 11s;
 }
+.bg-bubbles li:nth-child(11) {
+  left: 12%;
+  width: 100px;
+  height: 100px;
+  -webkit-animation-duration: 25s;
+          animation-duration: 25s;
+ -webkit-animation-delay: 8s;
+          animation-delay: 8s;
+}
+
 @-webkit-keyframes square {
   0% {
     transform: translateY(0);
   }
   100% {
-    transform: translateY(-900px) rotate(600deg);
+    transform: translateY(-100vh) rotate(720deg);
   }
 }
 @keyframes square {
@@ -268,7 +292,7 @@ body{
     transform: translateY(0);
   }
   100% {
-    transform: translateY(-700px) rotate(600deg);
+    transform: translateY(-100vh) rotate(720deg);
   }
 }
 .wrapper {
@@ -279,10 +303,58 @@ body{
   left: 0;
   width: 100%;
   height: 100vh;
-  margin-top: 00px;
+  margin-top: 0px;
   overflow: hidden;
   z-index: -1;
 }
 .wrapper.form-success .container h1 {
   transform: translateY(85px);
+}
+.glasscard{
+  box-shadow: 20px 20px 50px rgba(0,0,0,0.5);
+  border-radius: 15px;
+  background: rgba(255,255,255,0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid rgba(255,255,255, 0.5);
+  border-left: 1px solid rgba(255,255,255, 0.5);
+  backdrop-filter: blur(5px); 
+}
+.invisible-scroll::-webkit-scrollbar{
+  display: none;
+}
+.invisible-scroll {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.fader{
+  position: relative;
+}
+.fader:after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  bottom: 0px;
+  left: 0;
+  pointer-events: none;
+  -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+  width: 100%;
+  height: 4em;
+}
+.fade_title{
+  font-weight: bold;
+  color: rgba(255,255,255,0.3);
+}
+.crownicon{
+  height: 100%;
+  width: 100%;
+  fill: rgb(250, 204, 21);
+  stroke: rgb(202,138,4);
+  stroke-width: 5px;
+  padding: 5px;
+}
+.sans{
+  font-family: 'Open Sans', sans-serif;
+ 
 }

@@ -1,24 +1,29 @@
 <header>
-  <nav class="flex flex-row justify-between mx-10"> 
+  <nav class="flex flex-row justify-between md: px-3 md:px-10 bg-gradient-to-b from-blue-900">
     <a href="/">
-      <img src="/images/logo.png" class="p-2 w-[150px] md:w-[175px] lg:w-[200px]"> 
+      <img src="/images/logo.png" class="py-2 w-[150px] md:w-[175px] lg:w-[200px]">
     </a>
-    <ul class="text-teal-100 cursor-pointer flex flex-row space-x-5"> 
-      <a href="/about"> 
-        <li class="glowtext py-5 text-lg lg:text-xl hover:text-pink-200">About</li>                
-      </a> 
-      <a href="#"> 
-        <li class="py-5 text-lg lg:text-xl text-stone-400">Kings</li>              
-      </a> 
-      <a href="#"> 
-        <li class="py-5 text-lg lg:text-xl text-stone-400">Lite-Paper</li>                 
-      </a> 
+    <ul class="text-teal-100 cursor-pointer flex flex-row space-x-5">
+      <a href="/about">
+        <li class="glowtext py-4 md:py-5 text-lg lg:text-xl hover:text-pink-200">About</li>
+      </a>
+      <a href="/kings">
+        <li class="glowtext py-4 md:py-5 text-lg lg:text-xl hover:text-pink-200">Kings</li>
+      </a>
+      <a href="#">
+        <li class="py-4 md:py-5 text-lg lg:text-xl text-stone-400">Lite-Paper</li>
+      </a>
     </ul>
   </nav>
 </header>
-<main class="px-4 py-20 sm:px-6 lg:px-8">
-  <div class="mx-auto max-w-2xl">
+<main class="px-4 sm:px-6 lg:px-8">
+  <div class="mx-0 lg:mx-5">
     <.flash_group flash={@flash} />
     {@inner_content}
   </div>
 </main>
+<footer class="flex flex-row justify-between pt-10 px-3 md:px-10">
+    <p class="glowtext text-sm">©2023 KDAbet DAO</p>
+    <p class="pb-1 glowtext glowtext2 text-sm flex flex-row flex-start"><span>powered by</span> <a href="https://kadena.io/"><img src="images/kadena.png" class="ml-2 h-6 w-6"></a></p>
+</footer>
+

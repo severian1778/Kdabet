@@ -1,16 +1,16 @@
 <.flash_group flash={@flash} />
 <header> 
-<nav class="flex flex-row justify-between mx-10">
-  <img src="/images/logo.png" class="p-2 w-[150px] md:w-[175px] lg:w-[200px]">
+<nav class="flex flex-row justify-between md: px-3 md:px-10 bg-gradient-to-b from-blue-900">
+  <img src="/images/logo.png" class="py-2 w-[150px] md:w-[175px] lg:w-[200px]">
   <ul class="text-teal-100 cursor-pointer flex flex-row space-x-5">
     <a href="/about">
-      <li class="glowtext py-5 text-lg lg:text-xl hover:text-pink-200">About</li>		
+      <li class="glowtext py-4 md:py-5 text-lg lg:text-xl hover:text-pink-200">About</li>		
+    </a>
+    <a href="/kings">
+      <li class="glowtext py-4 md:py-5 text-lg lg:text-xl hover:text-pink-200">Kings</li>		
     </a>
     <a href="#">
-      <li class="py-5 text-lg lg:text-xl text-stone-400">Kings</li>		
-    </a>
-    <a href="#">
-      <li class="py-5 text-lg lg:text-xl text-stone-400">Lite-Paper</li>		
+      <li class="py-4 md:py-5 text-lg lg:text-xl text-stone-400">Lite-Paper</li>		
     </a>
  </ul>
 </nav>
@@ -25,30 +25,38 @@
     <span>T</span>
   </section>  
 
-  <section class="subtitle">
-    <span class="letter sl1">r</span>
-    <span class="letter sl2">e</span>
-    <span class="letter sl3">t</span>
-    <span class="letter sl4">u</span>
-    <span class="letter sl5">r</span>
-    <span class="letter sl6">n</span>
+  <section class="subtitle px-14 md:px-4 min-w-[40%]">
+    <span class="inline-block">
+      <span class="letter sl1">r</span>
+      <span class="letter sl2">e</span>
+      <span class="letter sl3">t</span>
+      <span class="letter sl4">u</span>
+      <span class="letter sl5">r</span>
+      <span class="letter sl6">n</span>
+    </span>
     <span class="sep"></span>
-    <span class="letter sl7">o</span>
-    <span class="letter sl8">f</span>
+    <span display="inline-block">
+      <span class="letter sl7">o</span>
+      <span class="letter sl8">f</span>
+    </span>
     <span class="sep"></span>
-    <span class="letter sl9">t</span>
-    <span class="letter sl10">h</span>
-    <span class="letter sl11">e</span>
+    <span class="inline-block">
+      <span class="letter sl9">t</span>
+      <span class="letter sl10">h</span>
+      <span class="letter sl11">e</span>
+    </span>
     <span class="sep"></span>
-    <span class="letter sl12">k</span>
-    <span class="letter sl13">i</span>
-    <span class="letter sl14">n</span>
-    <span class="letter sl15">g</span>
-    <span class="letter sl16">s</span>
+    <span class="inline-block">
+      <span class="letter sl12">k</span>
+      <span class="letter sl13">i</span>
+      <span class="letter sl14">n</span>
+      <span class="letter sl15">g</span>
+      <span class="letter sl16">s</span>
+    </span>
   </section> 
 	
   <section class="subtitle2 mt-3">
-    November, 2024.
+    November, 2023.
   </section>
 
   <!-- Social Links -->
@@ -65,23 +73,40 @@
     <FontAwesome.LiveView.icon name="discord" type="brands" class="social-icon h-16 w-16 fill-slate-500" />
   </section>
 </div>
-<footer class="flex flex-row justify-between px-10">
+<footer class="flex flex-row justify-between pt-10 px-3 md:px-10">
   <p class="glowtext text-sm">©2023 KDAbet DAO</p>
-  <p class="glowtext glowtext2 text-sm flex flex-row flex-start"><span>powered by</span> <img src="images/kadena.png" class="ml-2 h-6 w-6"></p> 
+  <p class="glowtext glowtext2 text-sm flex flex-row flex-start"><span>powered by</span> <a href="https://kadena.io/"><img src="images/kadena.png" class="ml-2 h-6 w-6"></a></p> 
 </footer>
 
 <!-- animation -->
-<div class="wrapper">
-  <ul class="bg-bubbles">
-    <li><img src="images/kadena.png" class="w-full h-full"></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
+<div class="wrapper invisible md:visible">
+  <ul class="bg-bubbles opacity-70 md:opacity-80">
+    <li><img class="king" src="images/kadena.png" class="w-full h-full"></li>
+    <li><img class="king" src="images/kadena.png" class="w-full h-full"></li>
+    <li><img class="king" src="images/kadena.png" class="w-full h-full"></li>
+    <li><img class="king" src="images/kadena.png" class="w-full h-full"></li>
+    <li><img class="king" src="images/kadena.png" class="w-full h-full"></li>
+    <li><img class="king" src="images/kadena.png" class="w-full h-full"></li>
+    <li><img class="king" src="images/kadena.png" class="w-full h-full"></li>
+    <li><img class="king" src="images/kadena.png" class="w-full h-full"></li>
+    <li><img class="king" src="images/kadena.png" class="w-full h-full"></li>
+    <li><img class="king" src="images/kadena.png" class="w-full h-full"></li>
+    <li><img class="king" src="images/kadena.png" class="w-full h-full"></li>
   </ul>
 </div>
+
+<script type="text/javascript">
+  const kings = ["Lain.png","Frog.png", "Theezy.png", "Jimmy.png", "Junkie.png", "Crob.png", "Metcalfe.png", "BC.png", "Fabio.png", "nico.png", "tmg.png", "toshi.png", "kennedy.png", "pepe.png", "pkm.png", "hazen.png", "kdaminer.png", "whitekid.png", "rai.png", "dab.png", "dirty.png", "keta.png", "glenn.png", "Shaun.png", "Noah.png", "allin.png", "lakes.png", "jamboy.png", "mark.png", "mars.png", "extrin.png", "dodger.png", "bored.png", "pseno.png", "bells.png", "olabero.png", "up.png", "defi.png", "snakecat.png", "Chantal.png", "alex.png", "alexander.png", "ezal.png", "atta.png", "marcus.png", "mikey.png", "kryptonian.png", "aryan.png", "arrabeelo.png", "raf.png", "hollywood.png", "gonze.png", "techfleet.png", "sean.png", "ireland.png", "kadosh.png", "emodius.png", "sugah.png", "mikk.png", "carter.png", "ciredide.png", "arun.png", "ivars.png", "hobbs.png", "rex.png", "daya.png", "mom.png", "kadayee.png", "reese.png", "silk.png", "rich.png", "barry.png", "tia.png", "lm99.png", "cali.png", "pbr.png", "collector.png", "red.png", "greg.png", "olofs.png", "mahines.png", "baller.png", "marc.png", "haxtral.png", "ellis.png", "konst.png", "defry.png", "oneleg.png", "uae.png", "flexx.png", "keeper.png", "barb.png", "zdero.png", "yusuf.png", "fractal.png", "chris.png", "spyder.png", "berry.png", "alexkda.png", "newzealand.png", "defiscreens.png", "r3.png", "debil.png", "zotramid"]
+  const durations = [25,17,25,22,25,25,25,40,40,25,25,25]
+  const delays = [0,2,4,0,0,3,0,7,15,2,11,8]
+  const listeles = document.getElementsByClassName("king");
+  const els = Array.from(listeles);
+  els.forEach((x,i) => castPfp(x,i));
+  
+  function castPfp(el, ind){
+    const randomPfp = kings[Math.floor(Math.random() * kings.length)]
+    el.src = "/images/pfps/"+randomPfp
+    setTimeout(() => {castPfp(el, ind)}, 1000*(durations[ind]+delays[ind]));
+  }
+</script>
+

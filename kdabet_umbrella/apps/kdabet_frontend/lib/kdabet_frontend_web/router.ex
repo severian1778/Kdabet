@@ -22,6 +22,7 @@ defmodule KdabetFrontendWeb.Router do
     get "/", PageController, :home
     live "/demo", Demo
     live "/about", About
+    live "/kings", Kings
   end
 
   # Other scopes may use custom stacks.
