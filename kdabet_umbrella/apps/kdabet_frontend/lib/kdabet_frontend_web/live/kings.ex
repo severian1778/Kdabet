@@ -220,7 +220,9 @@ defmodule KdabetFrontendWeb.Kings do
       "nmart.png",
       "sage.png",
       "frankgr.png",
-      "erre.png"
+      "erre.png",
+      "linesman.png",
+      "lookandlikelove.png"
     ]
   end
 end
