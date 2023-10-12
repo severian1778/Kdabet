@@ -19,7 +19,7 @@ defmodule KdabetFrontendWeb.Kings do
     ~F"""
     <div class="flex flex-col w-full h-fit">
       <!-- Textual information -->
-      <section class="sans w-full h-fit flex flex-col md:flex-row justify-between py-5">
+      <section class="sans w-full mx-auto max-w-[1600px] h-fit flex flex-col md:flex-row justify-between py-5 lg:py-10">
         <div class="glowtext flex justify-between flex-col md:justify-start w-full md:w-1/2">
           <div class="w-full">
             <h1 class="text-[1.75em] lg:text-[2.15em] xl:text-[2.7em] flex flex-row font-bold justify-center md:justify-start space-x-1 sm:space-x-2 lg:space-x-3">
@@ -40,18 +40,18 @@ defmodule KdabetFrontendWeb.Kings do
           <h3 class="text-[1.4em] py-2">Benefits</h3>
           <hr class="w-full border-t-slate-700 border-b-slate-600 mb-4">
           <ul class="text-[1.0em] xl:text-[1.3em]">
-            <li>~ Hard-coded dividend of all excess profits</li>
+            <li>~ Hard dividend of all excess profits</li>
             <li>~ 1-1 DAO voting/proposal rights</li>
             <li>~ Affiliate earnings on K:nights NFT</li>
             <li>~ Bonus Perks from corporate partners</li>
             <li>~ Giftable Bet Bonuses</li>
-            <li>~ Annual DAO meetup.</li>
+            <li>~ Annual DAO meetup</li>
           </ul>
         </div>
       </section>
       <hr class="w-full border-t-blue-800 border-b-blue-900 mb-5">
       <!-- pfp rows -->
-      <section class="w-full flex flex-col">
+      <section class="w-full flex flex-col mx-auto max-w-[1600px]">
         <div class="glowtext w-full flex flex-row justify-between mb-5">
           <h1 class="text-[1.75em] lg:text-[2.15em] xl:text-[2.7em] flex flex-row font-bold justify-start space-x-1 sm:space-x-2 lg:space-x-3" >
             <span class="h-[40px] w-[40px] lg:h-[50px] lg:w-[50px] xl:h-[60px] xl:w-[60px]"><FontAwesome.LiveView.icon name="scroll" type="solid" class="crownicon" /></span>
