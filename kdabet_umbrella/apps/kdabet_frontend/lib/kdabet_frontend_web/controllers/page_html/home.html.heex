@@ -1,20 +1,59 @@
 <.flash_group flash={@flash} />
-<header> 
-<nav class="flex flex-row justify-between md: px-3 md:px-10 bg-gradient-to-b from-blue-900">
-  <img src="/images/logo.png" class="py-2 w-[150px] md:w-[175px] lg:w-[200px]">
-  <ul class="text-teal-100 cursor-pointer flex flex-row space-x-5">
-    <a href="/about">
-      <li class="glowtext py-4 md:py-5 text-lg lg:text-xl hover:text-pink-200">About</li>		
+<header class="relative z-10"> 
+  <nav
+    class="glasscard2 shadow-md flex items-center justify-between flex-wrap px-3 md:px-10 bg-gradient-to-b from-blue-900"
+    x-data="{ isOpen: false }"
+    @keydown.escape="isOpen = false"
+    @resize.window="
+    width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+    if (width > 760) {
+     isOpen = false
+    }"
+  >
+    <a href="/">
+    <img src="/images/logo.png" class="py-2 w-[150px] md:w-[175px] lg:w-[200px]">
     </a>
-    <a href="/kings">
-      <li class="glowtext py-4 md:py-5 text-lg lg:text-xl hover:text-pink-200">Kings</li>		
-    </a>
-    <a href="#">
-      <li class="py-4 md:py-5 text-lg lg:text-xl text-stone-400">Lite-Paper</li>		
-    </a>
- </ul>
-</nav>
+    <!--Toggle button (hidden on large screens)-->
+    <button
+      @click="isOpen = !isOpen"
+      type="button"
+      class="block md:hidden px-2 glowtext hover:text-teal-100 focus:outline-none focus:text-teal-100"
+      x-bind:class="{ 'transition transform-180': isOpen }"
+    >
+      <svg
+        class="h-6 w-6 fill-current"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+      >
+        <path
+          x-show="isOpen"
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M18.278 16.864a1 1 0 0 1-1.414 1.414l-4.829-4.828-4.828 4.828a1 1 0 0 1-1.414-1.414l4.828-4.829-4.828-4.828a1 1 0 0 1 1.414-1.414l4.829 4.828 4.828-4.828a1 1 0 1 1 1.414 1.414l-4.828 4.829 4.828 4.828z"
+        />
+        <path
+          x-show="!isOpen"
+          fill-rule="evenodd"
+          d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"
+        />
+      </svg>
+    </button>
+
+    <!-- Menu -->
+    <ul class="md:flex glowtext text-xl font-bold sans origin-top" x-bind:class="{ 'block absolute z-10 m-0 top-[60px] left-0 border-b border-slate-800 glasscard2 w-full': isOpen, 'hidden mr-3': !isOpen}" x-cloak>
+      <li class="px-3 cursor-pointer flex items-center hover:text-pink-200" x-bind:class="{'glasscard2 indent-5 py-3 border-b border-slate-500 hover:bg-slate-700': isOpen, '': !isOpen}">
+        <a class="w-full" href="/about">About</a>
+      </li>
+      <li class="px-3 cursor-pointer flex items-center hover:text-pink-200" x-bind:class="{'glasscard2 indent-5 py-3 border-b border-slate-500 hover:bg-slate-700': isOpen, '': !isOpen}">
+          <a class="w-full" href="/kings">Kings</a>
+      </li>
+      <!--<li class="px-3 cursor-pointer flex items-center text-stone-600" x-bind:class="{'glasscard2 py-3': isOpen, '': !isOpen}">
+          <a title="Coming Soon" href="#">Lite-Paper</a>
+      </li>-->
+    </ul>
+  </nav>
 </header>
+
 <div class="flex justify-center items-center uppercase h-[88vh] flex-col">
   <section class="title">
     <span>K</span>
@@ -109,4 +148,18 @@
     setTimeout(() => {castPfp(el, ind)}, 1000*(durations[ind]+delays[ind]));
   }
 </script>
+
+<!--
+  <ul class="text-teal-100 cursor-pointer flex flex-row space-x-5">
+    <a href="/about">
+      <li class="glowtext py-4 md:py-5 text-lg lg:text-xl hover:text-pink-200">About</li>		
+    </a>
+    <a href="/kings">
+      <li class="glowtext py-4 md:py-5 text-lg lg:text-xl hover:text-pink-200">Kings</li>		
+    </a>
+    <a href="#">
+      <li class="py-4 md:py-5 text-lg lg:text-xl text-stone-400">Lite-Paper</li>		
+    </a>
+  </ul>
+-->
 

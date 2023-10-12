@@ -321,6 +321,11 @@ body{
   border-left: 1px solid rgba(255,255,255, 0.5);
   backdrop-filter: blur(5px); 
 }
+.glasscard2{
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(5px); 
+}
+
 .invisible-scroll::-webkit-scrollbar{
   display: none;
 }

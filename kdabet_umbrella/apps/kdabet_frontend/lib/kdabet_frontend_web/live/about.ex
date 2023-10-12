@@ -4,7 +4,7 @@ defmodule KdabetFrontendWeb.About do
 
   def render(assigns) do
     ~F"""
-    <div class="flex flex-col xl:flex-row w-full h-fit xl:h-[85vh] overflow-hidden pt-10]">
+    <div class="flex flex-col xl:flex-row w-full h-fit xl:h-[85vh] overflow-hidden">
       <!-- About us -->
       <section class="fader mt-5 w-full md:w-5/6 lg:w-5/6 xl:w-1/2 justify-center m-auto xl:justify-start h-full overflow-hidden invisible-scroll overflow-y-scroll">
         <article class="glasscard p-[20px] md:p-[30px] lg:p-[50px] mt-[20px]">

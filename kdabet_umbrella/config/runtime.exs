@@ -4,7 +4,7 @@ import Config
 # config :fcore, ecto_repos: [FCore.Repo]
 # config :btctimesapi, ecto_repos: [FCore.Repo]
 
-# Core Database 
+# Core Database
 # config :fcore, FCore.Repo,
 #  username: "postgres",
 #  password: "postgres",
@@ -22,6 +22,8 @@ config :kdabet_frontend, KdabetFrontendWeb.Endpoint,
   url: [host: "localhost"],
   http: [port: 4000],
   check_origin: ["http://localhost:4000", "http://70.79.233.233:4000"],
+  # http: [port: 80],
+  # check_origin: ["http://ec2-34-217-76-52.us-west-2.compute.amazonaws.com:80","http://kdabet.com"],
   secret_key_base: "nigpH25KTvHLMJCbeQx/MZEf0xqsNKyRTLf62H10vLKnwacFrPdVibNhVVHf1pMb",
   render_errors: [view: KdabetFrontendWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: KdabetFrontend.PubSub,
