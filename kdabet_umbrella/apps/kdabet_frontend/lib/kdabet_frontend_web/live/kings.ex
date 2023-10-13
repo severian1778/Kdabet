@@ -86,7 +86,7 @@ defmodule KdabetFrontendWeb.Kings do
       {"toshi.png", "Kadtoshi"},
       {"kennedy.png", "Mr_Kennedy_123"},
       {"pepe.png", "hodl_pepe"},
-      {"mikael.png","M1kewesterling"}
+      {"mikael.png", "M1kewesterling"},
       {"pkm.png", "butterbean128"},
       {"hazen.png", "hazennik"},
       {"kdaminer.png", "KDAminer"},
@@ -110,7 +110,6 @@ defmodule KdabetFrontendWeb.Kings do
       {"bells.png", "tolling_bells"},
       {"olabero.png", "olabero"},
       {"up.png", "POW_Mooon"},
-      ## TODO:  Fix this
       {"defry.png", "K_DefiRy"},
       {"defi.png", "KadenaDEFI"},
       {"snakecat.png", "James50818951"},
@@ -265,7 +264,18 @@ defmodule KdabetFrontendWeb.Kings do
       {"bertrand.png", "bertrand_web3"},
       {"jarlsven.png", "TheUnrealSven"},
       {"orbine.png", "Orbine3"},
-      {"william.png", "JamestownWX"}
+      {"william.png", "JamestownWX"},
+      {"ronlaflamme.png", "RonLaFlammeEsq"},
+      {"paulb.png", "paulb360"},
+      {"eddenhaz.png", "eddenhazz"},
+      {"bradkendrick.png", "BradKendrick7"},
+      {"tom.png", "tom89sh"},
+      {"casual.png", "CasualMining"},
+      {"anolik.png", "anolik.png"},
+      {"marian.png", "marianKDA84"},
+      {"spaceman.png", "C_SpaceMan39"},
+      {"redacted.png", "a_a_redacted"},
+      {"james.png", "bettingncrypto"}
     ]
   end
 end
