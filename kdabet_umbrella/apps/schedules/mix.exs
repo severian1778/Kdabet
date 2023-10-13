@@ -1,9 +1,9 @@
-defmodule Mlbschedule.MixProject do
+defmodule Schedules.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :mlbschedule,
+      app: :schedules,
       version: "0.1.0",
       build_path: "../../_build",
       config_path: "../../config/config.exs",
@@ -19,7 +19,7 @@ defmodule Mlbschedule.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      mod: {MlbSchedule.Application, []}
+      mod: {Schedules.Application, []}
     ]
   end
 

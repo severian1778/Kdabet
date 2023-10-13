@@ -1,6 +1,6 @@
 defmodule Core.History do
   import Ecto.Query
-  alias Core.{Common, Schedule}
+  #alias Core.{Common, Schedule}
 
   ## typing
   @type date() :: String.t()

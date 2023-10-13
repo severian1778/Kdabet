@@ -1,4 +1,4 @@
-defmodule MlbSchedule.Application do
+defmodule Schedules.Application do
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
@@ -8,13 +8,13 @@ defmodule MlbSchedule.Application do
 
   @impl true
   def start(_type, _args) do
-    children = [
+    #children = [
       # Starts a worker by calling: Mlbschedule.Worker.start_link(arg)
       # {Mlbschedule.Worker, arg}
-    ]
+    #]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
-    MlbSchedule.Supervisor.start_link(name: MlbSchedule.Supervisor)
+    Schedules.Supervisor.start_link(name: Schedules.Supervisor)
   end
 end

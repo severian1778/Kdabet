@@ -1,6 +1,6 @@
-defmodule MlbSchedule do
+defmodule Schedules.Mlb.Official do
   use GenServer
-  alias MlbSchedule.MlbClient
+  alias Schedules.MlbOfficialClient
 
   alias Core.Common
   #############################
@@ -9,14 +9,17 @@ defmodule MlbSchedule do
   #############################
 
   @moduledoc """
-  NbaSchedule pipes the game status directly from MLBAM API.
+  MlbSchedule pipes the game status directly from MLBAM API.
   """
+  def start_link(opts) do
+    options = Map.get(opts, :opts)
+    GenServer.start_link(__MODULE__, :ok, options)
+  end
 
-  def start_link(opts), do: GenServer.start_link(__MODULE__, :ok, opts)
   def stop(), do: GenServer.call(__MODULE__, :stop)
-  def get_state(), do: GenServer.call(__MODULE__, {:getstate}, 30_000)
+  def get_state(pid), do: GenServer.call(pid, {:getstate, pid}, 30_000)
   def fetch_schedule(), do: GenServer.cast(__MODULE__, :fetch_schedule)
-  def custom_date(date), do: GenServer.cast(__MODULE__, {:custom_date, date})
+  def custom_date(pid, date), do: GenServer.cast(pid, {:custom_date, date})
 
   ##############################
   # SERVER CALLBACKS
@@ -58,18 +61,18 @@ defmodule MlbSchedule do
     #################
     # Summon Schedule
     #################
-    MlbSchedule.fetch_schedule()
+    __MODULE__.fetch_schedule()
     schedule_scraper()
     ## scheduler
     {:ok, config}
   end
 
-  def handle_call({:getstate}, _from, state), do: {:reply, state, state}
+  def handle_call({:getstate, _pid}, _from, state), do: {:reply, state, state}
 
   def handle_call(:stop, _from, state), do: {:stop, :normal, :ok, state}
 
   def handle_info(:work, state) do
-    MlbSchedule.fetch_schedule()
+    __MODULE__.fetch_schedule()
     ############################
     ## Schedule a timeout
     #############################
@@ -90,7 +93,7 @@ defmodule MlbSchedule do
   end
 
   def handle_cast(:fetch_schedule, state) do
-    {:ok, response} = MlbClient.get("/schedule/?sportId=1&date=#{state.date}")
+    {:ok, response} = MlbOfficialClient.get("/schedule/?sportId=1&date=#{state.date}")
 
     gamemaps =
       case response |> Map.get(:body) do

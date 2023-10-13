@@ -1,4 +1,4 @@
-defmodule MlbSchedule.MlbClient do
+defmodule Schedules.MlbOfficialClient do
   use Tesla
   Application.ensure_all_started(:hackney)
 
