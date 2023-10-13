@@ -275,7 +275,8 @@ defmodule KdabetFrontendWeb.Kings do
       {"marian.png", "marianKDA84"},
       {"spaceman.png", "C_SpaceMan39"},
       {"redacted.png", "a_a_redacted"},
-      {"james.png", "bettingncrypto"}
+      {"james.png", "bettingncrypto"},
+      {"123.png", "@SonyaMa86082489"}
     ]
   end
 end
