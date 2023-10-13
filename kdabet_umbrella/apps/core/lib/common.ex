@@ -4,21 +4,36 @@ defmodule Core.Common do
     - arity(0)
     - return <string>
   """
-
+  @spec padint(integer()) :: binary()
   def padint(num) do
     num |> Integer.to_string() |> String.pad_leading(2, "0")
   end
 
-  ## handy function for replicating a vaue in a list
+  @doc """
+  Replicates a value n times and returns a list of the replicated value
+  """
+  @spec replicate(integer(), any()) :: list(any())
   def replicate(n, x), do: for(_ <- 1..n, do: x)
 
-  ## handy method for adding up lists.of numbers
-  def arraysum(to_add, agg) do
-    Enum.map(agg |> Enum.with_index(), fn {feature, idx} ->
+  @doc """
+  Handy method for adding up two lists of numbers
+  iex(1)> arraysum([1,2,3],[1,2,3])
+          return ->  [2,4,6]
+  """
+  @spec arraysum(list(integer() | float()), list(integer() | float())) ::
+          list(integer() | float())
+  def arraysum(to_add, list) when is_list(to_add) and is_list(list) do
+    Enum.map(list |> Enum.with_index(), fn {feature, idx} ->
       feature + (to_add |> Enum.at(idx))
     end)
   end
 
+  @doc """
+  Scrubs rotowire team abbreviations and returns standard mlb abbreviations
+  iex(1)> scrubtoroto("sln")
+          return ->  "stl"
+  """
+  @spec scrubroto(binary()) :: binary()
   def scrubroto(str) do
     ## teamnames are all fucked up.
     str
@@ -37,20 +52,30 @@ defmodule Core.Common do
     |> String.replace("was", "wsh")
   end
 
+  @doc """
+  Scrubs random abbreviations and returns a standard
+  iex(1)> standardabbr("was")
+          return ->  "wsh"
+  """
+  @spec standardabbr(binary()) :: binary()
   def standardabbr(str) do
-    ## teamnames are all fucked up.
     str
     |> String.replace("was", "wsh")
     |> String.replace("sfg", "sf")
     |> String.replace("sdp", "sd")
     |> String.replace("chw", "cws")
-    |> String.replace("D-Backs", "ARI")
+    |> String.replace("D-Backs", "ari")
     |> String.replace("tbr", "tb")
     |> String.replace("kcr", "kc")
   end
 
+  @doc """
+  Scrubs full team names and returns a standard abbreviation
+  iex(1)> teamtoabbr("Cardinals")
+          return ->  "stl"
+  """
+  @spec teamtoabbr(binary()) :: binary()
   def teamtoabbr(str) do
-    ## teamnames are all fucked up.
     str
     |> String.replace("Cardinals", "stl")
     |> String.replace("Cubs", "chc")
@@ -85,6 +110,12 @@ defmodule Core.Common do
     |> String.replace("Guardians", "cle")
   end
 
+  @doc """
+  Scrubs full team names and returns a park number
+  iex(1)> teamtoabbr("Cardinals")
+          return ->  1
+  """
+  @spec teamtoparknum(binary()) :: integer()
   def teamtoparknum(str) do
     ## teamnames are all fucked up.
     str
@@ -122,6 +153,12 @@ defmodule Core.Common do
     |> String.to_integer()
   end
 
+  @doc """
+  Scrubs abbreviations and returns full team names
+  iex(1)> abbrtoteam("stl")
+          return ->  "Cardinals"
+  """
+  @spec abbrtoteam(binary()) :: binary()
   def abbrtoteam(str) do
     ## teamnames are all fucked up.
     str
@@ -159,8 +196,13 @@ defmodule Core.Common do
     |> String.replace("cle", "Indians")
   end
 
+  @doc """
+  Scrubs standard mlb abbreviations and returns rotowire standard abbreviations
+  iex(1)> mlbtoroto("Cardinals")
+          return ->  "stl"
+  """
+  @spec mlbtoroto(binary()) :: binary()
   def mlbtoroto(str) do
-    ## teamnames are all fucked up.
     str
     |> String.replace("stl", "sln")
     |> String.replace("chc", "chn")
@@ -187,6 +229,12 @@ defmodule Core.Common do
     # |> String.replace("sd", "sdn")
   end
 
+  @doc """
+  Scrubs standard mlb full cityteam names and returns mlb standard abbreviations
+  iex(1)> mlbtoabbr("St. Louis Cardinals")
+          return ->  "stl"
+  """
+  @spec mlbtoabbr(binary()) :: binary()
   def mlbtoabbr(str) do
     ## teamnames are all fucked up.
     str
@@ -223,93 +271,15 @@ defmodule Core.Common do
     |> String.replace("Cleveland Indians", "cle")
   end
 
-  def sbrabbr_to_mlb(str) do
-    ## teamnames are all fucked up.
-    str
-    |> String.replace("stl", "St. Louis Cardinals")
-    |> String.replace("chc", "Chicago Cubs")
-    |> String.replace("chn", "Chicago Cubs")
-    |> String.replace("tba", "Tampa Bay Rays")
-    |> String.replace("tbr", "Tampa Bay Rays")
-    |> String.replace("tb", "Tampa Bay Rays")
-    |> String.replace("sfg", "San Francisco Giants")
-    |> String.replace("sfn", "San Francisco Giants")
-    |> String.replace("sf", "San Francisco Giants")
-    |> String.replace("kca", "Kansas City Royals")
-    |> String.replace("kcr", "Kansas City Royals")
-    |> String.replace("kc", "Kansas City Royals")
-    |> String.replace("sdn", "San Diego Padres")
-    |> String.replace("sdp", "San Diego Padres")
-    |> String.replace("sd", "San Diego Padres")
-    |> String.replace("nyy", "New York Yankees")
-    |> String.replace("lad", "Los Angeles Dodgers")
-    |> String.replace("nym", "New York Mets")
-    |> String.replace("nyn", "New York Mets")
-    |> String.replace("chw", "Chicago White Sox")
-    |> String.replace("cha", "Chicago White Sox")
-    |> String.replace("cws", "Chicago White Sox")
-    |> String.replace("laa", "Los Angeles Angels")
-    |> String.replace("col", "Colorado Rockies")
-    |> String.replace("bos", "Boston Red Sox")
-    |> String.replace("tor", "Toronto Blue Jays")
-    |> String.replace("mil", "Milwaukee Brewers")
-    |> String.replace("oak", "Oakland Athletics")
-    |> String.replace("ari", "Arizona Diamondbacks")
-    |> String.replace("tex", "Texas Rangers")
-    |> String.replace("hou", "Houston Astros")
-    |> String.replace("atl", "Atlanta Braves")
-    |> String.replace("mia", "Miami Marlins")
-    |> String.replace("sea", "Seattle Mariners")
-    |> String.replace("min", "Minnesota Twins")
-    |> String.replace("det", "Detroit Tigers")
-    |> String.replace("phi", "Philadelphia Phillies")
-    |> String.replace("pit", "Pittsburgh Pirates")
-    |> String.replace("cin", "Cincinnati Reds")
-    |> String.replace("bal", "Baltimore Orioles")
-    |> String.replace("was", "Washington Nationals")
-    |> String.replace("wsh", "Washington Nationals")
-    |> String.replace("cle", "Cleveland Guardians")
-  end
-
-  def sbrid_to_tid(sbrid) when is_integer(sbrid) do
-    case sbrid do
-      610 -> "Minnesota Twins"
-      620 -> "Tampa Bay Rays"
-      607 -> "Cleveland Guardians"
-      609 -> "Chicago Cubs"
-      608 -> "Kansas City Royals"
-      613 -> "Texas Rangers"
-      628 -> "Pittsburgh Pirates"
-      631 -> "Milwaukee Brewers"
-      616 -> "Baltimore Orioles"
-      636 -> "San Francisco Giants"
-      611 -> "Detroit Tigers"
-      625 -> "Atlanta Braves"
-      623 -> "Washington Nationals"
-      629 -> "Cincinnati Reds"
-      617 -> "Boston Red Sox"
-      618 -> "New York Yankees"
-      626 -> "Chicago Cubs"
-      627 -> "St. Louis Cardinals"
-      614 -> "Los Angeles Angels"
-      615 -> "Seattle Mariners"
-      619 -> "Toronto Blue Jays"
-      634 -> "Colorado Rockies"
-      612 -> "Oakland Athletics"
-      630 -> "Houston Astros"
-      624 -> "Miami Marlins"
-      632 -> "San Diego Padres"
-      622 -> "New York Mets"
-      633 -> "Arizona Diamondbacks"
-      621 -> "Philadelphia Phillies"
-      635 -> "Los Angeles Dodgers"
-      753 -> "Cleveland Guardians"
-    end
-  end
-
   ###################################
   ## Generate an Erlang Date Tuple
   ###################################
+  @doc """
+  Returns a pure erlang date tuple from Erlang calendar function with leadning zeros
+  iex(1)> date()
+          return ->  {2019, 12, 04}, {04, 30, 30}
+  """
+  @spec date() :: tuple()
   def date do
     {{year, month, day}, {hours, minutes, seconds}} = :calendar.local_time()
     ## BUILD DATESTRING
@@ -361,6 +331,12 @@ defmodule Core.Common do
     {month, day}
   end
 
+  @doc """
+  Returns a string representing the current data in condensed yyyymmdd format
+  iex(1)> yyyymmdd()
+          return ->  "20180404"
+  """
+  @spec yyyymmdd() :: binary()
   ## Return todays date in string format with yyyy-mm-dd format
   def yyyymmdd do
     datenow = Timex.now() |> Timex.shift(hours: -8) |> Timex.to_date()
@@ -378,479 +354,15 @@ defmodule Core.Common do
     Enum.join([year, month, day], "-")
   end
 
-  #################################
-  ## Generate a list of pitch columns to scrub
-  #################################
-  def namestoscrub do
-    [
-      "x",
-      "y",
-      "x0",
-      "y0",
-      "z0",
-      "ay",
-      "az",
-      "ax",
-      "vy0",
-      "vz0",
-      "vx0",
-      "px",
-      "pz",
-      "pfx_x",
-      "pfx_z",
-      "ax",
-      "az",
-      "sz_bot",
-      "sz_top",
-      "spin_dir",
-      "spin_rate",
-      "start_speed",
-      "end_speed"
-    ]
-  end
-
-  def team_check(str) do
-    ## teamnames are all resolved to a full string name of a giventeam.
-    dstr = String.downcase(str)
-
-    cond do
-      ["stl", "cardinals"] |> Enum.member?(dstr) -> "Cardinals"
-      ["chc", "cubs"] |> Enum.member?(dstr) -> "Cubs"
-      ["tbr", "rays"] |> Enum.member?(dstr) -> "Rays"
-      ["sfg", "giants"] |> Enum.member?(dstr) -> "Giants"
-      ["kcr", "royals"] |> Enum.member?(dstr) -> "Royals"
-      ["sdp", "padres"] |> Enum.member?(dstr) -> "Padres"
-      ["nyy", "yankees"] |> Enum.member?(dstr) -> "Yankees"
-      ["lad", "dodgers"] |> Enum.member?(dstr) -> "Dodgers"
-      ["nym", "mets"] |> Enum.member?(dstr) -> "Mets"
-      ["chw", "white sox"] |> Enum.member?(dstr) -> "White Sox"
-      ["laa", "angels"] |> Enum.member?(dstr) -> "Angels"
-      ["col", "rockies"] |> Enum.member?(dstr) -> "Rockies"
-      ["bos", "red sox"] |> Enum.member?(dstr) -> "Red Sox"
-      ["tor", "blue jays"] |> Enum.member?(dstr) -> "Blue Jays"
-      ["mil", "brewers"] |> Enum.member?(dstr) -> "Brewers"
-      ["oak", "athletics"] |> Enum.member?(dstr) -> "Athletics"
-      ["ari", "d-backs"] |> Enum.member?(dstr) -> "D-backs"
-      ["tex", "rangers"] |> Enum.member?(dstr) -> "Rangers"
-      ["hou", "astros"] |> Enum.member?(str) -> "Astros"
-      ["atl", "braves"] |> Enum.member?(dstr) -> "Braves"
-      ["mia", "marlins"] |> Enum.member?(dstr) -> "Marlins"
-      ["sea", "mariners"] |> Enum.member?(dstr) -> "Mariners"
-      ["min", "twins"] |> Enum.member?(dstr) -> "Twins"
-      ["det", "tigers"] |> Enum.member?(dstr) -> "Tigers"
-      ["phi", "phillies"] |> Enum.member?(dstr) -> "Phillies"
-      ["pit", "pirates"] |> Enum.member?(dstr) -> "Pirates"
-      ["cin", "reds"] |> Enum.member?(dstr) -> "Reds"
-      ["bal", "orioles"] |> Enum.member?(dstr) -> "Orioles"
-      ["was", "nationals"] |> Enum.member?(dstr) -> "Nationals"
-      ["cle", "indians"] |> Enum.member?(dstr) -> "Indians"
-      true -> nil
-    end
-  end
-
-  def pitchstruct(pitch) do
-    %{
-      gid: pitch.gid,
-      abid: pitch.abid,
-      pitchid: pitch.pitchid,
-      ay: pitch.ay,
-      ptype: pitch.pitch_type,
-      px: pitch.px,
-      pz: pitch.pz,
-      vz0: pitch.vz0,
-      vx0: pitch.vx0,
-      start_speed: pitch.start_speed,
-      vy0: pitch.vy0,
-      des: pitch.des,
-      ax: pitch.ax,
-      z0: pitch.z0,
-      az: pitch.az,
-      x0: pitch.x0,
-      y0: 50.0
-    }
-  end
-
-  ## Live Test Variables
-  def get_dummy_odds do
-    %{
-      "2021/04/01/chwmlb-laamlb-1" => %{
-        awayodds: 1.95,
-        homeodds: 1.95,
-        awayteam: "White Sox",
-        hometeam: "Tigers",
-        date: "2021-04-01"
-      }
-    }
-  end
-
-  def get_dummy_lineups do
-    %{
-      "2021/04/01/chwmlb-laamlb-1" => %{
-        awaylineup: [
-          "John Doe",
-          "John Doe",
-          "John Doe",
-          "John Doe",
-          "John Doe",
-          "John Doe",
-          "John Doe",
-          "John Doe",
-          "John Doe"
-        ],
-        awaypids: [
-          100_000,
-          100_000,
-          100_000,
-          100_000,
-          100_000,
-          100_000,
-          100_000,
-          100_000,
-          100_000
-        ],
-        awaypitcher: ["Clayton Kershaw"],
-        awaystarter: [600_000],
-        awteam: "Cardinals",
-        date: "2021-04-01",
-        homelineup: [
-          "John Doe",
-          "John Doe",
-          "John Doe",
-          "John Doe",
-          "John Doe",
-          "John Doe",
-          "John Doe",
-          "John Doe",
-          "John Doe"
-        ],
-        homepids: [
-          100_000,
-          100_000,
-          100_000,
-          100_000,
-          100_000,
-          100_000,
-          100_000,
-          100_000,
-          100_000
-        ],
-        homepitcher: ["Trevor Bauer"],
-        homestarter: [500_000],
-        hmteam: "Mariners"
-      }
-    }
-  end
-
-  def get_dummy_schedule do
-    %{
-      "2021/04/01/chwmlb-laamlb-1" => %{
-        batter: get_dummy_batter(),
-        errors: get_dummy_errors(),
-        gamedata: get_dummy_errors(),
-        hits: get_dummy_hits(),
-        linescore: get_dummy_linescore(),
-        pitcher: get_dummy_pitcher(),
-        status: get_dummy_status()
-      }
-    }
-  end
-
-  def get_dummy_preds do
-    %{
-      "2021/04/01/chwmlb-laamlb-1" => %{
-        awayavg: 0.5,
-        awayteam: "White Sox",
-        awaywps: [0.5, 0.5, 0.5],
-        homeavg: 0.5,
-        hometeam: "Angels",
-        homewps: [0.5, 0.5, 0.5],
-        maxval: 0.5,
-        minval: 0.5
-      }
-    }
-  end
-
-  defp get_dummy_status() do
-    %{
-      b: "2",
-      ind: "I",
-      inning: "6",
-      inning_state: "Top",
-      is_no_hitter: "N",
-      is_perfect_game: "N",
-      note: "",
-      o: "2",
-      reason: "",
-      s: "3",
-      status: "In Progress",
-      top_inning: "Y"
-    }
-  end
-
-  defp get_dummy_pitcher() do
-    %{
-      er: "0",
-      era: "0.00",
-      first: "Taylor",
-      id: "642203",
-      ip: "5.0",
-      last: "Widener",
-      losses: "0",
-      name_display_roster: "Widener",
-      number: "57",
-      wins: "0"
-    }
-  end
-
-  defp get_dummy_gamedata() do
-    %{
-      away_name_abbrev: "ARI",
-      away_team_name: "D-backs",
-      awayloss: "3",
-      awayscore: "3",
-      awaywins: "0",
-      home_team_abbrev: "SD",
-      home_team_name: "Padres",
-      homescore: "0",
-      homewins: "3",
-      id: "2021/04/04/arimlb-sdnmlb-1",
-      tipoff: "16:10"
-    }
-  end
-
-  defp get_dummy_linescore() do
-    %{
-      "1" => %{awayscore: "1", homescore: "0"},
-      "2" => %{awayscore: "1", homescore: "0"},
-      "3" => %{awayscore: "1", homescore: "0"},
-      "4" => %{awayscore: "1", homescore: "0"},
-      "5" => %{awayscore: "1", homescore: "0"},
-      "6" => %{awayscore: "1", homescore: "0"},
-      "7" => %{awayscore: "1", homescore: "0"},
-      "8" => %{awayscore: "1", homescore: "0"},
-      "9" => %{awayscore: "1", homescore: "0"}
-    }
-  end
-
-  defp get_dummy_errors() do
-    %{
-      away: "1",
-      home: "0"
-    }
-  end
-
-  defp get_dummy_hits() do
-    %{
-      away: "1",
-      home: "0"
-    }
-  end
-
-  defp get_dummy_batter() do
-    %{
-      ab: "1",
-      avg: "0.329",
-      first: "John",
-      h: "1",
-      hr: "1",
-      id: "600000",
-      last: "Doe",
-      name_display_roster: "John Doe",
-      number: "1",
-      obp: ".500",
-      ops: ".500",
-      pos: "SS",
-      rbi: "0",
-      slg: ".750"
-    }
-  end
-
-  def mdltypes do
-    [
-      MlbModel.LinearClsf,
-      MlbModel.LogisticClsf,
-      MlbModel.RandomForest,
-      MlbModel.XGBoost,
-      MlbModel.NeuralNet
-    ]
-  end
-
-  def modelToString(mtype) do
-    case mtype do
-      MlbModel.LinearClsf -> "LinearClsf"
-      MlbModel.LogisticClsf -> "LogisticClsf"
-      MlbModel.RandomForest -> "RandomForest"
-      MlbModel.XGBoost -> "XGBoost"
-      MlbModel.NeuralNet -> "NeuralNet"
-      MlbModel.Blend -> "Blend"
-    end
-  end
-
-  def statcast_floats do
-    [
-      :sz_bot,
-      :sz_top,
-      :pfx_x,
-      :pfx_z,
-      :ax,
-      :ay,
-      :az,
-      :release_pos_x,
-      :release_pos_y,
-      :release_pos_z,
-      :vx0,
-      :vy0,
-      :vz0,
-      :release_extension,
-      :release_speed,
-      :plate_x,
-      :plate_z,
-      :hc_x,
-      :hc_y,
-      :estimated_woba_using_speedangle,
-      :launch_speed,
-      :effective_speed,
-      :estimated_ba_using_speedangle,
-      :delta_run_exp,
-      :delta_home_win_exp,
-      :woba_value,
-      :break_length_deprecated,
-      :break_angle_deprecated,
-      :spin_dir
-    ]
-  end
-
-  def statcast_ints do
-    [
-      :balls,
-      :strikes,
-      :batter,
-      :pitcher,
-      :zone,
-      :pitch_number,
-      :at_bat_number,
-      :release_spin_rate,
-      :inning,
-      :fielder_1,
-      :fielder_2,
-      :fielder_3,
-      :fielder_4,
-      :fielder_5,
-      :fielder_6,
-      :fielder_7,
-      :fielder_8,
-      :fielder_9,
-      :on_1b,
-      :on_2b,
-      :on_3b,
-      :woba_denom,
-      :post_bat_score,
-      :babip_value,
-      :game_year,
-      :away_score,
-      :bat_score,
-      :post_away_score,
-      :iso_value,
-      :fld_score,
-      :spin_axis,
-      :home_score,
-      :launch_speed_angle,
-      :launch_angle,
-      :hit_distance_sc,
-      :post_fld_score,
-      :hit_location,
-      :release_spin_rate,
-      :outs_when_up,
-      :post_home_score,
-      :tfs_zulu_deprecated,
-      :umpire,
-      :spin_rate_deprecated
-    ]
-  end
-
-  def atbat_legend() do
-    [
-      :gid,
-      :abid,
-      :pitcherid,
-      :batterid,
-      :strikes,
-      :balls,
-      :outs,
-      :des,
-      :event,
-      :event_num,
-      :away_team_runs,
-      :home_team_runs,
-      :ob1start,
-      :ob2start,
-      :ob3start,
-      :ob1end,
-      :ob2end,
-      :ob3end,
-      :numpitches,
-      :runs,
-      :p_throws,
-      :b_height,
-      :stand,
-      :faction,
-      :datenum,
-      :battername,
-      :pitchername
-    ]
-  end
-
-  def get_dummy_ets() do
-    ##########################
-    ## Set up the :ets tables
-    ########################## 
-    tables = [
-      :schedule,
-      :predictions,
-      :lineups,
-      :odds
-    ]
-
-    Enum.each(tables, fn table ->
-      :ets.new(table, [
-        :set,
-        :named_table,
-        :public,
-        read_concurrency: true,
-        write_concurrency: true
-      ])
-
-      ## initialize slugs
-      :ets.insert(table, {table |> Atom.to_string(), %{}})
-    end)
-
-    :ets.insert(:schedule, {"schedule", get_dummy_schedule()})
-    :ets.insert(:predictions, {"predictions", get_dummy_preds()})
-    :ets.insert(:lineups, {"lineups", get_dummy_lineups()})
-    :ets.insert(:odds, {"odds", get_dummy_odds()})
-  end
-
-  def delete_dummy_ets() do
-    :ets.delete(:schedule)
-    :ets.delete(:lineups)
-    :ets.delete(:predictions)
-    :ets.delete(:odds)
-  end
-
+  @doc """
+  takes in a standard datestring and returns a unix time
+  iex(1)> datestring_to_unix("2019-04-23")
+          return ->  "2019-04-23 00:00:00"
+  """
   def datestring_to_unix(date) do
     datestring = date <> " 00:00:00"
     {:ok, naive} = NaiveDateTime.from_iso8601(datestring)
     {:ok, datetime} = DateTime.from_naive(naive, "Etc/UTC")
     DateTime.to_unix(datetime)
-  end
-
-  def standardname(name) do
-    case name do
-      ## Yulieski Gurriel
-      "Yulieski" -> "Yuli"
-      ## Nate Lowe
-      "Nate" -> "Nathaniel"
-      _ -> name
-    end
   end
 end

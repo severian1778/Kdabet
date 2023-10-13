@@ -13,12 +13,10 @@ defmodule MlbSchedule do
   """
 
   def start_link(opts), do: GenServer.start_link(__MODULE__, :ok, opts)
-
   def stop(), do: GenServer.call(__MODULE__, :stop)
-
   def get_state(), do: GenServer.call(__MODULE__, {:getstate}, 30_000)
-
   def fetch_schedule(), do: GenServer.cast(__MODULE__, :fetch_schedule)
+  def custom_date(date), do: GenServer.cast(__MODULE__, {:custom_date, date})
 
   ##############################
   # SERVER CALLBACKS
@@ -84,6 +82,13 @@ defmodule MlbSchedule do
   ###############################
   ###############################
   ###############################
+  @doc """
+  Updates the date in the state
+  """
+  def handle_cast({:custom_date, date}, state) do
+    {:noreply, %{state | date: date}}
+  end
+
   def handle_cast(:fetch_schedule, state) do
     {:ok, response} = MlbClient.get("/schedule/?sportId=1&date=#{state.date}")
 
@@ -222,9 +227,6 @@ defmodule MlbSchedule do
   end
 
   def schedule_scraper() do
-    Process.send_after(self(), :work, 600_000)
+    Process.send_after(self(), :work, 10_000)
   end
-
-  ## For unit testing purposes
-  def hello(), do: :world
 end

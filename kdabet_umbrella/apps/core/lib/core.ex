@@ -5,7 +5,7 @@ defmodule Core do
   import Ecto.Query
   alias Core.Repo
 
-  @type date() :: String.t()
+  @type date() :: Calendar.naive_datetime()
   @type gid() :: String.t()
 
   @doc """
@@ -20,7 +20,7 @@ defmodule Core do
        iex> {:ok, "games for 2016-04-03 deleted"}
 
   """
-  @spec delete_schedule(gid()) :: :atom
+  @spec delete_schedule(gid()) :: {atom(), String.t()}
   def delete_schedule(gid) when is_binary(gid) do
     query =
       from(a in Core.Schedule,
@@ -29,8 +29,18 @@ defmodule Core do
 
     Repo.delete_all(query)
 
-    :ok
+    {:ok, "Game id #{gid} deleted"}
   end
 
-  def hello(), do: :world
+  @spec delete_schedule(date()) :: {atom(), String.t()}
+  def delete_schedule(date) do
+    query =
+      from(a in Core.Schedule,
+        where: a.date == ^date
+      )
+
+    Repo.delete_all(query)
+
+    {:ok, "All games for date #{date} deleted"}
+  end
 end

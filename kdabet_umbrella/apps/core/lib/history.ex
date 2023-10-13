@@ -1,22 +1,16 @@
 defmodule Core.History do
   import Ecto.Query
-  alias Core.Common
+  alias Core.{Common, Schedule}
 
   ## typing
   @type date() :: String.t()
-  @type type() :: String.t()
-  @type team() :: String.t()
-  @type faction() :: String.t()
-  @type mtype() :: String.t()
-  @type firstname() :: String.t()
-  @type lastname() :: String.t()
 
   @doc """
   Function => get_fixture
     - arity(2)
       => dataA <String>: A string representing a iso8601 date
       => dataB <String>: A string representing a iso8601 date
-    - purpose:  get a list of games in a date range 
+    - purpose:  get a list of games in a date range
     - return: Struct <%Schedule>
 
     ## Example

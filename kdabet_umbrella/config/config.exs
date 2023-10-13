@@ -17,7 +17,7 @@ config :core, ecto_repos: [Core.Repo]
 config :core, Core.Repo,
   username: "postgres",
   password: "postgres",
-  database: "kdabet_repo",
+  database: "core_repo",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
   pool_size: 30
