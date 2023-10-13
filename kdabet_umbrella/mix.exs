@@ -10,7 +10,8 @@ defmodule KdabetUmbrella.MixProject do
       releases: [
         fullstack: [
           applications: [
-            kdabet_frontend: :permanent
+            kdabet_frontend: :permanent,
+            mlbschedule: :permanent
           ]
         ]
       ]

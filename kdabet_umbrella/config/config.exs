@@ -12,6 +12,16 @@ import Config
 ################################################
 ## CONFIGURE THE CORE REPOSITORIES
 ################################################
+config :core, ecto_repos: [Core.Repo]
+
+config :core, Core.Repo,
+  username: "postgres",
+  password: "postgres",
+  database: "kdabet_repo",
+  hostname: "localhost",
+  show_sensitive_data_on_connection_error: true,
+  pool_size: 30
+
 ################################################
 ## CONFIGURE TESLA CLIENT
 ################################################
