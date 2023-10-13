@@ -276,7 +276,16 @@ defmodule KdabetFrontendWeb.Kings do
       {"spaceman.png", "C_SpaceMan39"},
       {"redacted.png", "a_a_redacted"},
       {"james.png", "bettingncrypto"},
-      {"123.png", "@SonyaMa86082489"}
+      {"123.png", "SonyaMa86082489"},
+      {"cheese.png", "MCheesington"},
+      {"wolf.png", "MauiMiners"},
+      {"udderly.png", "UdderlyNFTs"},
+      {"joshua.png", "joshuahade"},
+      {"raechel.png", "CowellClass"},
+      {"ogoy.png", "markyboy8284"},
+      {"leandro.png", "Leandrokol"},
+      {"santana.png", "KaGeRT90"},
+      {"marvi.png", "MarviSofi48197"}
     ]
   end
 end

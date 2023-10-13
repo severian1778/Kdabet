@@ -11,10 +11,16 @@ defmodule KdabetUmbrella.MixProject do
         fullstack: [
           applications: [
             kdabet_frontend: :permanent,
-            mlbschedule: :permanent
+            schedules: :permanent,
+            core: :permanent
+          ]
+        ],
+        frontend_only: [
+          applications: [
+            kdabet_frontend: :permanent,
           ]
         ]
-      ]
+     ]
     ]
   end
 
