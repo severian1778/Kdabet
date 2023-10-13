@@ -1,6 +1,7 @@
 # Mlbschedule
 
 **TODO: Add description**
+Mlbschedule is a application that maintains the state of the current Major League Baseball game schedule.
 
 ## Installation
 
