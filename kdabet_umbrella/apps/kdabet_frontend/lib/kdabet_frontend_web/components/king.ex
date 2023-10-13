@@ -4,12 +4,15 @@ defmodule KdabetFrontendWeb.Components.King do
   """
   use Surface.Component
 
-  @doc "The twitter url"
+  @doc "The image of the twitter pfp"
   prop(imageurl, :string, required: true)
+
+  @doc "The twitter handle"
+  prop(twitter, :string, required: true)
 
   def render(assigns) do
     ~F"""
-    <a class="block w-full h-full" href="/about">
+    <a class="block w-full h-full hover:" target="_blank" rel="noopener noreferrer" href={"https://twitter.com/"<>@twitter}>
       <img class="w-full h-full" src={"/images/pfps/"<>@imageurl}>
     </a>
     """
