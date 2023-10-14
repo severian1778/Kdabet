@@ -1,6 +1,7 @@
 defmodule Schedules do
-  @docmdule """
-  Scheduels is the general core library for calling down schedule data
+  @docmodule """
+
+  Schedules is the general core library for calling down schedule data
   from the processes on the dynamic supervisor.  Because each worker
   is somewhat unique in its method to acquire schedule data,  there is
   no real general worker that can be spawned to handle each case.

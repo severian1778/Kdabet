@@ -12,8 +12,14 @@ defmodule KdabetFrontendWeb.Components.King do
 
   def render(assigns) do
     ~F"""
-    <a class="block w-full h-full hover:" target="_blank" rel="noopener noreferrer" href={"https://twitter.com/"<>@twitter}>
-      <img class="w-full h-full" src={"/images/pfps/"<>@imageurl}>
+    <a
+      class="block w-full h-full hover:"
+      target="_blank"
+      rel="noopener noreferrer"
+      href={"https://twitter.com/" <> @twitter}
+      x-data="{ tooltip: 'X Handle: test'}"
+    >
+      <img x-tooltip="tooltip" class="w-full h-full" src={"/images/pfps/" <> @imageurl}>
     </a>
     """
   end
