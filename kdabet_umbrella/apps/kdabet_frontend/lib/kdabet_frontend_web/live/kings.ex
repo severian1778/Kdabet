@@ -303,7 +303,10 @@ defmodule KdabetFrontendWeb.Kings do
       {"hanan.png", "xanan_the_Rad"},
       {"thing.png", "_i_thing"},
       {"mlbbetz.png", "MLBbetz"},
-      {"logancatmug.png", "logancatmug"}
+      {"logancatmug.png", "logancatmug"},
+      {"badass.png", "batugan_kaw"},
+      {"piwnik.png", "zapivcon"},
+      {"khaalsu.png", "khaalsu"}
     ]
   end
 end
