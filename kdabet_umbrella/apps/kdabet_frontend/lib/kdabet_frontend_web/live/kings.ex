@@ -294,7 +294,16 @@ defmodule KdabetFrontendWeb.Kings do
       {"krr.png", "B028302830V"},
       {"joeleo.png", "Joeleo_13"},
       {"trias.png", "trias_gom"},
-      {"madness.png", "gracie915"}
+      {"madness.png", "gracie915"},
+      {"mayoyo.png", "MayoyoCrypto"},
+      {"solutions.png", "AlessioCrypto"},
+      {"garacky.png", "GARAKCY_eth"},
+      {"kriollo.png", "CriolloInvestor"},
+      {"pillsbury.png", "keithdpillsbury"},
+      {"hanan.png", "xanan_the_Rad"},
+      {"thing.png", "_i_thing"},
+      {"mlbbetz.png", "MLBbetz"},
+      {"logancatmug.png", "logancatmug"}
     ]
   end
 end
