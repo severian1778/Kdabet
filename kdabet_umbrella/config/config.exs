@@ -25,6 +25,31 @@ config :core, Core.Repo,
 ################################################
 ## CONFIGURE TESLA CLIENT
 ################################################
+
+################################################
+## CONFIGURE WEB CRAWLER
+################################################
+# Chrome
+# default
+config :wallaby,
+  driver: Wallaby.Chrome,
+  js_errors: false,
+  chromedriver: [
+    headless: false,
+    path: "/usr/bin/chromedriver",
+    capabilities: %{
+      javascriptEnabled: true,
+      loadImages: true
+    }
+  ]
+
+config :wallaby, otp_app: :odds, hackney_options: [timeout: 5_000]
+
+################################################
+## CONFIGURE MACHINE LEARNING TO USE GPU 
+#################################################
+config :nx, :default_backend, EXLA.Backend
+
 ################################################
 ## ENDPOINTS
 ################################################
