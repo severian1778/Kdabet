@@ -306,7 +306,15 @@ defmodule KdabetFrontendWeb.Kings do
       {"logancatmug.png", "logancatmug"},
       {"badass.png", "batugan_kaw"},
       {"piwnik.png", "zapivcon"},
-      {"khaalsu.png", "khaalsu"}
+      {"khaalsu.png", "khaalsu"},
+      {"muhibbsattar.png", "muhibbsattar"},
+      {"megan.png", "MeganMar07"},
+      {"theo.png", "sabercrunchers"},
+      {"marty.png", "AndytownMarty"},
+      {"mlbbetz.png", "mlbbetz"},
+      {"corte.png", "Corte_Mortez"},
+      {"stefan.png", "StefanDuee"},
+      {"atasoy.png", "Hyppermedia"}
     ]
   end
 end
