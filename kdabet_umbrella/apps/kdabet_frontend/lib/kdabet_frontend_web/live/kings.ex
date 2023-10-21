@@ -59,13 +59,25 @@ defmodule KdabetFrontendWeb.Kings do
           </h1>
           <p class="glowtext text-[1.75em] lg:text-[2.15em] xl:text-[2.7em]">{(@pfps|>length)}/500</p>
         </div>
-        <div class="w-fit flex flex-wrap justify-center">
-          <div class="w-[100px] h-[100px]" :for={ {pfp, twitter} <- @pfps}>
+        <div class="kingcontainer w-fit flex flex-wrap justify-center">
+          <div class="w-[100px] h-[100px] shadow-[inset_0_-2px_4px_rgba(0,0,0,0.6)]" :for={ {pfp, twitter} <- @pfps}>
             <King imageurl={pfp} twitter={twitter}></King>
           </div>
         </div>
       </section>
     </div>
+
+    <script type="text/javascript">
+      const container = document.querySelector('.kingcontainer')
+
+      container.addEventListener('mousemove', ev => {
+        const target = ev.srcElement.nextElementSibling
+        var x = ev.clientX;
+        var y = ev.clientY;
+        target.style.top = (y+10)+"px";
+        target.style.left = (x+10)+"px";
+      })
+    </script>
     """
   end
 
@@ -314,7 +326,18 @@ defmodule KdabetFrontendWeb.Kings do
       {"mlbbetz.png", "mlbbetz"},
       {"corte.png", "Corte_Mortez"},
       {"stefan.png", "StefanDuee"},
-      {"atasoy.png", "Hyppermedia"}
+      {"atasoy.png", "Hyppermedia"},
+      {"reshma.png", "reshma2803"},
+      {"crisision.png", "crisision_"},
+      {"kdv.png", "KDVlieger"},
+      {"kaitan.png", "kaitan67"},
+      {"hashing.png", "KadenaHashing"},
+      {"matta.png", "RyanMattaMedia"},
+      {"radek.png", "RadekVrnak"},
+      {"prince.png", "milady_prince28"},
+      {"dov.png", "_dovgoruk"},
+      {"stony.png", "Stoneym84"},
+      {"tomnaka.png", "TomiNakamoto"}
     ]
   end
 end

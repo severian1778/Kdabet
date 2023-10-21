@@ -55,7 +55,6 @@ html{
 .subtitle{
   color: #d6d1e8;
   font-family: 'Open Sans', sans-serif;
-  font-size: 2rem;
   font-weight: 600;
   background: rgb(0,0,0,0.7);
   padding-top: 8px;
@@ -284,7 +283,7 @@ html{
     transform: translateY(-100vh) rotate(720deg);
   }
 }
-.wrapper {
+.pfpwrapper {
   #background: #50a3a2;
   #background: linear-gradient(to bottom right, #50a3a2 0%, #53e3a6 100%);
   position: absolute;
@@ -294,7 +293,7 @@ html{
   height: 100vh;
   margin-top: 0px;
   overflow: hidden;
-  z-index: -1;
+  z-index: 1;
 }
 .wrapper.form-success .container h1 {
   transform: translateY(85px);
@@ -350,5 +349,34 @@ html{
 }
 .sans{
   font-family: 'Open Sans', sans-serif;
- 
+}
+.kinglink .tooltip{
+  position: fixed;
+  display: block;
+  opacity: 0;
+  visibility: hidden;
+  background: #262626;
+  border-radius: 7.5px;
+  color: #ccc;
+  text-transform: uppercase;
+  font-family: Arial;
+  font-size: 16px;
+  padding: 10px 15px;
+  border: 2px solid #ccc;
+}
+.kinglink .tooltip:before{
+  content: "";
+  display: none;
+  width: 10px;
+  height: 10px;
+  background: #262626;
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+}
+.kinglink:hover .tooltip{
+  opacity: 1;
+  visibility: visible;
 }

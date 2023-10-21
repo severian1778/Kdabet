@@ -55,7 +55,7 @@
     </nav>
   </header>
 
-  <div class="flex justify-center items-center uppercase h-[88vh] text-[4rem] md:text-[6rem] flex-col">
+  <div class="relative flex justify-center items-center uppercase h-[88vh] text-[4rem] md:text-[6rem] flex-col z-10">
     <section class="title">
       <span>K</span>
       <span>D</span>
@@ -65,7 +65,7 @@
       <span>T</span>
     </section>  
 
-    <section class="subtitle px-14 md:px-4 min-w-[40%]">
+    <section class="subtitle text-[1.7rem] md:text-[2rem] px-14 md:px-4 min-w-[40%] max-w-[90%] space-x-5">
       <span class="inline-block">
         <span class="letter sl1">r</span>
         <span class="letter sl2">e</span>
@@ -74,18 +74,15 @@
         <span class="letter sl5">r</span>
         <span class="letter sl6">n</span>
       </span>
-      <span class="sep"></span>
       <span display="inline-block">
         <span class="letter sl7">o</span>
         <span class="letter sl8">f</span>
       </span>
-      <span class="sep"></span>
       <span class="inline-block">
         <span class="letter sl9">t</span>
         <span class="letter sl10">h</span>
         <span class="letter sl11">e</span>
       </span>
-      <span class="sep"></span>
       <span class="inline-block">
         <span class="letter sl12">k</span>
         <span class="letter sl13">i</span>
@@ -100,17 +97,19 @@
     </section>
 
     <!-- Social Links -->
-    <section class="flex flex-row py-10 space-x-10">
+    <section class="max-w-[90%] mx-auto flex flex-row py-10 space-x-10">
       <a href="https://twitter.com/kadenabet">
-        <FontAwesome.LiveView.icon name="twitter" type="brands" class="social-icon h-16 w-16 fill-blue-500 hover:fill-pink-400" />
+        <FontAwesome.LiveView.icon name="twitter" type="brands" class="social-icon h-12 w-12 md:h-16 md:w-16 fill-blue-500 hover:fill-pink-400" />
       </a>
       <a href="https://t.me/EqualbetDiscuss">
-        <FontAwesome.LiveView.icon name="telegram" type="brands" class="social-icon h-16 w-16 fill-blue-500 hover:fill-pink-400" />
+        <FontAwesome.LiveView.icon name="telegram" type="brands" class="social-icon h-12 w-12 md:h-16 md:w-16 fill-blue-500 hover:fill-pink-400" />
       </a>
       <a href="https://github.com/severian1778/Kdabet">
-        <FontAwesome.LiveView.icon name="github" type="brands" class="social-icon h-16 w-16 fill-blue-500 hover:fill-pink-400" />
+        <FontAwesome.LiveView.icon name="github" type="brands" class="social-icon h-12 w-12 md:h-16 md:w-16 fill-blue-500 hover:fill-pink-400" />
       </a>
-      <FontAwesome.LiveView.icon name="discord" type="brands" class="social-icon h-16 w-16 fill-slate-500" />
+      <a href="https://discord.gg/Vwqhb32Q">
+        <FontAwesome.LiveView.icon name="discord" type="brands" class="social-icon h-12 w-12 md:h-16 md:w-16 fill-blue-500 hover:fill-pink-400" />
+      </a>
     </section>
   </div>
   <footer class="flex flex-row justify-between pt-10 px-3 md:px-10">
@@ -119,7 +118,7 @@
   </footer>
 
   <!-- animation -->
-  <div class="wrapper invisible md:visible">
+  <div class="pfpwrapper invisible md:visible">
     <ul class="bg-bubbles opacity-70 md:opacity-80">
       <li><img class="king" src="images/kadena.png" class="w-full h-full"></li>
       <li><img class="king" src="images/kadena.png" class="w-full h-full"></li>
@@ -136,7 +135,7 @@
   </div>
 
   <script type="text/javascript">
-    const kings = ["Lain.png","Frog.png", "Theezy.png", "Jimmy.png", "Junkie.png", "Crob.png", "Metcalfe.png", "BC.png", "Fabio.png", "nico.png", "tmg.png", "toshi.png", "kennedy.png", "pepe.png", "pkm.png", "hazen.png", "kdaminer.png", "whitekid.png", "rai.png", "dab.png", "dirty.png", "keta.png", "glenn.png", "Shaun.png", "Noah.png", "allin.png", "lakes.png", "jamboy.png", "mark.png", "mars.png", "extrin.png", "dodger.png", "bored.png", "pseno.png", "bells.png", "olabero.png", "up.png", "defi.png", "snakecat.png", "Chantal.png", "alex.png", "alexander.png", "ezal.png", "atta.png", "marcus.png", "mikey.png", "kryptonian.png", "aryan.png", "arrabeelo.png", "raf.png", "hollywood.png", "gonze.png", "techfleet.png", "sean.png", "ireland.png", "kadosh.png", "emodius.png", "sugah.png", "mikk.png", "carter.png", "ciredide.png", "arun.png", "ivars.png", "hobbs.png", "rex.png", "daya.png", "mom.png", "kadayee.png", "reese.png", "silk.png", "rich.png", "barry.png", "problematictia.png", "lm99.png", "cali.png", "pbr.png", "collector.png", "greg.png", "olofs.png", "mahines.png", "baller.png", "marc.png", "haxtral.png", "ellis.png", "konst.png", "defry.png", "oneleg.png", "uae.png", "flexx.png", "keeper.png", "barb.png", "zdero.png", "yusuf.png", "fractal.png", "cryptochris.png", "spyder.png", "berry.png", "alexkda.png", "newzealand.png", "defiscreens.png", "r3.png", "debil.png", "zotramid","eodvet.png","sasa.png","xor.png","dicearena.png","baron.png", "hankthetank.png","ron.png","janrya.png","warrior.png","retirement.png","newtype.png","phenomenal.png","dopexbt.png", "loris.png","prima.png","sniperj.png","borgia.png","raymondreddington.png","yahoo.png","cryptovaulter.png","tonny.png","arctic.png","kenneth.png","happyfaceivy.png","steven.png","rainford.png","rundmc.png","stone.png","aptosboss.png","42.png","sultan.png","rymang.png","zjmloi.png","tippytoe.png","stryker_z_.png","esteban.png","kieonna.png","andrea.png","nikomo.png","kadenadoctor.png","chrissaud.png","nmart.png","sage.png","frankgr.png","erre.png","linesman.png","lookandlikelove.png","amir.png","asymmetrical.png","uk.png","elle.png","j7.png","elena.png","g7.png","joshingram.png","northwestern.png","arlo.png","nehire.png","goodman.png","nik.png","fiero.png","alaatrash.png","sergio.png","kimberlee.png","nikola.png","kylemarek.png","ace.png","loretta.png","maasai.png","azzacalabaza.png","thomasyasmin.png","thomasrehab.png","01way.png","cenghizgan.png","supersaucy.png","kjordan.png","kevinclark.png","kadeniak.png","imback.png","world.png","mcrib.png","pineapple.png","mavstar.png","bertrand.png","jarlsven.png","orbine.png","keyes.png","william.png","kurator.png","mikael.png","ronlaflamme.png","paulb.png","eddenhaz.png","bradkendrick.png","tom.png","casual.png","anolik.png","marian.png","spaceman.png","redacted.png","james.png","123.png","cheese.png","wolf.png","udderly.png","joshua.png","raechel.png","ogoy.png","santana.png","marvi.png","neuromancer.png","edd.png","hobbit.png","walter.png","krr.png","joeleo.png","trias.png", "mayoyo.png","solutions.png","garacky.png","kriollo.png","hanan.png","thing.png","mlbbetz.png","logancatmug.png","badass.png","zapvicon.png","muhibbsattar.png","megan.png","theo.png","marty.png","mlbbetz.png","corte.png","stefan.png","atasoy.png"]
+    const kings = ["Lain.png","Frog.png", "Theezy.png", "Jimmy.png", "Junkie.png", "Crob.png", "Metcalfe.png", "BC.png", "Fabio.png", "nico.png", "tmg.png", "toshi.png", "kennedy.png", "pepe.png", "pkm.png", "hazen.png", "kdaminer.png", "whitekid.png", "rai.png", "dab.png", "dirty.png", "keta.png", "glenn.png", "Shaun.png", "Noah.png", "allin.png", "lakes.png", "jamboy.png", "mark.png", "mars.png", "extrin.png", "dodger.png", "bored.png", "pseno.png", "bells.png", "olabero.png", "up.png", "defi.png", "snakecat.png", "Chantal.png", "alex.png", "alexander.png", "ezal.png", "atta.png", "marcus.png", "mikey.png", "kryptonian.png", "aryan.png", "arrabeelo.png", "raf.png", "hollywood.png", "gonze.png", "techfleet.png", "sean.png", "ireland.png", "kadosh.png", "emodius.png", "sugah.png", "mikk.png", "carter.png", "ciredide.png", "arun.png", "ivars.png", "hobbs.png", "rex.png", "daya.png", "mom.png", "kadayee.png", "reese.png", "silk.png", "rich.png", "barry.png", "problematictia.png", "lm99.png", "cali.png", "pbr.png", "collector.png", "greg.png", "olofs.png", "mahines.png", "baller.png", "marc.png", "haxtral.png", "ellis.png", "konst.png", "defry.png", "oneleg.png", "uae.png", "flexx.png", "keeper.png", "barb.png", "zdero.png", "yusuf.png", "fractal.png", "cryptochris.png", "spyder.png", "berry.png", "alexkda.png", "newzealand.png", "defiscreens.png", "r3.png", "debil.png", "zotramid","eodvet.png","sasa.png","xor.png","dicearena.png","baron.png", "hankthetank.png","ron.png","janrya.png","warrior.png","retirement.png","newtype.png","phenomenal.png","dopexbt.png", "loris.png","prima.png","sniperj.png","borgia.png","raymondreddington.png","yahoo.png","cryptovaulter.png","tonny.png","arctic.png","kenneth.png","happyfaceivy.png","steven.png","rainford.png","rundmc.png","stone.png","aptosboss.png","42.png","sultan.png","rymang.png","zjmloi.png","tippytoe.png","stryker_z_.png","esteban.png","kieonna.png","andrea.png","nikomo.png","kadenadoctor.png","chrissaud.png","nmart.png","sage.png","frankgr.png","erre.png","linesman.png","lookandlikelove.png","amir.png","asymmetrical.png","uk.png","elle.png","j7.png","elena.png","g7.png","joshingram.png","northwestern.png","arlo.png","nehire.png","goodman.png","nik.png","fiero.png","alaatrash.png","sergio.png","kimberlee.png","nikola.png","kylemarek.png","ace.png","loretta.png","maasai.png","azzacalabaza.png","thomasyasmin.png","thomasrehab.png","01way.png","cenghizgan.png","supersaucy.png","kjordan.png","kevinclark.png","kadeniak.png","imback.png","world.png","mcrib.png","pineapple.png","mavstar.png","bertrand.png","jarlsven.png","orbine.png","keyes.png","william.png","kurator.png","mikael.png","ronlaflamme.png","paulb.png","eddenhaz.png","bradkendrick.png","tom.png","casual.png","anolik.png","marian.png","spaceman.png","redacted.png","james.png","123.png","cheese.png","wolf.png","udderly.png","joshua.png","raechel.png","ogoy.png","santana.png","marvi.png","neuromancer.png","edd.png","hobbit.png","walter.png","krr.png","joeleo.png","trias.png", "mayoyo.png","solutions.png","garacky.png","kriollo.png","hanan.png","thing.png","mlbbetz.png","logancatmug.png","badass.png","zapvicon.png","muhibbsattar.png","megan.png","theo.png","marty.png","mlbbetz.png","corte.png","stefan.png","atasoy.png","reshma2803","crisision.png","kdv.png","kaitan.png","matta.png","radek.png","prince.png","dov.png","stony.png","tomnaka.png"]
     const durations = [25,17,25,22,25,25,25,40,40,25,25,25]
     const delays = [0,2,4,0,0,3,0,7,15,2,11,8]
     const listeles = document.getElementsByClassName("king");
