@@ -16,9 +16,9 @@ defmodule Schedules.Mlb.Official do
     GenServer.start_link(__MODULE__, :ok, options)
   end
 
-  def stop(), do: GenServer.call(__MODULE__, :stop)
+  def stop(), do: GenServer.call(self(), :stop)
   def get_state(pid), do: GenServer.call(pid, {:getstate, pid}, 30_000)
-  def fetch_schedule(), do: GenServer.cast(__MODULE__, :fetch_schedule)
+  def fetch_schedule(), do: GenServer.cast(self(), :fetch_schedule)
   def custom_date(pid, date), do: GenServer.cast(pid, {:custom_date, date})
 
   ##############################
@@ -61,9 +61,11 @@ defmodule Schedules.Mlb.Official do
     #################
     # Summon Schedule
     #################
-    __MODULE__.fetch_schedule()
+    fetch_schedule()
+
+    ## work scheduler
     schedule_scraper()
-    ## scheduler
+
     {:ok, config}
   end
 
@@ -72,7 +74,7 @@ defmodule Schedules.Mlb.Official do
   def handle_call(:stop, _from, state), do: {:stop, :normal, :ok, state}
 
   def handle_info(:work, state) do
-    __MODULE__.fetch_schedule()
+    fetch_schedule()
     ############################
     ## Schedule a timeout
     #############################
@@ -225,7 +227,6 @@ defmodule Schedules.Mlb.Official do
     #############################
     :ets.insert(:schedule, {"schedule", gamemaps})
 
-    ## state
     {:noreply, %{state | gamemaps: gamemaps}}
   end
 

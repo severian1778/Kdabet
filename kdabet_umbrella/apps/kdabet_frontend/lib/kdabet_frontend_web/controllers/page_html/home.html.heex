@@ -1,165 +1,152 @@
 <.flash_group flash={@flash} />
-<header class="relative z-10"> 
-  <nav
-    class="glasscard2 shadow-md flex items-center justify-between flex-wrap px-3 md:px-10 bg-gradient-to-b from-blue-900"
-    x-data="{ isOpen: false }"
-    @keydown.escape="isOpen = false"
-    @resize.window="
-    width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
-    if (width > 760) {
-     isOpen = false
-    }"
-  >
-    <a href="/">
-    <img src="/images/logo.png" class="py-2 w-[150px] md:w-[175px] lg:w-[200px]">
-    </a>
-    <!--Toggle button (hidden on large screens)-->
-    <button
-      @click="isOpen = !isOpen"
-      type="button"
-      class="block md:hidden px-2 glowtext hover:text-teal-100 focus:outline-none focus:text-teal-100"
-      x-bind:class="{ 'transition transform-180': isOpen }"
+<div class="w-full h-full antialiased bg-[url('/images/financeback.png')]"> 
+  <header class="relative z-10"> 
+    <nav
+      class="glasscard2 shadow-md flex items-center justify-between flex-wrap px-3 md:px-10 bg-gradient-to-b from-blue-900"
+      x-data="{ isOpen: false }"
+      @keydown.escape="isOpen = false"
+      @resize.window="
+      width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+      if (width > 760) {
+       isOpen = false
+      }"
     >
-      <svg
-        class="h-6 w-6 fill-current"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
+      <a href="/">
+      <img src="/images/logo.png" class="py-2 w-[150px] md:w-[175px] lg:w-[200px]">
+      </a>
+      <!--Toggle button (hidden on large screens)-->
+      <button
+        @click="isOpen = !isOpen"
+        type="button"
+        class="block md:hidden px-2 glowtext hover:text-teal-100 focus:outline-none focus:text-teal-100"
+        x-bind:class="{ 'transition transform-180': isOpen }"
       >
-        <path
-          x-show="isOpen"
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-          d="M18.278 16.864a1 1 0 0 1-1.414 1.414l-4.829-4.828-4.828 4.828a1 1 0 0 1-1.414-1.414l4.828-4.829-4.828-4.828a1 1 0 0 1 1.414-1.414l4.829 4.828 4.828-4.828a1 1 0 1 1 1.414 1.414l-4.828 4.829 4.828 4.828z"
-        />
-        <path
-          x-show="!isOpen"
-          fill-rule="evenodd"
-          d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"
-        />
-      </svg>
-    </button>
+        <svg
+          class="h-6 w-6 fill-current"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+        >
+          <path
+            x-show="isOpen"
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M18.278 16.864a1 1 0 0 1-1.414 1.414l-4.829-4.828-4.828 4.828a1 1 0 0 1-1.414-1.414l4.828-4.829-4.828-4.828a1 1 0 0 1 1.414-1.414l4.829 4.828 4.828-4.828a1 1 0 1 1 1.414 1.414l-4.828 4.829 4.828 4.828z"
+          />
+          <path
+            x-show="!isOpen"
+            fill-rule="evenodd"
+            d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"
+          />
+        </svg>
+      </button>
 
-    <!-- Menu -->
-    <ul class="md:flex glowtext text-xl font-bold sans origin-top" x-bind:class="{ 'block absolute z-10 m-0 top-[60px] left-0 border-b border-slate-800 glasscard2 w-full': isOpen, 'hidden mr-3': !isOpen}" x-cloak>
-      <li class="px-3 cursor-pointer flex items-center hover:text-pink-200" x-bind:class="{'bg-slate-700 indent-5 py-3 border-b border-slate-500 hover:bg-slate-600': isOpen, '': !isOpen}">
-        <a class="w-full" href="/about">About</a>
-      </li>
-      <li class="px-3 cursor-pointer flex items-center hover:text-pink-200" x-bind:class="{'bg-slate-700 indent-5 py-3 border-b border-slate-500 hover:bg-slate-600': isOpen, '': !isOpen}">
-          <a class="w-full" href="/kings">Kings</a>
-      </li>
-      <!--<li class="px-3 cursor-pointer flex items-center text-stone-600" x-bind:class="{'glasscard2 py-3': isOpen, '': !isOpen}">
-          <a title="Coming Soon" href="#">Lite-Paper</a>
-      </li>-->
+      <!-- Menu -->
+      <ul class="md:flex glowtext text-xl font-bold sans origin-top" x-bind:class="{ 'block absolute z-10 m-0 top-[60px] left-0 border-b border-slate-800 glasscard2 w-full': isOpen, 'hidden mr-3': !isOpen}" x-cloak>
+        <li class="px-3 cursor-pointer flex items-center hover:text-pink-200" x-bind:class="{'bg-slate-700 indent-5 py-3 border-b border-slate-500 hover:bg-slate-600': isOpen, '': !isOpen}">
+          <a class="w-full" href="/about">About</a>
+        </li>
+        <li class="px-3 cursor-pointer flex items-center hover:text-pink-200" x-bind:class="{'bg-slate-700 indent-5 py-3 border-b border-slate-500 hover:bg-slate-600': isOpen, '': !isOpen}">
+            <a class="w-full" href="/kings">Kings</a>
+        </li>
+        <!--<li class="px-3 cursor-pointer flex items-center text-stone-600" x-bind:class="{'glasscard2 py-3': isOpen, '': !isOpen}">
+            <a title="Coming Soon" href="#">Lite-Paper</a>
+        </li>-->
+      </ul>
+    </nav>
+  </header>
+
+  <div class="flex justify-center items-center uppercase h-[88vh] text-[4rem] md:text-[6rem] flex-col">
+    <section class="title">
+      <span>K</span>
+      <span>D</span>
+      <span>A</span>
+      <span>B</span>
+      <span>E</span>
+      <span>T</span>
+    </section>  
+
+    <section class="subtitle px-14 md:px-4 min-w-[40%]">
+      <span class="inline-block">
+        <span class="letter sl1">r</span>
+        <span class="letter sl2">e</span>
+        <span class="letter sl3">t</span>
+        <span class="letter sl4">u</span>
+        <span class="letter sl5">r</span>
+        <span class="letter sl6">n</span>
+      </span>
+      <span class="sep"></span>
+      <span display="inline-block">
+        <span class="letter sl7">o</span>
+        <span class="letter sl8">f</span>
+      </span>
+      <span class="sep"></span>
+      <span class="inline-block">
+        <span class="letter sl9">t</span>
+        <span class="letter sl10">h</span>
+        <span class="letter sl11">e</span>
+      </span>
+      <span class="sep"></span>
+      <span class="inline-block">
+        <span class="letter sl12">k</span>
+        <span class="letter sl13">i</span>
+        <span class="letter sl14">n</span>
+        <span class="letter sl15">g</span>
+        <span class="letter sl16">s</span>
+      </span>
+    </section> 
+    
+    <section class="subtitle2 mt-3">
+      November, 2023.
+    </section>
+
+    <!-- Social Links -->
+    <section class="flex flex-row py-10 space-x-10">
+      <a href="https://twitter.com/kadenabet">
+        <FontAwesome.LiveView.icon name="twitter" type="brands" class="social-icon h-16 w-16 fill-blue-500 hover:fill-pink-400" />
+      </a>
+      <a href="https://t.me/EqualbetDiscuss">
+        <FontAwesome.LiveView.icon name="telegram" type="brands" class="social-icon h-16 w-16 fill-blue-500 hover:fill-pink-400" />
+      </a>
+      <a href="https://github.com/severian1778/Kdabet">
+        <FontAwesome.LiveView.icon name="github" type="brands" class="social-icon h-16 w-16 fill-blue-500 hover:fill-pink-400" />
+      </a>
+      <FontAwesome.LiveView.icon name="discord" type="brands" class="social-icon h-16 w-16 fill-slate-500" />
+    </section>
+  </div>
+  <footer class="flex flex-row justify-between pt-10 px-3 md:px-10">
+    <p class="glowtext text-sm">©2023 KDAbet DAO</p>
+    <p class="glowtext glowtext2 text-sm flex flex-row flex-start"><span>powered by</span> <a href="https://kadena.io/"><img src="images/kadena.png" class="ml-2 h-6 w-6"></a></p> 
+  </footer>
+
+  <!-- animation -->
+  <div class="wrapper invisible md:visible">
+    <ul class="bg-bubbles opacity-70 md:opacity-80">
+      <li><img class="king" src="images/kadena.png" class="w-full h-full"></li>
+      <li><img class="king" src="images/kadena.png" class="w-full h-full"></li>
+      <li><img class="king" src="images/kadena.png" class="w-full h-full"></li>
+      <li><img class="king" src="images/kadena.png" class="w-full h-full"></li>
+      <li><img class="king" src="images/kadena.png" class="w-full h-full"></li>
+      <li><img class="king" src="images/kadena.png" class="w-full h-full"></li>
+      <li><img class="king" src="images/kadena.png" class="w-full h-full"></li>
+      <li><img class="king" src="images/kadena.png" class="w-full h-full"></li>
+      <li><img class="king" src="images/kadena.png" class="w-full h-full"></li>
+      <li><img class="king" src="images/kadena.png" class="w-full h-full"></li>
+      <li><img class="king" src="images/kadena.png" class="w-full h-full"></li>
     </ul>
-  </nav>
-</header>
+  </div>
 
-<div class="flex justify-center items-center uppercase h-[88vh] flex-col">
-  <section class="title">
-    <span>K</span>
-    <span>D</span>
-    <span>A</span>
-    <span>B</span>
-    <span>E</span>
-    <span>T</span>
-  </section>  
-
-  <section class="subtitle px-14 md:px-4 min-w-[40%]">
-    <span class="inline-block">
-      <span class="letter sl1">r</span>
-      <span class="letter sl2">e</span>
-      <span class="letter sl3">t</span>
-      <span class="letter sl4">u</span>
-      <span class="letter sl5">r</span>
-      <span class="letter sl6">n</span>
-    </span>
-    <span class="sep"></span>
-    <span display="inline-block">
-      <span class="letter sl7">o</span>
-      <span class="letter sl8">f</span>
-    </span>
-    <span class="sep"></span>
-    <span class="inline-block">
-      <span class="letter sl9">t</span>
-      <span class="letter sl10">h</span>
-      <span class="letter sl11">e</span>
-    </span>
-    <span class="sep"></span>
-    <span class="inline-block">
-      <span class="letter sl12">k</span>
-      <span class="letter sl13">i</span>
-      <span class="letter sl14">n</span>
-      <span class="letter sl15">g</span>
-      <span class="letter sl16">s</span>
-    </span>
-  </section> 
-	
-  <section class="subtitle2 mt-3">
-    November, 2023.
-  </section>
-
-  <!-- Social Links -->
-  <section class="flex flex-row py-10 space-x-10">
-    <a href="https://twitter.com/kadenabet">
-      <FontAwesome.LiveView.icon name="twitter" type="brands" class="social-icon h-16 w-16 fill-blue-500 hover:fill-pink-400" />
-    </a>
-    <a href="https://t.me/EqualbetDiscuss">
-      <FontAwesome.LiveView.icon name="telegram" type="brands" class="social-icon h-16 w-16 fill-blue-500 hover:fill-pink-400" />
-    </a>
-    <a href="https://github.com/severian1778/Kdabet">
-      <FontAwesome.LiveView.icon name="github" type="brands" class="social-icon h-16 w-16 fill-blue-500 hover:fill-pink-400" />
-    </a>
-    <FontAwesome.LiveView.icon name="discord" type="brands" class="social-icon h-16 w-16 fill-slate-500" />
-  </section>
+  <script type="text/javascript">
+    const kings = ["Lain.png","Frog.png", "Theezy.png", "Jimmy.png", "Junkie.png", "Crob.png", "Metcalfe.png", "BC.png", "Fabio.png", "nico.png", "tmg.png", "toshi.png", "kennedy.png", "pepe.png", "pkm.png", "hazen.png", "kdaminer.png", "whitekid.png", "rai.png", "dab.png", "dirty.png", "keta.png", "glenn.png", "Shaun.png", "Noah.png", "allin.png", "lakes.png", "jamboy.png", "mark.png", "mars.png", "extrin.png", "dodger.png", "bored.png", "pseno.png", "bells.png", "olabero.png", "up.png", "defi.png", "snakecat.png", "Chantal.png", "alex.png", "alexander.png", "ezal.png", "atta.png", "marcus.png", "mikey.png", "kryptonian.png", "aryan.png", "arrabeelo.png", "raf.png", "hollywood.png", "gonze.png", "techfleet.png", "sean.png", "ireland.png", "kadosh.png", "emodius.png", "sugah.png", "mikk.png", "carter.png", "ciredide.png", "arun.png", "ivars.png", "hobbs.png", "rex.png", "daya.png", "mom.png", "kadayee.png", "reese.png", "silk.png", "rich.png", "barry.png", "problematictia.png", "lm99.png", "cali.png", "pbr.png", "collector.png", "greg.png", "olofs.png", "mahines.png", "baller.png", "marc.png", "haxtral.png", "ellis.png", "konst.png", "defry.png", "oneleg.png", "uae.png", "flexx.png", "keeper.png", "barb.png", "zdero.png", "yusuf.png", "fractal.png", "cryptochris.png", "spyder.png", "berry.png", "alexkda.png", "newzealand.png", "defiscreens.png", "r3.png", "debil.png", "zotramid","eodvet.png","sasa.png","xor.png","dicearena.png","baron.png", "hankthetank.png","ron.png","janrya.png","warrior.png","retirement.png","newtype.png","phenomenal.png","dopexbt.png", "loris.png","prima.png","sniperj.png","borgia.png","raymondreddington.png","yahoo.png","cryptovaulter.png","tonny.png","arctic.png","kenneth.png","happyfaceivy.png","steven.png","rainford.png","rundmc.png","stone.png","aptosboss.png","42.png","sultan.png","rymang.png","zjmloi.png","tippytoe.png","stryker_z_.png","esteban.png","kieonna.png","andrea.png","nikomo.png","kadenadoctor.png","chrissaud.png","nmart.png","sage.png","frankgr.png","erre.png","linesman.png","lookandlikelove.png","amir.png","asymmetrical.png","uk.png","elle.png","j7.png","elena.png","g7.png","joshingram.png","northwestern.png","arlo.png","nehire.png","goodman.png","nik.png","fiero.png","alaatrash.png","sergio.png","kimberlee.png","nikola.png","kylemarek.png","ace.png","loretta.png","maasai.png","azzacalabaza.png","thomasyasmin.png","thomasrehab.png","01way.png","cenghizgan.png","supersaucy.png","kjordan.png","kevinclark.png","kadeniak.png","imback.png","world.png","mcrib.png","pineapple.png","mavstar.png","bertrand.png","jarlsven.png","orbine.png","keyes.png","william.png","kurator.png","mikael.png","ronlaflamme.png","paulb.png","eddenhaz.png","bradkendrick.png","tom.png","casual.png","anolik.png","marian.png","spaceman.png","redacted.png","james.png","123.png","cheese.png","wolf.png","udderly.png","joshua.png","raechel.png","ogoy.png","santana.png","marvi.png","neuromancer.png","edd.png","hobbit.png","walter.png","krr.png","joeleo.png","trias.png", "mayoyo.png","solutions.png","garacky.png","kriollo.png","hanan.png","thing.png","mlbbetz.png","logancatmug.png","badass.png","zapvicon.png","muhibbsattar.png","megan.png","theo.png","marty.png","mlbbetz.png","corte.png","stefan.png","atasoy.png"]
+    const durations = [25,17,25,22,25,25,25,40,40,25,25,25]
+    const delays = [0,2,4,0,0,3,0,7,15,2,11,8]
+    const listeles = document.getElementsByClassName("king");
+    const els = Array.from(listeles);
+    els.forEach((x,i) => castPfp(x,i));
+    
+    function castPfp(el, ind){
+      const randomPfp = kings[Math.floor(Math.random() * kings.length)]
+      el.src = "/images/pfps/"+randomPfp
+      setTimeout(() => {castPfp(el, ind)}, 1000*(durations[ind]+delays[ind]));
+    }
+  </script>
 </div>
-<footer class="flex flex-row justify-between pt-10 px-3 md:px-10">
-  <p class="glowtext text-sm">©2023 KDAbet DAO</p>
-  <p class="glowtext glowtext2 text-sm flex flex-row flex-start"><span>powered by</span> <a href="https://kadena.io/"><img src="images/kadena.png" class="ml-2 h-6 w-6"></a></p> 
-</footer>
-
-<!-- animation -->
-<div class="wrapper invisible md:visible">
-  <ul class="bg-bubbles opacity-70 md:opacity-80">
-    <li><img class="king" src="images/kadena.png" class="w-full h-full"></li>
-    <li><img class="king" src="images/kadena.png" class="w-full h-full"></li>
-    <li><img class="king" src="images/kadena.png" class="w-full h-full"></li>
-    <li><img class="king" src="images/kadena.png" class="w-full h-full"></li>
-    <li><img class="king" src="images/kadena.png" class="w-full h-full"></li>
-    <li><img class="king" src="images/kadena.png" class="w-full h-full"></li>
-    <li><img class="king" src="images/kadena.png" class="w-full h-full"></li>
-    <li><img class="king" src="images/kadena.png" class="w-full h-full"></li>
-    <li><img class="king" src="images/kadena.png" class="w-full h-full"></li>
-    <li><img class="king" src="images/kadena.png" class="w-full h-full"></li>
-    <li><img class="king" src="images/kadena.png" class="w-full h-full"></li>
-  </ul>
-</div>
-
-<script type="text/javascript">
-  const kings = ["Lain.png","Frog.png", "Theezy.png", "Jimmy.png", "Junkie.png", "Crob.png", "Metcalfe.png", "BC.png", "Fabio.png", "nico.png", "tmg.png", "toshi.png", "kennedy.png", "pepe.png", "pkm.png", "hazen.png", "kdaminer.png", "whitekid.png", "rai.png", "dab.png", "dirty.png", "keta.png", "glenn.png", "Shaun.png", "Noah.png", "allin.png", "lakes.png", "jamboy.png", "mark.png", "mars.png", "extrin.png", "dodger.png", "bored.png", "pseno.png", "bells.png", "olabero.png", "up.png", "defi.png", "snakecat.png", "Chantal.png", "alex.png", "alexander.png", "ezal.png", "atta.png", "marcus.png", "mikey.png", "kryptonian.png", "aryan.png", "arrabeelo.png", "raf.png", "hollywood.png", "gonze.png", "techfleet.png", "sean.png", "ireland.png", "kadosh.png", "emodius.png", "sugah.png", "mikk.png", "carter.png", "ciredide.png", "arun.png", "ivars.png", "hobbs.png", "rex.png", "daya.png", "mom.png", "kadayee.png", "reese.png", "silk.png", "rich.png", "barry.png", "problematictia.png", "lm99.png", "cali.png", "pbr.png", "collector.png", "greg.png", "olofs.png", "mahines.png", "baller.png", "marc.png", "haxtral.png", "ellis.png", "konst.png", "defry.png", "oneleg.png", "uae.png", "flexx.png", "keeper.png", "barb.png", "zdero.png", "yusuf.png", "fractal.png", "cryptochris.png", "spyder.png", "berry.png", "alexkda.png", "newzealand.png", "defiscreens.png", "r3.png", "debil.png", "zotramid","eodvet.png","sasa.png","xor.png","dicearena.png","baron.png", "hankthetank.png","ron.png","janrya.png","warrior.png","retirement.png","newtype.png","phenomenal.png","dopexbt.png", "loris.png","prima.png","sniperj.png","borgia.png","raymondreddington.png","yahoo.png","cryptovaulter.png","tonny.png","arctic.png","kenneth.png","happyfaceivy.png","steven.png","rainford.png","rundmc.png","stone.png","aptosboss.png","42.png","sultan.png","rymang.png","zjmloi.png","tippytoe.png","stryker_z_.png","esteban.png","kieonna.png","andrea.png","nikomo.png","kadenadoctor.png","chrissaud.png","nmart.png","sage.png","frankgr.png","erre.png","linesman.png","lookandlikelove.png","amir.png","asymmetrical.png","uk.png","elle.png","j7.png","elena.png","g7.png","joshingram.png","northwestern.png","arlo.png","nehire.png","goodman.png","nik.png","fiero.png","alaatrash.png","sergio.png","kimberlee.png","nikola.png","kylemarek.png","ace.png","loretta.png","maasai.png","azzacalabaza.png","thomasyasmin.png","thomasrehab.png","01way.png","cenghizgan.png","supersaucy.png","kjordan.png","kevinclark.png","kadeniak.png","imback.png","world.png","mcrib.png","pineapple.png","mavstar.png","bertrand.png","jarlsven.png","orbine.png","keyes.png","william.png","kurator.png","mikael.png","ronlaflamme.png","paulb.png","eddenhaz.png","bradkendrick.png","tom.png","casual.png","anolik.png","marian.png","spaceman.png","redacted.png","james.png","123.png","cheese.png","wolf.png","udderly.png","joshua.png","raechel.png","ogoy.png","santana.png","marvi.png","neuromancer.png","edd.png","hobbit.png","walter.png","krr.png","joeleo.png","trias.png", "mayoyo.png","solutions.png","garacky.png","kriollo.png","hanan.png","thing.png","mlbbetz.png","logancatmug.png","badass.png","zapivcon.png","muhibbsattar.png","megan.png","theo.png","marty.png","mlbbetz.png","corte.png","stefan.png","atasoy.png"]
-  const durations = [25,17,25,22,25,25,25,40,40,25,25,25]
-  const delays = [0,2,4,0,0,3,0,7,15,2,11,8]
-  const listeles = document.getElementsByClassName("king");
-  const els = Array.from(listeles);
-  els.forEach((x,i) => castPfp(x,i));
-  
-  function castPfp(el, ind){
-    const randomPfp = kings[Math.floor(Math.random() * kings.length)]
-    el.src = "/images/pfps/"+randomPfp
-    setTimeout(() => {castPfp(el, ind)}, 1000*(durations[ind]+delays[ind]));
-  }
-</script>
-
-<!--
-  <ul class="text-teal-100 cursor-pointer flex flex-row space-x-5">
-    <a href="/about">
-      <li class="glowtext py-4 md:py-5 text-lg lg:text-xl hover:text-pink-200">About</li>		
-    </a>
-    <a href="/kings">
-      <li class="glowtext py-4 md:py-5 text-lg lg:text-xl hover:text-pink-200">Kings</li>		
-    </a>
-    <a href="#">
-      <li class="py-4 md:py-5 text-lg lg:text-xl text-stone-400">Lite-Paper</li>		
-    </a>
-  </ul>
--->
-

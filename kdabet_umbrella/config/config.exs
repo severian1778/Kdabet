@@ -46,7 +46,7 @@ config :wallaby,
 config :wallaby, otp_app: :odds, hackney_options: [timeout: 5_000]
 
 ################################################
-## CONFIGURE MACHINE LEARNING TO USE GPU 
+## CONFIGURE MACHINE LEARNING TO USE GPU
 #################################################
 config :nx, :default_backend, EXLA.Backend
 
@@ -77,7 +77,7 @@ config :esbuild,
   default: [
     args:
       ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
-    cd: Path.expand("../apps/frontend/assets", __DIR__),
+    cd: Path.expand("../apps/kdabet_frontend/assets", __DIR__),
     env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
   ]
 
@@ -90,7 +90,7 @@ config :tailwind,
     --input=../priv/static/assets/app.css.tailwind
     --output=../priv/static/assets/app.css
   ),
-    cd: Path.expand("../apps/frontend/assets", __DIR__)
+    cd: Path.expand("../apps/kdabet_frontend/assets", __DIR__)
   ]
 
 ## DART SASS
@@ -98,7 +98,7 @@ config :dart_sass,
   version: "1.61.0",
   default: [
     args: ~w(css/app.scss ../priv/static/assets/app.css.tailwind),
-    cd: Path.expand("../apps/frontend/assets", __DIR__)
+    cd: Path.expand("../apps/kdabet_frontend/assets", __DIR__)
   ]
 
 config :ex_fontawesome, type: "regular"

@@ -120,4 +120,13 @@ defmodule KdabetFrontendWeb do
       unquote(html_helpers())
     end
   end
+
+  def surface_live_view_book do
+    quote do
+      use Surface.LiveView,
+        layout: {KdabetFrontendWeb.Layouts, :book}
+
+      unquote(html_helpers())
+    end
+  end
 end

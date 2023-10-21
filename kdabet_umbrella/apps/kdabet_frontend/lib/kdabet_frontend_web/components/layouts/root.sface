@@ -14,7 +14,7 @@
     <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}></script>
     <script src="https://cdn.jsdelivr.net/npm/@ryangjchandler/alpine-tooltip@1.x.x/dist/cdn.min.js" defer></script>
   </head>
-  <body class="antialiased bg-[url('/images/financeback.png')]">
+  <body> 
     {@inner_content}
   </body>
 </html>

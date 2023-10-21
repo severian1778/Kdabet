@@ -1,5 +1,5 @@
-<div class="w-full h-full antialiased bg-[url('/images/financeback.png')]">
-  <header class="relative z-10">
+<div class="flex flex-col h-full">
+  <header class="h-[76px]">
     <nav
       class="glasscard2 shadow-md flex items-center justify-between flex-wrap px-3 md:px-10 bg-gradient-to-b from-blue-900"
       x-data="{ isOpen: false }"
@@ -52,15 +52,12 @@
       </ul>
     </nav>
   </header>
-  <main class="px-4 sm:px-6 lg:px-8 relative z-0">
-    <div class="mx-0 lg:mx-5">
-      <.flash_group flash={@flash} />
-      {@inner_content}
-    </div>
+  <main class="h-[100vh]">
+    <.flash_group flash={@flash} />
+    {@inner_content}
   </main>
-  <footer class="flex flex-row justify-between pt-10 px-3 md:px-10">
-      <p class="glowtext text-sm">©2023 KDAbet DAO</p>
+  <footer class="h-[76px] flex flex-row border-t border-slate-700 justify-between pt-10 px-3 md:px-10">
+      <p class="glowtext text-sm">©2024 KDAbet DAO</p>
       <p class="pb-1 glowtext glowtext2 text-sm flex flex-row flex-start"><span>powered by</span> <a href="https://kadena.io/"><img src="images/kadena.png" class="ml-2 h-6 w-6"></a></p>
   </footer>
 </div>
-

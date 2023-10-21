@@ -4,4 +4,5 @@ defmodule KdabetFrontendWeb.Layouts do
   embed_templates "layouts/*"
   embed_sface "layouts/root.sface"
   embed_sface "layouts/app.sface"
+  embed_sface "layouts/book.sface"
 end

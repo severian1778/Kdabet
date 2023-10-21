@@ -1,0 +1,72 @@
+/* Import scoped CSS rules for components */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import Custom Files*/
+@import "./_components.scss";
+@import "./_splash.scss";
+
+/* This file is for your main application CSS */
+@import url('https://fonts.googleapis.com/css2?family=Londrina+Outline&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Londrina+Outline&family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
+
+html{
+  box-sizing: border-box;
+  height: 100vh;
+}
+*,
+:before,
+:after{
+  box-sizing: inherit;
+}
+body{
+  background: radial-gradient(#222244 0%, #001D3A 50%);
+  background-repeat: repeat-y;
+  height: 100vh;  
+  & >div{
+    @apply h-full;
+  }
+}
+
+/* book css */
+.book_main{
+  @apply h-full;
+  & section{
+    @apply h-full border-slate-300;
+  } 
+}
+.navmenu{
+  @apply w-full;
+  & li{
+    @apply text-lg border-b border-slate-800 cursor-pointer px-3 py-2 hover:bg-pink-100 hover:text-slate-700;
+  }
+}
+.nav_mobile{
+  @apply w-full;
+  & li{
+    @apply flex flex-col justify-center w-1/6;
+    & svg{
+      @apply mx-auto w-10 h-10 p-1 fill-amber-700;
+    }
+    & span{
+      @apply w-full text-center text-sm;
+    }
+  }
+}
+.nav_device{
+  @apply w-full;
+  & li{
+    @apply flex justify-items-start;
+    & svg{
+     @apply w-6 h-6 fill-amber-700 mr-3;
+    }
+  }
+}
+
+.glassy_bg{
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(5px); 
+}
+

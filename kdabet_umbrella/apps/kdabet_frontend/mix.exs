@@ -49,7 +49,7 @@ defmodule KdabetFrontend.MixProject do
       {:gettext, "~> 0.20"},
       {:plug_cowboy, "~> 2.5"},
       ## additions
-      {:dart_sass, "~> 0.5", runtime: Mix.env() == :dev},
+      {:dart_sass, "~> 0.6", runtime: Mix.env() == :dev},
       {:ex_fontawesome, "~> 0.7.2"},
       {:surface, "~> 0.11.0"},
       {:surface_catalogue, "~> 0.6.0"},
@@ -57,7 +57,9 @@ defmodule KdabetFrontend.MixProject do
       {:sourceror, "~> 0.12.0"},
       {:tesla, "~> 1.4"},
       {:hackney, "~> 1.17"},
-      {:jason, "~> 1.3"}
+      {:jason, "~> 1.3"},
+      ## import umbrella apps
+      {:schedules, in_umbrella: true}
     ]
   end
 
@@ -71,8 +73,13 @@ defmodule KdabetFrontend.MixProject do
     [
       setup: ["deps.get", "assets.setup", "assets.build"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
-      "assets.build": ["tailwind default", "esbuild default"],
-      "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"]
+      "assets.build": ["esbuild default", "sass default", "tailwind default"],
+      "assets.deploy": [
+        "sass default",
+        "esbuild default --minify",
+        "tailwind default --minify",
+        "phx.digest"
+      ]
     ]
   end
 

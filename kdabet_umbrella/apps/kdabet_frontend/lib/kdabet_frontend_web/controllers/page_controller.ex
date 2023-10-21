@@ -11,6 +11,10 @@ defmodule KdabetFrontendWeb.PageController do
     render(conn, :about, layout: false)
   end
 
+  def demo(conn, _params) do
+    render(conn, :demo, layout: false)
+  end
+
   def kings(conn, _params) do
     render(conn, :kings, layout: false)
   end
