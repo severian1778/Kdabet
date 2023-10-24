@@ -17,7 +17,7 @@ defmodule Schedules.Mlb.Official do
   end
 
   def stop(), do: GenServer.call(self(), :stop)
-  def get_state(pid), do: GenServer.call(pid, {:getstate, pid}, 30_000)
+  def get_state(pid), do: GenServer.call(pid, :getstate, 30_000)
   def fetch_schedule(), do: GenServer.cast(self(), :fetch_schedule)
   def custom_date(pid, date), do: GenServer.cast(pid, {:custom_date, date})
 
@@ -34,7 +34,7 @@ defmodule Schedules.Mlb.Official do
       born: DateTime.utc_now(),
       last_updated: 0,
       heartbeat: 0,
-      date: Date.to_iso8601(DateTime.utc_now() |> DateTime.add(-8 * 3600, :second)),
+      date: Date.to_iso8601(DateTime.utc_now() |> DateTime.add(-7 * 3600, :second)),
       gamemaps: []
     }
 
@@ -53,8 +53,7 @@ defmodule Schedules.Mlb.Official do
         write_concurrency: true
       ])
 
-      #
-      #  ## initialize slugs
+      # initialize slugs
       :ets.insert(table, {table |> Atom.to_string(), gamedataslug})
     end)
 
@@ -69,7 +68,7 @@ defmodule Schedules.Mlb.Official do
     {:ok, config}
   end
 
-  def handle_call({:getstate, _pid}, _from, state), do: {:reply, state, state}
+  def handle_call(:getstate, _from, state), do: {:reply, state, state}
 
   def handle_call(:stop, _from, state), do: {:stop, :normal, :ok, state}
 
@@ -171,13 +170,6 @@ defmodule Schedules.Mlb.Official do
 
             gamemap = %{
               awayabbr: awayabbr,
-              homeabbr: homeabbr,
-              awayscore: game |> Map.get("teams") |> Map.get("away") |> Map.get("score"),
-              homescore: game |> Map.get("teams") |> Map.get("home") |> Map.get("score"),
-              seriesGameNumber: game |> Map.get("seriesGameNumber"),
-              status: game |> Map.get("status") |> Map.get("detailedState"),
-              gametime: game |> Map.get("status") |> Map.get("abstractGameState"),
-              game_pk: game |> Map.get("gamePk"),
               awayteam:
                 game
                 |> Map.get("teams")
@@ -185,6 +177,27 @@ defmodule Schedules.Mlb.Official do
                 |> Map.get("team")
                 |> Map.get("name")
                 |> String.replace("Indians", "Guardians"),
+              awayscore:
+                case game |> Map.get("teams") |> Map.get("away") |> Map.get("score") do
+                  nil -> 0
+                  val -> val
+                end,
+              awaywins:
+                game
+                |> Map.get("teams")
+                |> Map.get("away")
+                |> Map.get("leagueRecord")
+                |> Map.get("wins"),
+              awaylosses:
+                game
+                |> Map.get("teams")
+                |> Map.get("away")
+                |> Map.get("leagueRecord")
+                |> Map.get("losses"),
+              date: game |> Map.get("officialDate"),
+              gamestate: game |> Map.get("status") |> Map.get("abstractGameState"),
+              gid: game |> Map.get("gamePk"),
+              homeabbr: homeabbr,
               hometeam:
                 game
                 |> Map.get("teams")
@@ -192,30 +205,30 @@ defmodule Schedules.Mlb.Official do
                 |> Map.get("team")
                 |> Map.get("name")
                 |> String.replace("Indians", "Guardians"),
-              awaywins:
-                game
-                |> Map.get("teams")
-                |> Map.get("away")
-                |> Map.get("leagueRecord")
-                |> Map.get("wins"),
-              awayloss:
-                game
-                |> Map.get("teams")
-                |> Map.get("away")
-                |> Map.get("leagueRecord")
-                |> Map.get("losses"),
+              homescore:
+                case game |> Map.get("teams") |> Map.get("home") |> Map.get("score") do
+                  nil -> 0
+                  val -> val
+                end,
               homewins:
                 game
                 |> Map.get("teams")
                 |> Map.get("home")
                 |> Map.get("leagueRecord")
                 |> Map.get("wins"),
-              homeloss:
+              homelosses:
                 game
                 |> Map.get("teams")
                 |> Map.get("home")
                 |> Map.get("leagueRecord")
-                |> Map.get("losses")
+                |> Map.get("losses"),
+              starttime:
+                game
+                |> Map.get("gameDate")
+                |> DateTime.from_iso8601()
+                |> elem(1)
+                |> DateTime.add(-7 * 3600, :second),
+              status: game |> Map.get("status") |> Map.get("detailedState")
             }
 
             Map.put(acc, gamestring, gamemap)
@@ -227,7 +240,13 @@ defmodule Schedules.Mlb.Official do
     #############################
     :ets.insert(:schedule, {"schedule", gamemaps})
 
-    {:noreply, %{state | gamemaps: gamemaps}}
+    {:noreply,
+     %{
+       state
+       | gamemaps: gamemaps,
+         heartbeat: state.heartbeat + 1,
+         last_updated: DateTime.utc_now() |> DateTime.add(-7 * 3600, :second)
+     }}
   end
 
   def schedule_scraper() do

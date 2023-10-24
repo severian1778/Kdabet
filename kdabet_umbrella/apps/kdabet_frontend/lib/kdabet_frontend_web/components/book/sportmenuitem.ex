@@ -7,6 +7,9 @@ defmodule KdabetFrontendWeb.Components.SportMenuItem do
   @doc "The Sport's Name"
   slot(sport)
 
+  @doc "The Number of Games Badge"
+  slot(cardinality)
+
   @doc "The Icon's Name"
   prop(sportname, :string, required: true)
 
@@ -15,10 +18,17 @@ defmodule KdabetFrontendWeb.Components.SportMenuItem do
 
   def render(assigns) do
     ~F"""
-      <li :on-click="sportmenuitem_click" phx-value-sport={@sportname}>
-        <FontAwesome.LiveView.icon name={@iconname} type="solid"/>
-        <span><#slot {@sport}/></span>
-      </li>
+    <li
+      class="flex flex-row justify-between"
+      :on-click="sportmenuitem_click"
+      phx-value-sport={@sportname}
+    >
+      <span class="flex flex-row justify-start space-x-2">
+        <span class="self-center"><FontAwesome.LiveView.icon name={@iconname} type="solid" /></span>
+        <span><#slot {@sport} /></span>
+      </span>
+      <#slot {@cardinality} />
+    </li>
     """
   end
 end

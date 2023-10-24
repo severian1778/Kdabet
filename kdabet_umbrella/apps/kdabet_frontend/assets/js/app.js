@@ -18,7 +18,6 @@
 // Include phoenix_html to handle method=PUT/DELETE in forms and buttons.
 import "phoenix_html"
 import Alpine from 'alpinejs'
-import Tooltip from "@ryangjchandler/alpine-tooltip";
 
 // Establish Phoenix Socket and LiveView configuration.
 import {Socket} from "phoenix"
@@ -38,9 +37,6 @@ let liveSocket = new LiveSocket("/live", Socket, {
     }
   }
 })
-
-// Alpine Plugins
-Alpine.plugin(Tooltip);
 
 // Start AlpineJs
 window.Alpine = Alpine

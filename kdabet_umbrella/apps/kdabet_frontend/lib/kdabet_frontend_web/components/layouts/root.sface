@@ -8,11 +8,7 @@
       {assigns[:page_title] || "KdabetFrontendWeb"}
     </.live_title>
     <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"}>
-    <!-- CSS Plugins -->
-    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css" />
-    <!-- Scripts --> 
     <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}></script>
-    <script src="https://cdn.jsdelivr.net/npm/@ryangjchandler/alpine-tooltip@1.x.x/dist/cdn.min.js" defer></script>
   </head>
   <body> 
     {@inner_content}

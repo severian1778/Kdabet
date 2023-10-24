@@ -337,7 +337,25 @@ defmodule KdabetFrontendWeb.Kings do
       {"prince.png", "milady_prince28"},
       {"dov.png", "_dovgoruk"},
       {"stony.png", "Stoneym84"},
-      {"tomnaka.png", "TomiNakamoto"}
+      {"tomnaka.png", "TomiNakamoto"},
+      {"paitience.png", "Patienceswhale"},
+      {"jummy.png", "jummypunk"},
+      {"chain.png", "Ramaine_2tru"},
+      {"foard.png", "FoardStephen"},
+      {"tonny2.png", "TonnyBriel"},
+      {"fred.png", "FredF1064"},
+      {"nathan.png", "oleary"},
+      {"apedemak.png", "CryptoLion81"},
+      {"investment.png", "Kaushal04766858"},
+      {"arch.png", "KDA_Archangel"},
+      {"cigar.png", "CigarJr"},
+      {"izzy.png", "Izzy7Panther"},
+      {"monique.png", "Moputje"},
+      {"marge.png", "MargeWatkiss"},
+      {"eric.png", "esousa89"},
+      {"sophia.png", "sophiascoins"},
+      {"vixnu.png", "VIXNU"},
+      {"caviar.png", "CaviarEth"}
     ]
   end
 end
