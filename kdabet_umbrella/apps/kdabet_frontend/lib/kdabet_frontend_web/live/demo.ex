@@ -5,6 +5,7 @@ defmodule KdabetFrontendWeb.Demo do
   @impl true
   def mount(_params, _session, socket) do
     ## Gathering all of the scheduled betting markets
+    ## TODO: refactor these data calls into a more succinct format
     mlb_schedule =
       Schedules.get_official_mlb_data()
       |> Map.get(:gamemaps)
@@ -20,13 +21,18 @@ defmodule KdabetFrontendWeb.Demo do
       |> Map.get(:gamemaps)
       |> Map.values()
 
+    nfl_schedule =
+      Schedules.get_espn_nfl_data()
+      |> Map.get(:gamemaps)
+      |> Map.values()
+
     ## TODO: make this into a next 10 games coming up game list
     ## Initialize critical data for assigns
     current_gamelist = dummy_gamelist()
     current_market_type = "Next10"
     ## A list of sports and FontAwesome icon names tuples
     sportlist = [
-      {"Football", "football", 0},
+      {"Football", "football", nfl_schedule |> length},
       {"Soccer", "futbol", 0},
       {"Baseball", "baseball", mlb_schedule |> length},
       {"Hockey", "hockey-puck", nhl_schedule |> length},
@@ -42,6 +48,7 @@ defmodule KdabetFrontendWeb.Demo do
      |> assign(mlb_schedule: mlb_schedule)
      |> assign(nba_schedule: nba_schedule)
      |> assign(nhl_schedule: nhl_schedule)
+     |> assign(nfl_schedule: nfl_schedule)
      |> assign(sportlist: sportlist)}
   end
 
@@ -61,7 +68,7 @@ defmodule KdabetFrontendWeb.Demo do
                 <span class="rounded-full bg-slate-800 text-slate-200 h-7 w-7 text-sm border-2 border-slate-500 text-center leading-[1.5rem]">{numgames}</span>
               </:cardinality>
             </SportMenuItem>
-         {/for}
+          {/for}
         </ul>
 
         <!-- Tablet and up Menu -->
@@ -82,7 +89,10 @@ defmodule KdabetFrontendWeb.Demo do
           {!-- Game List Header --}
           <:gamelistheader>
             <div class="relative flex flex-col w-[90%] overflow-hidden mt-10 mb-5 mx-auto border border-4 border-slate-500 rounded bg-gradient-to-b from-[#091f36] to-[#1b3649]">
-              <img class="absolute top-[-25px] right-[30px] h-[207px]" src={"images/"<>headerImage(@current_market_type)<>".png"}>
+              <img
+                class="absolute top-[-25px] right-[30px] h-[207px]"
+                src={"images/" <> headerImage(@current_market_type) <> ".png"}
+              />
               {!-- Breadcrumbs --}
               <div class="text-base pt-3 px-5 space-x-1">
                 <a class="font-semibold" href="#">Home</a><span>/</span><span>{@current_market_type}</span>
@@ -133,6 +143,7 @@ defmodule KdabetFrontendWeb.Demo do
         "Baseball" -> socket.assigns.mlb_schedule
         "Basketball" -> socket.assigns.nba_schedule
         "Hockey" -> socket.assigns.nhl_schedule
+        "Football" -> socket.assigns.nfl_schedule
         _ -> dummy_gamelist()
       end
 
@@ -144,6 +155,9 @@ defmodule KdabetFrontendWeb.Demo do
     case sport do
       "Baseball" -> "baseballplayer"
       "Basketball" -> "basketballplayer"
+      "Hockey" -> "hockeyplayer"
+      "Soccer" -> "soccerplayer"
+      "Football" -> "footballplayer"
       _ -> "baseballplayer"
     end
   end

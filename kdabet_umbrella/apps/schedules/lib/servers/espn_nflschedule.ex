@@ -1,15 +1,15 @@
-defmodule Schedules.Nhl.Official do
+defmodule Schedules.Nfl.Espn do
   use GenServer
-  alias Schedules.NhlOfficialClient
+  alias Schedules.NflEspnClient
 
-  alias Core.Common.Nhl
+  # alias Core.Common.Nhl
   #############################
   # Client API
   #############################
   #############################
 
   @moduledoc """
-  NbaSchedule pipes the game status directly from NBA API.
+  Espn NflSchedule pipes the game status directly from Nfl ESPN Schedule API.
   """
   def start_link(opts) do
     options = Map.get(opts, :opts)
@@ -39,7 +39,7 @@ defmodule Schedules.Nhl.Official do
     }
 
     tables = [
-      :nhlschedule
+      :espn_nflschedule
     ]
 
     gamedataslug = []
@@ -98,13 +98,112 @@ defmodule Schedules.Nhl.Official do
 
   def handle_cast(:fetch_schedule, state) do
     {:ok, response} =
-      NhlOfficialClient.get("api/v1/schedule?date=#{state.date}")
+      NflEspnClient.get(
+        "header?sport=football&league=nfl&region=us&lang=en&contentorigin=espn&buyWindow=1m&showAirings=buy%2Clive%2Creplay&showZipLookup=true&tz=America%2FNew_York"
+      )
 
+    ## do stuff with response
     gamemaps =
       case response |> Map.get(:body) do
         "Invalid game date" ->
           {:error,
            "Please provide a legitimate game date.  Your provided #{state.date} which is invalid"}
+
+        body ->
+          gameset =
+            response.body
+            |> Map.get("sports")
+            |> Enum.at(0)
+            |> Map.get("leagues")
+            |> Enum.at(0)
+            |> Map.get("events")
+
+          ## reduce games into schedule slugs
+          Enum.reduce(gameset, %{}, fn game, acc ->
+            gamestring = game |> Map.get("id")
+
+            ## awayteam
+            awaydata = game |> Map.get("competitors") |> Enum.at(0)
+
+            [awaywins, awaylosses] =
+              awaydata
+              |> Map.get("record")
+              |> String.split("-")
+              |> Enum.map(fn v -> String.to_integer(v) end)
+
+            ## hometeam
+            homedata = game |> Map.get("competitors") |> Enum.at(1)
+
+            [homewins, homelosses] =
+              homedata
+              |> Map.get("record")
+              |> String.split("-")
+              |> Enum.map(fn v -> String.to_integer(v) end)
+
+            gamemap = %{
+              awayabbr: awaydata |> Map.get("abbreviation"),
+              awayteam: awaydata |> Map.get("displayName"),
+              awayscore:
+                case awaydata |> Map.get("score") do
+                  "" -> 0
+                  score -> score
+                end,
+              awaywins: awaywins,
+              awaylosses: awaylosses,
+              date: game |> Map.get("date") |> String.split("T") |> Enum.at(0),
+              gamestate:
+                game |> Map.get("fullStatus") |> Map.get("type") |> Map.get("description"),
+              gid: game |> Map.get("id"),
+              homeabbr: homedata |> Map.get("abbreviation"),
+              hometeam: homedata |> Map.get("displayName"),
+              homescore:
+                case homedata |> Map.get("score") do
+                  "" -> 0
+                  score -> score
+                end,
+              homewins: homewins,
+              homelosses: homelosses,
+              starttime:
+                game
+                |> Map.get("fullStatus")
+                |> Map.get("type")
+                |> Map.get("shortDetail")
+                |> String.split("- ")
+                |> Enum.at(1),
+              status:
+                case game |> Map.get("fullStatus") |> Map.get("type") |> Map.get("state") do
+                  "pre" -> "Pre-Game"
+                  "final" -> "Final"
+                  _ -> "In Game"
+                end
+            }
+
+            ## Put the new map into the accumulator with gamestring as key
+            Map.put(acc, gamestring, gamemap)
+          end)
+      end
+
+    ## state
+    {:noreply,
+     %{
+       state
+       | gamemaps: gamemaps,
+         heartbeat: state.heartbeat + 1,
+         last_updated: DateTime.utc_now() |> DateTime.add(-8 * 3600, :second)
+     }}
+  end
+
+  def schedule_scraper() do
+    Process.send_after(self(), :work, 60_000)
+  end
+end
+
+"""
+    gamemaps =
+      case response |> Map.get(:body) do
+        "Invalid game date" ->
+          {:error,
+           "Please provide a legitimate game date.  Your provided {state.date} which is invalid"}
 
         body ->
           gameset =
@@ -190,124 +289,5 @@ defmodule Schedules.Nhl.Official do
             Map.put(acc, gamestring, gamemap)
           end)
       end
-
-    ## state
-    {:noreply,
-     %{
-       state
-       | gamemaps: gamemaps,
-         heartbeat: state.heartbeat + 1,
-         last_updated: DateTime.utc_now() |> DateTime.add(-8 * 3600, :second)
-     }}
-  end
-
-  def schedule_scraper() do
-    Process.send_after(self(), :work, 60_000)
-  end
-end
-
-"""
-    gamemaps =
-      case response |> Map.get(:body) do
-        "Invalid game date" ->
-          {:error,
-           "Please provide a legitimate game date.  Your provided {state.date} which is invalid"}
-
-        body ->
-          matchups = body |> Map.get("resultSets")
-
-          ## The structure of the api return is very convoluted so we split it up
-          matches = matchups |> Enum.at(0) |> Map.get("rowSet")
-          date = body |> Map.get("parameters") |> Map.get("GameDate")
-          datenum = String.replace(date, "-", "") |> String.to_integer()
-          scoresets = matchups |> Enum.at(1) |> Map.get("rowSet")
-
-          ## Conference standings
-          standings =
-            (matchups |> Enum.at(4) |> Map.get("rowSet")) ++
-              (matchups |> Enum.at(5) |> Map.get("rowSet"))
-
-          ## Gather a list of matchups and construct the slug set
-          Enum.reduce(Enum.to_list(1..(matches |> length)), %{}, fn indice, acc ->
-            matchup = matches |> Enum.at(indice - 1)
-            gid = matchup |> Enum.at(2)
-
-            ## Away Record
-            [awaywins, awaylosses] =
-              Enum.filter(standings, fn [h | t] ->
-                [matchup |> Enum.at(7) | t] == [h | t]
-              end)
-              |> Enum.at(0)
-              |> Enum.slice(7..8)
-
-            ## Away Record
-            [homewins, homelosses] =
-              Enum.filter(standings, fn [h | t] ->
-                [matchup |> Enum.at(6) | t] == [h | t]
-              end)
-              |> Enum.at(0)
-              |> Enum.slice(7..8)
-
-            slug =
-              %{
-                awayabbr:
-                  matchup
-                  |> Enum.at(7)
-                  |> Core.Common.Nba.teamid_to_teamabbr()
-                  |> String.downcase(),
-                awayteam:
-                  Enum.join([
-                    matchup |> Enum.at(7) |> Core.Common.Nba.teamid_to_city(),
-                    " ",
-                    matchup |> Enum.at(7) |> Core.Common.Nba.teamid_to_teamname()
-                  ]),
-                awayscore:
-                  case scoresets |> Enum.at(2 * (indice - 1)) |> Enum.at(21) do
-                    nil -> 0
-                    a -> a
-                  end,
-                awaywins: awaywins,
-                awaylosses: awaylosses,
-                gid: gid,
-                homeabbr:
-                  matchup
-                  |> Enum.at(6)
-                  |> Core.Common.Nba.teamid_to_teamabbr()
-                  |> String.downcase(),
-                hometeam:
-                  Enum.join([
-                    matchup |> Enum.at(6) |> Core.Common.Nba.teamid_to_city(),
-                    " ",
-                    matchup |> Enum.at(6) |> Core.Common.Nba.teamid_to_teamname()
-                  ]),
-                homescore:
-                  case scoresets |> Enum.at(2 * (indice - 1) + 1) |> Enum.at(21) do
-                    nil -> 0
-                    a -> a
-                  end,
-                homewins: homewins,
-                homelosses: homelosses,
-                date: date,
-                starttime: matchup |> Enum.at(4),
-                status:
-                  case matchup |> Enum.at(3) do
-                    1 -> "Pre-Game"
-                    3 -> "Final"
-                    _ -> "In-Progress"
-                  end
-              }
-
-            Map.put(acc, gid, slug)
-          end)
-      end
-
-    #############################
-    ## Update ETS.
-    #############################
-    :ets.insert(
-      :nbaschedule,
-      {"schedule", gamemaps}
-    )
-
 
 """

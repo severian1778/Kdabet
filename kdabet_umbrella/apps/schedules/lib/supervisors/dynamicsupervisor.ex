@@ -22,6 +22,11 @@ defmodule Schedules.ScheduleSupervisor do
         api: Schedules.Nhl.Official,
         league: "nhl",
         source: "official"
+      },
+      %{
+        api: Schedules.Nfl.Espn,
+        league: "nfl",
+        source: "espn"
       }
     ]
 

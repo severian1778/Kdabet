@@ -32,8 +32,7 @@ defmodule Schedules.Nba.Official do
       born: DateTime.utc_now(),
       last_updated: 0,
       heartbeat: 0,
-      # Date.to_iso8601(DateTime.utc_now() |> DateTime.add(-8 * 3600, :second)),
-      date: "2023-10-24",
+      date: Date.to_iso8601(DateTime.utc_now() |> DateTime.add(-7 * 3600, :second)),
       gamemaps: []
     }
 
