@@ -53,15 +53,18 @@ defmodule KdabetFrontendWeb.Kings do
       <!-- pfp rows -->
       <section class="w-full flex flex-col mx-auto max-w-[1600px]">
         <div class="glowtext w-full flex flex-row justify-between mb-5">
-          <h1 class="text-[1.75em] lg:text-[2.15em] xl:text-[2.7em] flex flex-row font-bold justify-start space-x-1 sm:space-x-2 lg:space-x-3" >
+          <h1 class="text-[1.75em] lg:text-[2.15em] xl:text-[2.7em] flex flex-row font-bold justify-start space-x-1 sm:space-x-2 lg:space-x-3">
             <span class="h-[40px] w-[40px] lg:h-[50px] lg:w-[50px] xl:h-[60px] xl:w-[60px]"><FontAwesome.LiveView.icon name="scroll" type="solid" class="crownicon" /></span>
             <span>Kings Row</span>
           </h1>
-          <p class="glowtext text-[1.75em] lg:text-[2.15em] xl:text-[2.7em]">{(@pfps|>length)}/500</p>
+          <p class="glowtext text-[1.75em] lg:text-[2.15em] xl:text-[2.7em]">{@pfps |> length}/500</p>
         </div>
         <div class="kingcontainer w-fit flex flex-wrap justify-center">
-          <div class="w-[100px] h-[100px] shadow-[inset_0_-2px_4px_rgba(0,0,0,0.6)]" :for={ {pfp, twitter} <- @pfps}>
-            <King imageurl={pfp} twitter={twitter}></King>
+          <div
+            class="w-[100px] h-[100px] shadow-[inset_0_-2px_4px_rgba(0,0,0,0.6)]"
+            :for={{pfp, twitter} <- @pfps}
+          >
+            <King imageurl={pfp} twitter={twitter} />
           </div>
         </div>
       </section>
@@ -355,7 +358,30 @@ defmodule KdabetFrontendWeb.Kings do
       {"eric.png", "esousa89"},
       {"sophia.png", "sophiascoins"},
       {"vixnu.png", "VIXNU"},
-      {"caviar.png", "CaviarEth"}
+      {"caviar.png", "CaviarEth"},
+      {"srijan.png", "bhardwaj_srijan"},
+      {"mikemiller.png", "Miller974"},
+      {"gregdavis.png", "GregoryDav86113"},
+      {"ryan.png", "RMar231"},
+      {"tonyl.png", "ju5ttony"},
+      {"js157.png", "Js157nyc"},
+      {"ennead.png", "BluebirdChallah"},
+      {"jesus.png", "ClarkKe88421274"},
+      {"revoo.png", "ReVoo_Crypto"},
+      {"vitja.png", "AV369_"},
+      {"jennsimms.png", "enna1222Simms"},
+      {"renegade.png", "ExploreLbry"},
+      {"paolla.png", "paollamot"},
+      {"lewis.png", "dubl__inc"},
+      {"thizzle.png", "KINGTHIZZLE"},
+      {"titans.png", "KadenaTitans"},
+      {"imdc.png", "IDc82225197"},
+      {"cheetah.png", "CryptoPhil0s0fr"},
+      {"kadetroid.png", "kadenamoonboy"},
+      {"traderjoe.png", "ChampsElite"},
+      {"modi.png", "Modi__108"},
+      {"gibson.png", "JoelGibson69"},
+      {"x.png", "DegenOnX"}
     ]
   end
 end

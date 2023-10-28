@@ -26,6 +26,13 @@ defmodule KdabetFrontendWeb.Demo do
       |> Map.get(:gamemaps)
       |> Map.values()
 
+    fifa_schedule =
+      Schedules.get_espn_fifa_data()
+      |> Map.get(:gamemaps)
+      |> Enum.reduce([], fn league, acc ->
+        acc ++ (league |> Map.values())
+      end)
+
     ## TODO: make this into a next 10 games coming up game list
     ## Initialize critical data for assigns
     current_gamelist = dummy_gamelist()
@@ -33,7 +40,7 @@ defmodule KdabetFrontendWeb.Demo do
     ## A list of sports and FontAwesome icon names tuples
     sportlist = [
       {"Football", "football", nfl_schedule |> length},
-      {"Soccer", "futbol", 0},
+      {"Soccer", "futbol", fifa_schedule |> length},
       {"Baseball", "baseball", mlb_schedule |> length},
       {"Hockey", "hockey-puck", nhl_schedule |> length},
       {"Basketball", "basketball", nba_schedule |> length},
@@ -49,6 +56,7 @@ defmodule KdabetFrontendWeb.Demo do
      |> assign(nba_schedule: nba_schedule)
      |> assign(nhl_schedule: nhl_schedule)
      |> assign(nfl_schedule: nfl_schedule)
+     |> assign(fifa_schedule: fifa_schedule)
      |> assign(sportlist: sportlist)}
   end
 
@@ -144,6 +152,7 @@ defmodule KdabetFrontendWeb.Demo do
         "Basketball" -> socket.assigns.nba_schedule
         "Hockey" -> socket.assigns.nhl_schedule
         "Football" -> socket.assigns.nfl_schedule
+        "Soccer" -> socket.assigns.fifa_schedule
         _ -> dummy_gamelist()
       end
 

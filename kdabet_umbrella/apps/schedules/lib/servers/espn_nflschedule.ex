@@ -109,7 +109,7 @@ defmodule Schedules.Nfl.Espn do
           {:error,
            "Please provide a legitimate game date.  Your provided #{state.date} which is invalid"}
 
-        body ->
+       _body ->
           gameset =
             response.body
             |> Map.get("sports")

@@ -51,7 +51,7 @@ defmodule Schedules do
   end
 
   @doc """
-  Fetches the current state from the Official NBA League data api
+  Fetches the current state from the Espn Fifa League data api
   iex(1)> get_espn_nfl_data()
           return:  [%Schedule.NFL{...}, ...]
   """
@@ -61,5 +61,18 @@ defmodule Schedules do
     [{pid, _}] = Registry.lookup(@registry, "nflespn")
     ## call the game state
     Schedules.Nfl.Espn.get_state(pid)
+  end
+
+  @doc """
+  Fetches the current state from the Espn Fifa League data api
+  iex(1)> get_espn_fifa_data()
+          return:  [%Schedule.FIFA{...}, ...]
+  """
+  @spec get_espn_fifa_data() :: map()
+  def get_espn_fifa_data() do
+    ## fetch the pid
+    [{pid, _}] = Registry.lookup(@registry, "fifaespn")
+    ## call the game state
+    Schedules.Fifa.Espn.get_state(pid)
   end
 end

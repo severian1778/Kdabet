@@ -2,7 +2,7 @@ defmodule Schedules.Mlb.Official do
   use GenServer
   alias Schedules.MlbOfficialClient
 
-  alias Core.Common
+  alias Core.Common.Mlb
   #############################
   # Client API
   #############################
@@ -122,8 +122,8 @@ defmodule Schedules.Mlb.Official do
               |> Map.get("away")
               |> Map.get("team")
               |> Map.get("name")
-              |> Common.mlbtoabbr()
-              |> Common.mlbtoroto()
+              |> Mlb.mlbtoabbr()
+              |> Mlb.mlbtoroto()
 
             homeabbr =
               game
@@ -131,8 +131,8 @@ defmodule Schedules.Mlb.Official do
               |> Map.get("home")
               |> Map.get("team")
               |> Map.get("name")
-              |> Common.mlbtoabbr()
-              |> Common.mlbtoroto()
+              |> Mlb.mlbtoabbr()
+              |> Mlb.mlbtoroto()
 
             dblhdr =
               Enum.filter(acc, fn g ->

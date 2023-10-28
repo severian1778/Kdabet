@@ -27,7 +27,12 @@ defmodule Schedules.ScheduleSupervisor do
         api: Schedules.Nfl.Espn,
         league: "nfl",
         source: "espn"
-      }
+      },
+      %{
+        api: Schedules.Fifa.Espn,
+        league: "fifa",
+        source: "espn"
+      } 
     ]
 
     supervise_worker_server(params)
