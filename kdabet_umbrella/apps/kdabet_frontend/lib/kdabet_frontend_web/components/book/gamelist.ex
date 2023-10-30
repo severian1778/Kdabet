@@ -3,6 +3,7 @@ defmodule KdabetFrontendWeb.Components.GameList do
   An HTML snippet representing a wrapper for a dynamic list of games to render into.
   """
   use Surface.Component
+  alias KdabetFrontendWeb.Components.{OddsPair}
 
   @doc "The list of currently chosen games"
   prop(gamelist, :list, required: true)
@@ -48,32 +49,20 @@ defmodule KdabetFrontendWeb.Components.GameList do
               <span class="text-xs">{game.starttime}</span>
             </div>
             {!-- Moneyline --}
-            <div class="basis-1/4 flex flex-row justify-end space-x-5 self-center">
-              <button class="ring-offset-4 ring-stone-600 rounded ring p-1 h-10 w-14 text-slate-200 bg-slate-500 hover:bg-slate-700">2.000</button>
-              <button class="ring-offset-4 ring-stone-600 rounded ring p-1 h-10 w-14 text-slate-200 bg-slate-500 hover:bg-slate-700">2.000</button>
-            </div>
+            <OddsPair style="moneyline_button" game={game} odds={{2.000, 2.100}}>
+              <:oddA>2.000</:oddA>
+              <:oddB>2.100</:oddB>
+            </OddsPair>
             {!-- Point Spread --}
-            <div class="basis-1/4 flex flex-row justify-end space-x-5 self-center">
-              <button class="flex flex-col ring-offset-4 ring-stone-600 rounded ring p-1 h-10 w-14 text-slate-200 bg-slate-500 hover:bg-slate-700">
-                <span class="font-bold text-xs w-full text-center">-1.5</span>
-                <span class="text-sm w-full text-center">2.000</span>
-              </button>
-              <button class="flex flex-col ring-offset-4 ring-stone-600 rounded ring p-1 h-10 w-14 text-slate-200 bg-slate-500 hover:bg-slate-700">
-                <span class="font-bold text-xs w-full text-center">+1.5</span>
-                <span class="text-sm w-full text-center">2.000</span>
-              </button>
-            </div>
+            <OddsPair style="spread_button" game={game} odds={{2.000, 2.100}}>
+              <:oddA><span>+1.5</span><span>2.000</span></:oddA>
+              <:oddB><span>-1.5</span><span>2.100</span></:oddB>
+            </OddsPair>
             {!-- Totals --}
-            <div class="basis-1/4 flex flex-row justify-end space-x-5 self-center">
-              <button class="flex flex-col ring-offset-4 ring-stone-600 rounded ring p-1 h-10 w-14 text-slate-200 bg-slate-500 hover:bg-slate-700">
-                <span class="font-bold text-xs w-full text-center">-8.5</span>
-                <span class="text-sm w-full text-center">2.000</span>
-              </button>
-              <button class="flex flex-col ring-offset-4 ring-stone-600 rounded ring p-1 h-10 w-14 text-slate-200 bg-slate-500 hover:bg-slate-700">
-                <span class="font-bold text-xs w-full text-center">+8.5</span>
-                <span class="text-sm w-full text-center">2.000</span>
-              </button>
-            </div>
+            <OddsPair style="spread_button" game={game} odds={{2.000, 2.100}}>
+              <:oddA><span>8.5</span><span>2.000</span></:oddA>
+              <:oddB><span>8.5</span><span>2.100</span></:oddB>
+            </OddsPair>
           </div>
         {/for}
       </div>

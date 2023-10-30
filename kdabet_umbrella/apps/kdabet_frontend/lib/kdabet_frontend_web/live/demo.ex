@@ -1,6 +1,6 @@
 defmodule KdabetFrontendWeb.Demo do
   use KdabetFrontendWeb, :surface_live_view_book
-  alias KdabetFrontendWeb.Components.{GameList, SportMenuItem}
+  alias KdabetFrontendWeb.Components.{GameList, SportMenuItem, BetSlip}
 
   @impl true
   def mount(_params, _session, socket) do
@@ -52,12 +52,15 @@ defmodule KdabetFrontendWeb.Demo do
      |> assign(id: socket.id)
      |> assign(current_gamelist: current_gamelist)
      |> assign(current_market_type: current_market_type)
+     ## schedules
      |> assign(mlb_schedule: mlb_schedule)
      |> assign(nba_schedule: nba_schedule)
      |> assign(nhl_schedule: nhl_schedule)
      |> assign(nfl_schedule: nfl_schedule)
      |> assign(fifa_schedule: fifa_schedule)
-     |> assign(sportlist: sportlist)}
+     |> assign(sportlist: sportlist)
+     ## betslip
+     |> assign(pending: [])}
   end
 
   @impl true
@@ -91,7 +94,7 @@ defmodule KdabetFrontendWeb.Demo do
           {/for}
         </ul>
       </section>
-      <!-- Main Menu -->
+      {!-- Main Menu --}
       <section class="basis-10/12 md:basis-8/12 lg:basis-6/12 md:border-l md:border-r bg-[rgba(0,0,0,0.2)]">
         <GameList gamelist={@current_gamelist}>
           {!-- Game List Header --}
@@ -133,17 +136,19 @@ defmodule KdabetFrontendWeb.Demo do
           <p class="py-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
         </div>
       </section>
-      <!-- Bet Slip -->
+
+      {!-- Bet Slip --}
       <section class="basis-3/12 hidden lg:block border-r">
-        <p>BetSlip</p>
+        <BetSlip id="betslip" prev_pending={[]} />
       </section>
     </div>
     """
   end
 
-  @doc """
-  Handle the changing of betting menu via clicking on a type of sport
-  """
+  ######################################
+  ## Handle Events
+  ######################################
+
   @impl true
   def handle_event("sportmenuitem_click", %{"sport" => sport_str}, socket) do
     new_gamelist =
@@ -158,6 +163,18 @@ defmodule KdabetFrontendWeb.Demo do
 
     {:noreply, assign(socket, current_gamelist: new_gamelist, current_market_type: sport_str)}
   end
+
+  @impl true
+  def handle_event("to_betslip", %{"odd" => odd, "beton" => beton}, socket) do
+    ## do stuff
+    BetSlip.update_betslip("betslip", odd, beton)
+    ## return state
+    {:noreply, socket}
+  end
+
+  ######################################
+  ## End Events
+  ######################################
 
   ## returns the name of the header image dependant on the current sport in assigns
   defp headerImage(sport) do

@@ -69,4 +69,30 @@ body{
   background: rgba(255,255,255,0.05);
   backdrop-filter: blur(5px); 
 }
+.glassy_modal{
+  box-shadow: 20px 20px 50px rgba(0,0,0,0.5);
+  border-radius: 15px;
+  background: rgba(255,255,255,0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid rgba(255,255,255, 0.5);
+  border-left: 1px solid rgba(255,255,255, 0.5);
+  backdrop-filter: blur(5px);
+}
 
+/* GameList */
+.moneyline_button{
+  @apply ring-offset-4 ring-stone-600 rounded ring p-1 h-10 w-14 text-slate-200 bg-slate-500 hover:bg-slate-700;
+}
+.spread_button{
+  @apply flex flex-col ring-offset-4 ring-stone-600 rounded ring p-1 h-10 w-14 text-slate-200 bg-slate-500 hover:bg-slate-700;
+  
+  span:nth-child(1){
+    @apply font-bold text-xs w-full text-center;
+  }
+  
+  span:nth-child(2){
+    @apply text-sm w-full text-center leading-[1.4];
+  }
+}

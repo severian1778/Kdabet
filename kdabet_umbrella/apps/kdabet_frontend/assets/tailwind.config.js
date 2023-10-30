@@ -17,11 +17,27 @@ module.exports = {
     extend: {
       colors: {
         brand: "#FD4F00",
-      }
+      },
+      textShadow: {
+        sm: '0 1px 2px var(--tw-shadow-color)',
+        DEFAULT: '0 2px 4px var(--tw-shadow-color)',
+        lg: '0 8px 16px var(--tw-shadow-color)',
+      },
     },
   },
   plugins: [
     require("@tailwindcss/forms"),
+    // Allows text shadow
+    plugin(function ({ matchUtilities, theme }) {
+      matchUtilities(
+        {
+          'text-shadow': (value) => ({
+            textShadow: value,
+          }),
+        },
+        { values: theme('textShadow') }
+      )
+    }),
     // Allows prefixing tailwind classes with LiveView classes to add rules
     // only when LiveView classes are applied, for example:
     //

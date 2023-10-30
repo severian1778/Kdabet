@@ -325,7 +325,6 @@ defmodule KdabetFrontendWeb.Kings do
       {"muhibbsattar.png", "muhibbsattar"},
       {"megan.png", "MeganMar07"},
       {"theo.png", "sabercrunchers"},
-      {"marty.png", "AndytownMarty"},
       {"mlbbetz.png", "mlbbetz"},
       {"corte.png", "Corte_Mortez"},
       {"stefan.png", "StefanDuee"},

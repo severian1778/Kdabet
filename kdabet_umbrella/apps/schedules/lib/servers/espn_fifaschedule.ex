@@ -166,8 +166,17 @@ defmodule Schedules.Fifa.Espn do
                   String.match?(maybe_time, ~r/FT/) ->
                     "Final"
 
+                  String.match?(maybe_time, ~r/ET/) ->
+                    "End Time"
+
                   String.match?(maybe_time, ~r/HT/) ->
                     "Half Time"
+
+                  String.match?(maybe_time, ~r/Abandoned/) ->
+                    "Abandoned"
+
+                  String.match?(maybe_time, ~r/Postponed/) ->
+                    "Postponed"
 
                   String.match?(maybe_time, ~r/\d+'/) ->
                     "In Game"
@@ -214,7 +223,11 @@ defmodule Schedules.Fifa.Espn do
               }
 
               ## insert the Schedule structure into the game map with a key -> value pair
-              Map.put(acc, gamestring, gamemap)
+              if !is_binary(gamemap |> Map.get(:starttime)) do
+                Map.put(acc, gamestring, gamemap)
+              else
+                acc
+              end
             end)
           end)
       end
