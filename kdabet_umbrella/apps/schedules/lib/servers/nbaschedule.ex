@@ -184,7 +184,9 @@ defmodule Schedules.Nba.Official do
                     1 -> "Pre-Game"
                     3 -> "Final"
                     _ -> "In-Progress"
-                  end
+                  end,
+                league: "Nba",
+                sport: "Basketball"
               }
 
             Map.put(acc, gid, slug)

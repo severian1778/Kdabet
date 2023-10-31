@@ -228,7 +228,9 @@ defmodule Schedules.Mlb.Official do
                 |> DateTime.from_iso8601()
                 |> elem(1)
                 |> DateTime.add(-7 * 3600, :second),
-              status: game |> Map.get("status") |> Map.get("detailedState")
+              status: game |> Map.get("status") |> Map.get("detailedState"),
+              league: "Mlb",
+              sport: "Baseball"
             }
 
             Map.put(acc, gamestring, gamemap)

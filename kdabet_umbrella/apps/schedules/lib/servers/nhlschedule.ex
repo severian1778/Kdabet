@@ -184,7 +184,9 @@ defmodule Schedules.Nhl.Official do
                 |> DateTime.from_iso8601()
                 |> elem(1)
                 |> DateTime.add(-7 * 3600, :second),
-              status: game |> Map.get("status") |> Map.get("detailedState")
+              status: game |> Map.get("status") |> Map.get("detailedState"),
+              league: "Nhl",
+              sport: "Hockey"
             }
 
             Map.put(acc, gamestring, gamemap)

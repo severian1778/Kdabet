@@ -172,6 +172,9 @@ defmodule Schedules.Fifa.Espn do
                   String.match?(maybe_time, ~r/HT/) ->
                     "Half Time"
 
+                  ["Extra", "Time", "Halftime"] ->
+                    "Extra Time"
+
                   String.match?(maybe_time, ~r/Abandoned/) ->
                     "Abandoned"
 
@@ -219,7 +222,9 @@ defmodule Schedules.Fifa.Espn do
                     "pre" -> "Pre-Game"
                     "final" -> "Final"
                     _ -> "In Game"
-                  end
+                  end,
+                league: "Fifa",
+                sport: "Soccer"
               }
 
               ## insert the Schedule structure into the game map with a key -> value pair

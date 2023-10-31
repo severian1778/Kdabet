@@ -175,7 +175,9 @@ defmodule Schedules.Nfl.Espn do
                   "pre" -> "Pre-Game"
                   "final" -> "Final"
                   _ -> "In Game"
-                end
+                end,
+              league: "Nfl",
+              sport: "Football" 
             }
 
             ## Put the new map into the accumulator with gamestring as key

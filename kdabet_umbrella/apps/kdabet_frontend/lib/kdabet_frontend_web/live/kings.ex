@@ -380,7 +380,22 @@ defmodule KdabetFrontendWeb.Kings do
       {"traderjoe.png", "ChampsElite"},
       {"modi.png", "Modi__108"},
       {"gibson.png", "JoelGibson69"},
-      {"x.png", "DegenOnX"}
+      {"x.png", "DegenOnX"},
+      {"art.png", "puddleofpeepee"},
+      {"poof.png", "Poof93427117"},
+      {"kaddex.png", "Kaddex_Official"},
+      {"lapepe.png", "thaiKDA22"},
+      {"kbaby.png", "Kbaby84294272"},
+      {"ship.png", "RuudyBack"},
+      {"max.png", "cc0mfer"},
+      {"marknft.png", "nftsious"},
+      {"cranberry.png", "CranFlagCanary"},
+      {"40cardfriedman", "40cardfriedman"},
+      {"moon.png", "mooni23"},
+      {"coopa.png", "Coopa985"},
+      {"dannyb.png", "DannyB72661017"},
+      {"paolo.png", "PaoloTetherino"},
+      {"ftlofu.png", "ftlofu"}
     ]
   end
 end
