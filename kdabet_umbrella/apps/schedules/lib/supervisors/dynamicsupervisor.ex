@@ -18,21 +18,21 @@ defmodule Schedules.ScheduleSupervisor do
         league: "nba",
         source: "official"
       },
-      %{
-        api: Schedules.Nhl.Official,
-        league: "nhl",
-        source: "official"
-      },
+      #%{
+      #  api: Schedules.Nhl.Official,
+      #  league: "nhl",
+      #  source: "official"
+      #},
       %{
         api: Schedules.Nfl.Espn,
         league: "nfl",
         source: "espn"
-      },
-      %{
-        api: Schedules.Fifa.Espn,
-        league: "fifa",
-        source: "espn"
-      } 
+      }#,
+      #%{
+      #  api: Schedules.Fifa.Espn,
+      #  league: "fifa",
+      #  source: "espn"
+      #} 
     ]
 
     supervise_worker_server(params)

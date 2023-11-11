@@ -1,6 +1,7 @@
 defmodule KdabetFrontendWeb.Demo do
   use KdabetFrontendWeb, :surface_live_view_book
   alias KdabetFrontendWeb.Components.{GameList, SportMenuItem, BetSlip}
+  alias Core.Types.{Bet}
 
   @impl true
   def mount(_params, _session, socket) do
@@ -165,12 +166,25 @@ defmodule KdabetFrontendWeb.Demo do
   end
 
   @impl true
-  def handle_event("to_betslip", %{"odd" => odd, "beton" => beton}, socket) do
-    ## do stuff
-    BetSlip.update_betslip("betslip", odd, beton)
+  def handle_event("to_betslip", %{"bet" => bet}, socket) when is_binary(bet) do
+    ## decode the bet
+    decoded_bet =
+      bet
+      |> Jason.decode!()
+      |> Enum.map(fn {key, value} -> {String.to_existing_atom(key), value} end)
+
+    ## Update the betslip
+    BetSlip.update_betslip("betslip", struct(Bet, decoded_bet))
+
     ## return state
     {:noreply, socket}
   end
+
+  # def handle_event("to_betslip", _, socket) do
+  ## TODO: Make sure we send some kind of flash to the screen when a bet is made but the type is wrong
+  #  IO.inspect({:error, "Badly typed bet"})
+  #  {:reply, socket}
+  # end
 
   ######################################
   ## End Events
@@ -205,7 +219,9 @@ defmodule KdabetFrontendWeb.Demo do
         homeabbr: "ari",
         homeloss: 2,
         homewins: 1,
-        starttime: "17:05 pm ET"
+        starttime: "17:05 pm ET",
+        sport: "Football",
+        league: "NFl"
       },
       %{
         status: "Pre-Game",
@@ -221,7 +237,9 @@ defmodule KdabetFrontendWeb.Demo do
         homeabbr: "bos",
         homeloss: 2,
         homewins: 1,
-        starttime: "17:05 pm ET"
+        starttime: "17:05 pm ET",
+        sport: "Football",
+        league: "NFl"
       }
     ]
   end

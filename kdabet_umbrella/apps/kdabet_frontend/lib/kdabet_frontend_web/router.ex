@@ -4,25 +4,26 @@ defmodule KdabetFrontendWeb.Router do
   import Surface.Catalogue.Router
 
   pipeline :browser do
-    plug :accepts, ["html"]
-    plug :fetch_session
-    plug :fetch_live_flash
-    plug :put_root_layout, html: {KdabetFrontendWeb.Layouts, :root}
-    plug :protect_from_forgery
-    plug :put_secure_browser_headers
+    plug(:accepts, ["html"])
+    plug(:fetch_session)
+    plug(:fetch_live_flash)
+    plug(:put_root_layout, html: {KdabetFrontendWeb.Layouts, :root})
+    plug(:protect_from_forgery)
+    plug(:put_secure_browser_headers)
   end
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug(:accepts, ["json"])
   end
 
   scope "/", KdabetFrontendWeb do
-    pipe_through :browser
+    pipe_through(:browser)
 
-    get "/", PageController, :home
-    live "/demo", Demo
-    live "/about", About
-    live "/kings", Kings
+    get("/", PageController, :home)
+    live("/demo", Demo)
+    live("/about", About)
+    live("/kings", Kings)
+    live("/litepaper", LitePaper)
   end
 
   # Other scopes may use custom stacks.
@@ -40,16 +41,16 @@ defmodule KdabetFrontendWeb.Router do
     import Phoenix.LiveDashboard.Router
 
     scope "/dev" do
-      pipe_through :browser
+      pipe_through(:browser)
 
-      live_dashboard "/dashboard", metrics: KdabetFrontendWeb.Telemetry
-      forward "/mailbox", Plug.Swoosh.MailboxPreview
+      live_dashboard("/dashboard", metrics: KdabetFrontendWeb.Telemetry)
+      forward("/mailbox", Plug.Swoosh.MailboxPreview)
     end
   end
 
   if Mix.env() == :dev do
     scope "/" do
-      pipe_through :browser
+      pipe_through(:browser)
       surface_catalogue("/catalogue")
     end
   end

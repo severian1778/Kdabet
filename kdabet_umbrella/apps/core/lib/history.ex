@@ -1,6 +1,7 @@
 defmodule Core.History do
+  ## TODO:  For some reason there is an error that randomly appears here saying Core.Schedule does not exist,  find out why.
   import Ecto.Query
-  #alias Core.{Common, Schedule}
+  alias Core.{Schedule}
 
   ## typing
   @type date() :: String.t()

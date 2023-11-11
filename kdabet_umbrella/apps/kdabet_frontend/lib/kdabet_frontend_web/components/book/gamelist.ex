@@ -49,17 +49,17 @@ defmodule KdabetFrontendWeb.Components.GameList do
               <span class="text-xs">{game.starttime}</span>
             </div>
             {!-- Moneyline --}
-            <OddsPair style="moneyline_button" game={game} odds={{2.000, 2.100}}>
+            <OddsPair style="moneyline_button" bettype="moneyline" game={game} odds={{2.000, 2.100}}>
               <:oddA>2.000</:oddA>
               <:oddB>2.100</:oddB>
             </OddsPair>
             {!-- Point Spread --}
-            <OddsPair style="spread_button" game={game} odds={{2.000, 2.100}}>
+            <OddsPair style="spread_button" bettype="spread" game={game} odds={{2.000, 2.100}}>
               <:oddA><span>+1.5</span><span>2.000</span></:oddA>
               <:oddB><span>-1.5</span><span>2.100</span></:oddB>
             </OddsPair>
             {!-- Totals --}
-            <OddsPair style="spread_button" game={game} odds={{2.000, 2.100}}>
+            <OddsPair style="spread_button" bettype="total" game={game} odds={{2.000, 2.100}}>
               <:oddA><span>8.5</span><span>2.000</span></:oddA>
               <:oddB><span>8.5</span><span>2.100</span></:oddB>
             </OddsPair>
