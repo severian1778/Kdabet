@@ -1,0 +1,16 @@
+(env-enable-repl-natives true)
+
+(begin-tx)
+(load "./bootstrap-modules/repl-coin-tools.pact")
+(commit-tx)
+
+
+(begin-tx)
+(use repl-coin-tools)
+(fund-accounts ["alice", "bob", "carol", "dave"] 1000.0)
+(fund-account "k:048ca7383b2267a0ffe768b97b96104d0fb82e576c53e35a6a44e0bb675c53ce" "048ca7383b2267a0ffe768b97b96104d0fb82e576c53e35a6a44e0bb675c53ce" 1000.0)
+(fund-account "k:2c8d728e9f7faa69e432d0753907a4e84719f6a570d56f086c8616ac22f87652" "2c8d728e9f7faa69e432d0753907a4e84719f6a570d56f086c8616ac22f87652" 1000.0)
+(fund-account "k:market" "market" 1.0)
+(commit-tx)
+
+(env-enable-repl-natives false)

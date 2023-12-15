@@ -18,4 +18,9 @@ defmodule KdabetFrontendWeb.PageController do
   def kings(conn, _params) do
     render(conn, :kings, layout: false)
   end
+
+  def mint(conn, _params) do
+    render(conn, :mint, layout: false)
+  end
+
 end

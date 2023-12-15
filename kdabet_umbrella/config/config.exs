@@ -76,7 +76,7 @@ config :esbuild,
   version: "0.17.11",
   default: [
     args:
-      ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
+      ~w(js/app.js --bundle --target=es2020 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
     cd: Path.expand("../apps/kdabet_frontend/assets", __DIR__),
     env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
   ]
@@ -110,4 +110,8 @@ config :ex_fontawesome, type: "regular"
 #       metadata: [:user_id]
 #
 #
+
+config :kadena, hackney_opts: [{:connect_timeout, 1000}, {:recv_timeout, 5000}]
+config :kadena, :json_library, Jason
+
 config :phoenix, :json_library, Jason

@@ -12,27 +12,27 @@ defmodule KdabetFrontendWeb.Demo do
       |> Map.get(:gamemaps)
       |> Map.values()
 
-    nba_schedule =
-      Schedules.get_official_nba_data()
-      |> Map.get(:gamemaps)
-      |> Map.values()
+    nba_schedule = []
+    # Schedules.get_official_nba_data()
+    # |> Map.get(:gamemaps)
+    # |> Map.values()
 
-    nhl_schedule =
-      Schedules.get_official_nhl_data()
-      |> Map.get(:gamemaps)
-      |> Map.values()
+    nhl_schedule = []
+    # Schedules.get_official_nhl_data()
+    # |> Map.get(:gamemaps)
+    # |> Map.values()
 
-    nfl_schedule =
-      Schedules.get_espn_nfl_data()
-      |> Map.get(:gamemaps)
-      |> Map.values()
+    nfl_schedule = []
+    #  Schedules.get_espn_nfl_data()
+    #  |> Map.get(:gamemaps)
+    #  |> Map.values()
 
-    fifa_schedule =
-      Schedules.get_espn_fifa_data()
-      |> Map.get(:gamemaps)
-      |> Enum.reduce([], fn league, acc ->
-        acc ++ (league |> Map.values())
-      end)
+    fifa_schedule = []
+    # Schedules.get_espn_fifa_data()
+    # |> Map.get(:gamemaps)
+    # |> Enum.reduce([], fn league, acc ->
+    #  acc ++ (league |> Map.values())
+    # end)
 
     ## TODO: make this into a next 10 games coming up game list
     ## Initialize critical data for assigns
@@ -244,3 +244,7 @@ defmodule KdabetFrontendWeb.Demo do
     ]
   end
 end
+
+"""
+
+"""

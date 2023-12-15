@@ -11,6 +11,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Londrina+Outline&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Londrina+Outline&family=Pacifico&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,400;1,500;1,600;1,700;1,800;1,900&family=Open+Sans:wght@300;400;500;600;700;800&family=Oxanium:wght@700;800&display=swap');
 
 html{
   box-sizing: border-box;
@@ -22,13 +23,27 @@ html{
   box-sizing: inherit;
 }
 body{
-  background: radial-gradient(#222244 0%, #001D3A 50%);
-  background-repeat: repeat-y;
+ 	background: linear-gradient(0deg, #13409c, #0d2d63, #0d4263, #13409c);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
   height: 100vh;  
   & >div{
     @apply h-full;
   }
 }
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
 
 /* book css */
 .book_main{
@@ -81,6 +96,95 @@ body{
   backdrop-filter: blur(5px);
 }
 
+/* King Modal */
+.modal {
+  @apply w-full h-[100vh] z-40 top-0 left-0 fixed hidden flex-col justify-center items-center overflow-hidden bg-[rgba(0,0,0,0.8)];
+}
+
+.modal.is-active {
+    display: flex
+}
+
+.modal-background {
+    background-color: #0a0a0adb
+}
+
+.modal-content,.modal-card {
+    margin: 0 20px;
+    max-height: calc(100vh - 160px);
+    overflow: auto;
+    position: relative;
+    width: 100%
+}
+
+@media screen and (min-width: 769px) {
+    .modal-content,.modal-card {
+        margin:0 auto;
+        max-height: calc(100vh - 40px);
+        width: 640px
+    }
+}
+
+.modal-close {
+    background: none;
+    height: 40px;
+    position: fixed;
+    right: 20px;
+    top: 20px;
+    width: 40px
+}
+
+.modal-card {
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 40px);
+    overflow: hidden;
+    -ms-overflow-y: visible
+}
+
+.modal-card-head,.modal-card-foot {
+    align-items: center;
+    background-color: #f5f5f5;
+    display: flex;
+    flex-shrink: 0;
+    justify-content: flex-start;
+    padding: 20px;
+    position: relative
+}
+
+.modal-card-head {
+    border-bottom: 1px solid #dbdbdb;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px
+}
+
+.modal-card-title {
+    color: #363636;
+    flex-grow: 1;
+    flex-shrink: 0;
+    font-size: 1.5rem;
+    line-height: 1
+}
+
+.modal-card-foot {
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-top: 1px solid #dbdbdb
+}
+
+.modal-card-foot .button:not(:last-child) {
+    margin-right: .5em
+}
+
+.modal-card-body {
+    -webkit-overflow-scrolling: touch;
+    background-color: #fff;
+    flex-grow: 1;
+    flex-shrink: 1;
+    overflow: auto;
+    padding: 20px
+}
+
 /* GameList */
 .moneyline_button{
   @apply ring-offset-4 ring-stone-600 rounded ring p-1 h-10 w-14 text-slate-200 bg-slate-500 hover:bg-slate-700;
@@ -94,5 +198,21 @@ body{
   
   span:nth-child(2){
     @apply text-sm w-full text-center leading-[1.4];
+  }
+}
+
+/* Wallet Connect */
+.connectButton{
+  @apply flex flex-row justify-center space-x-3 w-60 mx-auto mb-1 px-5 py-3 rounded ring-2 ring-offset-2 ring-slate-500 ring-offset-slate-300 bg-sky-500 hover:bg-sky-400 text-xl text-stone-200 font-bold font-exo2;
+}
+.wallet-select-list{
+  @apply w-full border-sky-600 border-4;
+
+  li {
+    @apply flex flex-row justify-start space-x-3 w-full py-2 px-3 font-exo2 text-xl text-stone-200 hover:bg-[rgba(255,255,255,0.2)] cursor-pointer font-bold;
+
+    img {
+      @apply w-[30px] h-[30px];
+    }
   }
 }

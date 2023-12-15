@@ -1,0 +1,21 @@
+;; Load the environment
+
+;; Optionnal: Here we disable Marmalade because it's not usefull in our test script.
+(env-data {"disable-marmalade-v1":true,
+           "disable-marmalade-ng":true,
+           "disable-util-lib":false,
+           "disable-test-accounts":false})
+
+(load "kda-env/init.repl")
+
+; Load my module
+(begin-tx)
+(namespace 'free)
+(load "example.pact")
+(commit-tx)
+
+; Test the module
+(use free.util-strings)
+(print (free.hello.say-hello "bob"))
+(expect "Result should start with Hello" true (starts-with (free.hello.say-hello "bob") "Hello"))
+(expect "Result should end with KDA" true (ends-with (free.hello.say-hello "bob") "KDA"))

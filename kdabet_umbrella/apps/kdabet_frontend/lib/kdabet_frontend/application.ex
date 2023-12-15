@@ -15,8 +15,7 @@ defmodule KdabetFrontend.Application do
       # Start Finch
       {Finch, name: KdabetFrontend.Finch},
       # Start the Endpoint (http/https)
-      KdabetFrontendWeb.Endpoint
-      # Start a worker by calling: KdabetFrontend.Worker.start_link(arg)
+      KdabetFrontendWeb.Endpoint,
       # {KdabetFrontend.Worker, arg}
     ]
 

@@ -1,6 +1,17 @@
 {
   "dependencies": {
     "@ryangjchandler/alpine-tooltip": "^1.3.0",
-    "alpinejs": "^3.13.1"
+    "@wagmi/core": "^1.4.10",
+    "@web3modal/wagmi": "^3.4.0",
+    "alpinejs": "^3.13.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "remount": "^1.0.0",
+    "viem": "^1.19.13",
+    "web3": "^4.3.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.43",
+    "@types/react-dom": "^18.2.17"
   }
 }

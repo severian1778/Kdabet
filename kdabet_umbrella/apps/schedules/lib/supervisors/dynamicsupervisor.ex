@@ -12,27 +12,27 @@ defmodule Schedules.ScheduleSupervisor do
         api: Schedules.Mlb.Official,
         league: "mlb",
         source: "official"
-      },
-      %{
-        api: Schedules.Nba.Official,
-        league: "nba",
-        source: "official"
-      },
-      #%{
+      }
+      # %{
+      #  api: Schedules.Nba.Official,
+      #  league: "nba",
+      #  source: "official"
+      # },
+      # %{
       #  api: Schedules.Nhl.Official,
       #  league: "nhl",
       #  source: "official"
-      #},
-      %{
-        api: Schedules.Nfl.Espn,
-        league: "nfl",
-        source: "espn"
-      }#,
-      #%{
+      # },
+      # %{
+      #  api: Schedules.Nfl.Espn,
+      #  league: "nfl",
+      #  source: "espn"
+      # },
+      # %{
       #  api: Schedules.Fifa.Espn,
       #  league: "fifa",
       #  source: "espn"
-      #} 
+      # }
     ]
 
     supervise_worker_server(params)

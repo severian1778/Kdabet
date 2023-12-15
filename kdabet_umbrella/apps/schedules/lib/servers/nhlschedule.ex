@@ -98,7 +98,7 @@ defmodule Schedules.Nhl.Official do
 
   def handle_cast(:fetch_schedule, state) do
     {:ok, response} =
-      NhlOfficialClient.get("api/v1/schedule?date=#{state.date}")
+      NhlOfficialClient.get("v1/schedule/#{state.date}")
 
     gamemaps =
       case response |> Map.get(:body) do
@@ -107,6 +107,8 @@ defmodule Schedules.Nhl.Official do
            "Please provide a legitimate game date.  Your provided #{state.date} which is invalid"}
 
         body ->
+          IO.inspect(body |> Map.keys())
+
           gameset =
             case body["dates"] do
               [] ->

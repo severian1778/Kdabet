@@ -9,7 +9,7 @@ defmodule Schedules.NhlOfficialClient do
   # @proxy {:https, proxyobj["ip"], proxyobj["port"], []}
 
   ## Middleware
-  plug({Tesla.Middleware.BaseUrl, "https://statsapi.web.nhl.com"})
+  plug({Tesla.Middleware.BaseUrl, "https://api-web.nhle.com"})
 
   plug(Tesla.Middleware.JSON)
 
