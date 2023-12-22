@@ -182,4 +182,3 @@
   (create-table nft-table)
 ]
 )
-

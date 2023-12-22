@@ -1,0 +1,188 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;All simulations of on chain interactions in ng starts with cancelling deprecated software
+;;We need to send in an boolean into the sandbox that tells NG to turn marmalade off 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(env-data {"disable-marmalade":true, "disable-pact-util": false})
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;Now you load up Pascal's sandbox so everything knits up
+;;----------------------------------------------------------------------------
+;;Credit:  Crypto Pascal
+;;Location: https://github.com/CryptoPascal31/kadena_repl_sandbox.git
+;;----------------------------------------------------------------------------
+;;Use git clone to pull down the library and place it in the respective path.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(load "../../kadena_repl_sandbox/kda-env/init.repl")
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;We will set up the relevant environmental data to set up the collection
+;;----------------------------------------------------------------------------
+;;Credit: Amir Dapl, Pascal
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(begin-tx "create collection")
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; import the relevant kets that will be needed
+  ;; In the sandbox is can be strings like this but in the
+  ;; real world they will be keysets (crypto hashes)
+  ;; generated from your keypair software (kda-tool) 
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  (env-keys ["kdabet-admin" "kdabet-operation" "kdabet-bank"])
+  
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; Load up environmental data.  This data is usually send in a 
+  ;; transaction "command" but in the repl here we are simulating
+  ;; these transactions with (env-data ...).
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  (env-data {
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;; Describe the keys you want to add to the simulation
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    "kdabet-admin": {"keys": ["kdabet-admin"],"pred": "keys-any"},
+    "kdabet-operation": {"keys": ["kdabet-operation"],"pred": "keys-any"},
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;; Describe any guards you want in the form of a key
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
+    "creatorGuard": {"keys": ["kdabet-operation"],"pred": "keys-all"},
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;; Define the collection!  
+    ;;------------------------------------------------------------
+    ;; name -> name the collection
+    ;; creator -> <keyset>
+    ;; creatorGuard -> [<keyset>]  no random creators
+    ;; description: describe the collection
+    ;; types: describes the Lords and Kings
+    ;; typedata: describes the whitelist
+    ;; typepolicies: describes the NG policies for each type
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
+    "collection": {
+      "name": "kadena-kings",
+      "creator": "kdabet-operation",
+      "creatorGuard": {
+        "keys": ["kdabet-operation"],
+        "pred": "keys-any"
+      },
+      "description": "The kadena king is a utility NFT that governs the finance of the kdabet protocol",
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;;NOTE: There is a limited amount of time for the king to mint
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      "types": [
+         {
+          "id": "king",
+          "startTime": {"time": "2023-12-03T20:00:00Z"},
+          "endTime": {"time": "2024-01-03T00:00:00Z"},
+          "cost": 300.0,
+          "limit": 1,
+          "currencyType": "USD"
+        },
+        {
+          "id": "monarch",
+          "startTime": {"time": "2024-02-04T00:00:01Z"},
+          "endTime": {"time": "2028-02-04T00:00:00Z"},
+          "cost": 1000.0,
+          "limit": 1,
+          "currencyType": "USD"
+        },
+        {
+          "id": "lord",
+          "startTime": {"time": "2024-01-04T00:00:01Z"},
+          "endTime": {"time": "2024-02-04T00:00:00Z"},
+          "cost": 0.0,
+          "limit": 300,
+          "currencyType": "USD"
+        }
+      ]
+    },
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;; The Whitelist
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
+    "type-data": [
+      {
+        "id": "king",
+        "accounts": ["bob", "alice"]
+      },
+      {
+        "id": "monarch",
+        "accounts": []
+      },
+      {
+        "id": "lord",
+        "accounts": ["kdabet-operation"]
+      }
+    ],
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;; This is the critical messaging to the smart contract
+    ;; with respect to firing NG policies
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    "type-policies": [
+      {
+        "type": "king",
+        "policy-stack": "NON-FUNGIBLE INSTANT-MINT TRUSTED-CUSTODY FIXED-SALE AUCTION-SALE FIXED-SALE MARKETPLACE EXTRA-POLICIES"
+      },
+      {
+        "type": "monarch",
+        "policy-stack": "NON-FUNGIBLE INSTANT-MINT TRUSTED-CUSTODY FIXED-SALE AUCTION-SALE FIXED-SALE MARKETPLACE EXTRA-POLICIES"
+      },
+      { 
+        "type": "lord",
+        "policy-stack": "NON-FUNGIBLE INSTANT-MINT TRUSTED-CUSTODY DISABLE-SALE DISABLE-TRANSFER EXTRA-POLICIES"
+      }
+    ],
+    "upgrade": false
+  })
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;Now load the smart contract
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  (load "../kingsmint.pact")
+ 
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;Change the environmental data to operations and execute the
+  ;;create collection function.
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  (env-keys ["kdabet-operation"])
+  (env-gasmodel "table") 
+  (env-gaslimit 150000)
+  (env-gas 0)
+    (free.kingsmint.create-collection 500 (read-msg 'collection) coin) 
+    (free.kingsmint.add-policies "kadena-kings" (read-msg 'type-policies)) 
+  (env-gas)
+(commit-tx)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;Adds the kdabet operations account for recieving money
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
+(begin-tx "Add Operations Account")
+  (env-keys ["kdabet-operation"])
+  (coin.create-account "kdabet-operation" (read-keyset "kdabet-operation"))
+(commit-tx)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;Add the whitelist to the whitelist table
+;;This requires that the collection is already made
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
+(begin-tx "Create whitelist")
+  (env-chain-data { "block-time": (time "2023-12-25T20:00:00Z")})
+  (env-keys ["kdabet-operation"])
+  (free.kingsmint.add-whitelist-by-type "kadena-kings" (read-msg 'type-data))
+(commit-tx)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;The Creator emits a token for the owner to mint on NG
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
+(begin-tx "Bob pays KDAbet to mint a king NFT")
+  ;;we set the time to be in the illegitimate range
+  (env-chain-data { "block-time": (time "2025-01-05T20:00:00Z")})
+  (env-keys ["bob-key"])
+  (env-sigs
+    [{
+      "key": "bob-key",
+      "caps": [
+        (coin.TRANSFER "bob" "kdabet-operation" 500.0)
+      ]
+    }]
+  )
+ 
+  ;;Mint the token 
+  (free.kingsmint.reserve-mint "kadena-kings" "bob")
+(commit-tx)
+
