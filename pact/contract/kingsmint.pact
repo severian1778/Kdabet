@@ -4,6 +4,7 @@
 (use free.util-time)
 (use free.util-lists)
 (use marmalade-ng.ledger)
+(ns.create-principal-namespace (read-keyset "kdabet-admin"))
 ;; Define the critical keysets that are need to run smart contract operations
 (define-keyset "free.kdabet-admin" (read-keyset "kdabet-admin"))
 (define-keyset "free.kdabet-operation" (read-keyset "kdabet-operation"))

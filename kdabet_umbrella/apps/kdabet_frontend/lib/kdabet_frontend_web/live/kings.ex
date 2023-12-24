@@ -21,7 +21,7 @@ defmodule KdabetFrontendWeb.Kings do
     ~F"""
     <div class="flex flex-col w-full h-fit">
       <!-- Modal Popup -->
-      <KingModal id="modal"></KingModal>
+      <KingModal id="modal" />
 
       <!-- Textual information -->
       <section class="font-exo2 w-full mx-auto max-w-[1600px] h-fit flex flex-col md:flex-row justify-between py-5 lg:py-10">
@@ -57,7 +57,6 @@ defmodule KdabetFrontendWeb.Kings do
       <hr class="w-full border-t-blue-800 border-b-blue-900 mb-5">
       <!-- nft rows -->
       <section class="font-exo2 w-full flex flex-col mx-auto max-w-[1600px]">
-
         <!-- Kings Section -->
         <div class="glowtext w-full flex flex-row justify-between">
           <h1 class="text-[1.75em] lg:text-[2.15em] xl:text-[2.7em] flex flex-row font-bold justify-start space-x-1 sm:space-x-2 lg:space-x-3">
@@ -68,15 +67,12 @@ defmodule KdabetFrontendWeb.Kings do
         </div>
 
         <!-- Seperator -->
-        <hr class="border-stone-700 my-4"/>
+        <hr class="border-stone-700 my-4">
 
         <!-- Kings Collection List -->
         <div class="kingcontainer flex flex-wrap justify-center">
           <!-- Iterate through the kings -->
-          <div
-            class="w-full lg:mb-5 lg:w-[50%] my-2 max-w-2xl mx-auto"
-            :for={{discord, name} <- @kings}
-          >
+          <div class="w-full lg:mb-5 lg:w-[50%] my-2 max-w-2xl mx-auto" :for={{discord, name} <- @kings}>
             <King name={name} discord={discord} />
           </div>
         </div>
@@ -90,7 +86,7 @@ defmodule KdabetFrontendWeb.Kings do
           <p class="glowtext text-[1.75em] lg:text-[2.15em] xl:text-[2.7em]">{@lords |> length}/60</p>
         </div>
         <!-- Seperator -->
-        <hr class="border-stone-700 my-4"/>
+        <hr class="border-stone-700 my-4">
 
         <!-- Kings Collection List -->
         <div class="kingcontainer flex flex-wrap justify-center">
@@ -116,9 +112,49 @@ defmodule KdabetFrontendWeb.Kings do
   defp kingslist() do
     [
       {"BaronRon021", "Baron Courtswayer"},
+      {"JimmieDossHotep", "Captain Kincsem"},
+      {"Amir", "DariusBytezar"},
+      {"Halo77", "King Aryan"},
       {"ILikePow", "King Cat"},
       {"KDX Frog Schizo", "King of Lillypads"},
-      {"KDXLain", "Queen of Pixels"}
+      {"crob1985", "Peter K. Pact"},
+      {"KDXLain", "Queen of Pixels"},
+      {"teensfrommarz", "Mephisto"},
+      {"RaiSM129", "Home Lezz"},
+      {"Arunroohaayil", "King George"},
+      {"Reese", "King RedBeard"},
+      {"rafuael", "BuilderKing"},
+      {"BoredInDaOffice", "Moking"},
+      {"ezal_kda", "Marrok"},
+      {"Teere35627623", "Unwise Hold Man"},
+      {"Eddk147", "The Dawgfather King"},
+      {"DanteSettles", "K:ween K:Lo"},
+      {"Pow_Mooon1", "Slave Node King"},
+      {"Pow_Mooon2", "Silicon King"},
+      {"Pow_Mooon3", "King of Bags"},
+      {"Hazen", "Lich King"},
+      {"JamboyCrypto", "King T'challa"},
+      {"CorteMortez", "King Jedidiah"},
+      {"Sleachim", "Misch"},
+      {"TheMarcus", "Surf King"},
+      {"TheMarcus2", "Queen Of Slopes"},
+      {"TheMarcus3", "King of the Book"},
+      {"Mayoyo", "Lion King"},
+      {"Markyboy", "Lupu Lupu"},
+      {"Chantal", "Glass Queen"},
+      {"Donald", "Koala Kat King"},
+      {"kingofcigars", "King of Smoke"},
+      {"No", "King No"},
+      {"Forbes", "Hagar the Horrible"},
+      {"Victoria_CG", "Queen Costa"},
+      {"gaz.kda", "Radagast"},
+      {"Olabero", "Sir 888"},
+      {"Raoul85", "El Kapy"},
+      {"KNico", "King Agility"},
+      {"Linesman", "LeBron Chimpson III "},
+      {"RamRaiderRico", "Golden Gambles"},
+      {"Jack_Atta", "King of Pu$$y "},
+      {"VimilionAryan", "BAT KING"}
     ]
   end
 
