@@ -1,0 +1,4 @@
+cmd: "{\"networkId\":\"testnet01\",\"payload\":{\"exec\":{\"data\":\"data.json\",\"code\":\"(ns.create-principal-namespace (read-keyset \\\"534cd6181377b6007ac16b0e441d7f32a6cc0b0d3ca665f6044fc795e3cc48ea\\\"))\"}},\"signers\":[{\"pubKey\":\"534cd6181377b6007ac16b0e441d7f32a6cc0b0d3ca665f6044fc795e3cc48ea\"}],\"meta\":{\"creationTime\":1703310813,\"ttl\":600,\"gasLimit\":2300,\"chainId\":\"1\",\"gasPrice\":1.0e-6,\"sender\":\"k:c505d43881629be61b743d6c1dbc9ccaf746e8c41d5bf5863baab9611881f025\"},\"nonce\":\"2023-12-23 05:53:33.575121 UTC\"}"
+sigs:
+- pubKey: 534cd6181377b6007ac16b0e441d7f32a6cc0b0d3ca665f6044fc795e3cc48ea
+  sig: null

@@ -1,0 +1,14 @@
+code: |-
+  (ns.create-principal-namespace (read-keyset "534cd6181377b6007ac16b0e441d7f32a6cc0b0d3ca665f6044fc795e3cc48ea"))
+data: data.json
+meta:
+  chainId: "{{chain}}"
+  sender: "{{{from-acct}}}"
+  gasLimit: 2300
+  gasPrice: 0.000001
+  ttl: 600
+networkId: testnet01
+signers:
+  - public: 534cd6181377b6007ac16b0e441d7f32a6cc0b0d3ca665f6044fc795e3cc48ea
+    caps:
+type: exec
