@@ -83,7 +83,7 @@ defmodule KdabetFrontendWeb.Kings do
             <span class="h-[40px] w-[40px] lg:h-[50px] lg:w-[50px] xl:h-[60px] xl:w-[60px]"><FontAwesome.LiveView.icon name="scroll" type="solid" class="crownicon" /></span>
             <span>Lords Row</span>
           </h1>
-          <p class="glowtext text-[1.75em] lg:text-[2.15em] xl:text-[2.7em]">{@lords |> length}/60</p>
+          <p class="glowtext text-[1.75em] lg:text-[2.15em] xl:text-[2.7em]">{@lords |> length}/57</p>
         </div>
         <!-- Seperator -->
         <hr class="border-stone-700 my-4">
@@ -131,6 +131,7 @@ defmodule KdabetFrontendWeb.Kings do
       {"Pow_Mooon1", "Slave Node King"},
       {"Pow_Mooon2", "Silicon King"},
       {"Pow_Mooon3", "King of Bags"},
+      {"Paraci", "King Leonard II"},
       {"Hazen", "Lich King"},
       {"JamboyCrypto", "King T'challa"},
       {"CorteMortez", "King Jedidiah"},
