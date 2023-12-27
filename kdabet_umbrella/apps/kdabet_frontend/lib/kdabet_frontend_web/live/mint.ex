@@ -83,7 +83,7 @@ defmodule KdabetFrontendWeb.Mint do
     ~F"""
     <div class="flex flex-col max-w-6xl mx-auto space-y-10">
       <div class="w-full flex flex-row justify-center my-[30px] w-full">
-        <!-- Dashboard-->
+        <!-- Dashboard -->
         <section class="w-full">
           <div class="w-full font-exo2 text-stone-200 font-bold space-y-2">
             <h1 class="w-full text-center text-5xl">Mint a KDA king</h1>
@@ -91,21 +91,24 @@ defmodule KdabetFrontendWeb.Mint do
           </div>
         </section>
       </div>
-      <!-- Pre-Amble-->
+      <!-- Pre-Amble -->
       <div class="font-exo2 text-2xl text-stone-200 flex flex-row">
-        <img class="rounded-md border-2 border-stone-200 w-[300px] h-[300px]"src="/images/mintking.png">
-          <p class="flex-1 pl-10">Thank you for purchasing a Kadena King NFT.   The Kadena King is a special utility king that offers a 0.2% equal share of the work product with respect to the KDAbet sports betting and casino operator.  The Kadena king NFT offers the holder the ability to govern the future of the protocol, make a steady passive income and take part in the growth mechanic of the operator.<br><br>Please follow the directions and let your reign begin!</p>
+        <img
+          class="rounded-md border-2 border-stone-200 w-[300px] h-[300px]"
+          src="/images/mintking.png"
+        />
+        <p class="flex-1 pl-10">Thank you for purchasing a Kadena King NFT.   The Kadena King is a special utility king that offers a 0.2% equal share of the work product with respect to the KDAbet sports betting and casino operator.  The Kadena king NFT offers the holder the ability to govern the future of the protocol, make a steady passive income and take part in the growth mechanic of the operator.<br><br>Please follow the directions and let your reign begin!</p>
       </div>
-      <!-- Paragraph seperator-->
-      <img class="mx-auto" src="/images/crownseperator.png"/>
+      <!-- Paragraph seperator -->
+      <img class="mx-auto" src="/images/crownseperator.png">
       <!-- Step 1 -->
       <div class="flex flex-row">
-        <div class="w-1/2 max-width-1/2 font-exo2 text-stone-200 ">
+        <div class="w-1/2 max-width-1/2 font-exo2 text-stone-200">
           <div class="space-y-5">
             <h2 class="font-bold text-4xl">Connect Your Wallet:</h2>
             <h3 class="text-2xl">Choose a supported Maramlade NG provider.  Your wallet details will show up in the dashboard</h3>
           </div>
-          <!-- Wallet Details-->
+          <!-- Wallet Details -->
           <section class="glasscard w-full px-6 py-5 mt-10 mb-[30px]">
             <ul class="list-none font-exo2 text-stone-200 text-xl w-full space-y-1">
               <li class="flex flex-row justify-start">
@@ -113,12 +116,12 @@ defmodule KdabetFrontendWeb.Mint do
                 <span>
                   {#if assigns.walletState.account != ""}
                     {Enum.join([
-                      assigns.walletState.account|>String.slice(0,10),
+                      assigns.walletState.account |> String.slice(0, 10),
                       "...",
-                      assigns.walletState.account|>String.reverse|>String.slice(0,10)|>String.reverse
+                      assigns.walletState.account |> String.reverse() |> String.slice(0, 10) |> String.reverse()
                     ])}
                   {/if}
-               </span>
+                </span>
               </li>
               <li class="flex flex-row justify-start">
                 <span class="w-24 font-bold">Provider:</span>
@@ -133,16 +136,28 @@ defmodule KdabetFrontendWeb.Mint do
           </section>
         </div>
         <div class="w-1/2 max-width-1/2">
-          <!-- Wallet Connect Dropdown-->
+          <!-- Wallet Connect Dropdown -->
           <section class="w-full" x-data="{ open: false }">
             <!-- Connect Button -->
-            <button class="connectButton" x-on:click={assigns.connectButton.event} id="connectButton" :on-click={assigns.connectButton.func} phx-value-wallet={assigns.connectButton.provider} phx-hook={assigns.connectButton.hook}>
+            <button
+              class="connectButton"
+              x-on:click={assigns.connectButton.event}
+              id="connectButton"
+              :on-click={assigns.connectButton.func}
+              phx-value-wallet={assigns.connectButton.provider}
+              phx-hook={assigns.connectButton.hook}
+            >
               <img class="w-[30px] h-[30px]" :if={@connectButton.working} src="/images/pulse.gif">
               <span>{assigns.connectButton.innertext}</span>
             </button>
 
-            <!-- Disc-->
-            <div class="w-60 rounded-md bg-sky-700 overflow-hidden mx-auto" x-show="open" @click="open=false" @click.away="open = false">
+            <!-- Disc -->
+            <div
+              class="w-60 rounded-md bg-sky-700 overflow-hidden mx-auto"
+              x-show="open"
+              @click="open=false"
+              @click.away="open = false"
+            >
               <ul class="wallet-select-list">
                 <li id="koala_connect" :on-click="connectWithProvider" phx-value-wallet="koala">
                   <img src="/images/koala.png">
@@ -166,11 +181,11 @@ defmodule KdabetFrontendWeb.Mint do
           </section>
         </div>
       </div>
-      <!-- Paragraph seperator-->
-      <img class="mx-auto mt-[30px]" src="/images/crownseperator.png"/>
-      <!-- Step 2-->
+      <!-- Paragraph seperator -->
+      <img class="mx-auto mt-[30px]" src="/images/crownseperator.png">
+      <!-- Step 2 -->
       <div class="flex flex-row">
-        <div class="w-1/2 max-width-1/2 font-exo2 text-stone-200 ">
+        <div class="w-1/2 max-width-1/2 font-exo2 text-stone-200">
           <div class="space-y-5">
             <h2 class="font-bold text-4xl">Confirm Your King:</h2>
             <h3 class="text-2xl">A king can only be minted if your wallet is recorded as immutable data in the Kadena Kings NG mint smart contract.<br><br>If you are not on the whitelist, you cannot mint.<br><br>If a king has appeared in the prompt on the right hand side, this means you can mint a king.  Please confirm this is your Kadena king.</h3>
@@ -178,7 +193,10 @@ defmodule KdabetFrontendWeb.Mint do
         </div>
         <!-- King Data -->
         <div class="w-1/2 max-width-1/2 font-exo2 text-stone-200 flex flex-col text-2xl font-bold space-y-2">
-          <img class="rounded-md border-2 border-stone-300 w-[400px] h-[400px] mx-auto" src="/images/kings/ILikePow.png">
+          <img
+            class="rounded-md border-2 border-stone-300 w-[400px] h-[400px] mx-auto"
+            src="/images/kings/ILikePow.png"
+          />
           <h2 class="flex flex-row justify-between w-[400px] mx-auto">
             <span>Name:</span>
             <span>Name</span>
@@ -189,60 +207,67 @@ defmodule KdabetFrontendWeb.Mint do
           </h2>
         </div>
       </div>
-      <!-- Paragraph seperator-->
-      <img class="mx-auto mt-[30px]" src="/images/crownseperator.png"/>
-      <!-- Step 3-->
+      <!-- Paragraph seperator -->
+      <img class="mx-auto mt-[30px]" src="/images/crownseperator.png">
+      <!-- Step 3 -->
       <div class="flex flex-row">
-        <div class="w-1/2 max-width-1/2 font-exo2 text-stone-200 ">
+        <div class="w-1/2 max-width-1/2 font-exo2 text-stone-200">
           <div class="space-y-5">
             <h2 class="font-bold text-4xl">Mint Your King:</h2>
-            <h3 class="text-2xl">Take your rightful throne and mint the king.  </h3>
+            <h3 class="text-2xl">Take your rightful throne and mint the king.
+            </h3>
           </div>
-          <!-- Wallet Details-->
+          <!-- Wallet Details -->
           <section class="glasscard w-full px-6 py-5 mt-10 mb-[30px]">
             <ul class="list-none font-exo2 text-stone-200 text-xl w-full space-y-1">
               <li class="flex flex-row justify-start">
                 <span class="w-36 font-bold">Txn Sent:</span>
-                <span></span>
+                <span />
               </li>
               <li class="flex flex-row justify-start">
                 <span class="w-36 font-bold">Txn Confirmed:</span>
-                <span></span>
+                <span />
               </li>
               <li class="flex flex-row justify-start">
                 <span class="w-36 font-bold">Explorer:</span>
-                <span></span>
+                <span />
               </li>
             </ul>
           </section>
-
         </div>
         <!-- Mint Button -->
         <div class="w-1/2">
           <button class="connectButton">Mint the King</button>
         </div>
       </div>
-      <!-- Paragraph seperator-->
-      <img class="mx-auto mt-[30px]" src="/images/crownseperator.png"/>
-      <!-- Step 4-->
+      <!-- Paragraph seperator -->
+      <img class="mx-auto mt-[30px]" src="/images/crownseperator.png">
+      <!-- Step 4 -->
       <div class="flex flex-row">
-        <div class="w-1/2 max-width-1/2 font-exo2 text-stone-200 ">
+        <div class="w-1/2 max-width-1/2 font-exo2 text-stone-200">
           <div class="space-y-5">
             <h2 class="font-bold text-4xl">Join the DAO:</h2>
-            <h3 class="text-2xl">As the Ruler of KDAbet you must join the council of Kings.  Please register your wallet on the Swarms DAO software <a class="hover:text-pink-300 text-sky-300" href="https://dao.swarms.finance/dao/ZCo5s3nlXkBbXmjduTDPTS_a1nlbVWKyGoV0uWLDU5E">here.</a> </h3>
+            <h3 class="text-2xl">As the Ruler of KDAbet you must join the council of Kings.  Please register your wallet on the Swarms DAO software <a
+                class="hover:text-pink-300 text-sky-300"
+                href="https://dao.swarms.finance/dao/ZCo5s3nlXkBbXmjduTDPTS_a1nlbVWKyGoV0uWLDU5E"
+              >here.</a>
+            </h3>
           </div>
         </div>
         <!-- Swarms Data -->
         <div class="w-1/2 max-width-1/2 font-exo2 text-stone-200 flex flex-col text-2xl font-bold space-y-2">
-          <img class="rounded-md border-2 border-stone-300 w-[400px] h-[400px] mx-auto" src="/images/swarms.png">
+          <img
+            class="rounded-md border-2 border-stone-300 w-[400px] h-[400px] mx-auto"
+            src="/images/swarms.png"
+          />
         </div>
       </div>
-      <!-- Paragraph seperator-->
-      <img class="mx-auto mt-[30px]" src="/images/crownseperator.png"/>
-      <!-- Thank You-->
+      <!-- Paragraph seperator -->
+      <img class="mx-auto mt-[30px]" src="/images/crownseperator.png">
+      <!-- Thank You -->
       <div class="flex flex-col text-stone-200 font-exo2 text-center space-y-10">
         <h2 class="text-4xl">Thank you for becoming a fellow in the only decentralized ownership casino/sportsbook in the world.</h2>
-        <h1 class="text-2xl">Together we strive to make Kadena the destination for bettors who wan't complete freedom to enjoy their hobby, free from profiteering.</h1>
+        <h1 class="text-2xl">Together we strive to make Kadena the destination for bettors who want complete freedom to enjoy their hobby, free from profiteering.</h1>
         <img class="mx-auto w-[100px] h-[100px]" src="/images/thronelogo.png">
       </div>
     </div>
