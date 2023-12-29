@@ -319,7 +319,7 @@ defmodule KdabetFrontendWeb.Kings do
       {"Sophiascoins", "Queen of Colors"},
       {"Dabatola", "King Lazarus"},
       {"Surf777", "Turtle King"},
-      {"DonutSmoker", "Beauregard"},
+      {"DonutSmoker", "King Beauregard"},
       {"Alberto", "King of The Seas"},
       {"Riley", "Otter King"},
       {"ElCid", "King El Cid"},
@@ -338,7 +338,7 @@ defmodule KdabetFrontendWeb.Kings do
       {"NewKDA", "Moonwalker King"},
       {"MarginCalled", "Liquidation King"},
       {"DegAkal", "Voodoo King"},
-      {"RonLaflamme", "Themis"},
+      {"RonLaflamme", "Plutus"},
       {"Udyahm", "Kdababa"},
       {"JkenLu", "King Pac"},
       {"Dankabull", "Nefrititi"},
@@ -348,14 +348,16 @@ defmodule KdabetFrontendWeb.Kings do
       {"Ele_1704", "Red Queen"},
       {"Buzz", "King of Hoops"},
       {"Bern1", "Queen of Auburn"},
-      {"Mooni23", "Indian King"},
+      {"Mooni23", "Kush King"},
       {"OldCoder", "Old King"},
       {"Rihaan", "Flash King"},
       {"Sybil", "Archival Queen"},
       {"CaptainInsane", "The Dark Uncle"},
       {"Screens32", "Phoenix King"},
       {"RyanCronin", "Animation King"},
-      {"Bushman", "King of Dice"}
+      {"Bushman", "King of Dice"},
+      {"AgentZero", "Cypherpunk King"},
+      {"KDXLiamSan", "King of Tea"}
     ]
   end
 
