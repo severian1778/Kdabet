@@ -191,7 +191,7 @@ defmodule KdabetFrontendWeb.Kings do
       {"SansaL76", "Do Rag King"},
       {"Seankda", "King of Trek"},
       {"Debilisatore", "Satoshe"},
-      {"Ron", "Ron - King of Wizards"},
+      {"Ron", "King Ron Weasley"},
       {"Kadena ireland", "King James"},
       {"CryptoSpyder", "King Spyder"},
       {"Temple", "King Amandla Kamari"},
@@ -354,10 +354,10 @@ defmodule KdabetFrontendWeb.Kings do
       {"Sybil", "Archival Queen"},
       {"CaptainInsane", "The Dark Uncle"},
       {"Screens32", "Phoenix King"},
-      {"RyanCronin", "Animation King"},
       {"Bushman", "King of Dice"},
       {"AgentZero", "Cypherpunk King"},
-      {"KDXLiamSan", "King of Tea"}
+      {"MikeHerron", "Fossil King"},
+      {"RyanCronin", "Table Tennis King"}
     ]
   end
 
