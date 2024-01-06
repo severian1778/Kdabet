@@ -26,7 +26,7 @@
   ;; real world they will be keysets (crypto hashes)
   ;; generated from your keypair software (kda-tool) 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  (env-keys ["kdabet-admin" "kdabet-operation" "kdabet-bank"])
+  (env-keys ["kdabet-admin" "kdabet-operation"])
   
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Load up environmental data.  This data is usually send in a 
@@ -36,19 +36,12 @@
   (env-data {
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     ;; Describe the keys you want to add to the simulation
-    ;; Generally we have admin (governance) ops (operations) and
-    ;; banking which is a special key for financial ops.
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     "kdabet-admin": {"keys": ["kdabet-admin"],"pred": "keys-any"},
     "kdabet-operation": {"keys": ["kdabet-operation"],"pred": "keys-any"},
-    "kdabet-bank": {"keys": ["kdabet-bank"],"pred": "keys-all"},
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     ;; Describe any guards you want in the form of a key
-    ;; Here we have the bankguard (only governance here) 
-    ;; we also have the collection creator guard which in our case
-    ;; is the operations keyset.
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
-    "bank-guard": {"keys": ["kdabet-admin"],"pred": "keys-all"},
     "creatorGuard": {"keys": ["kdabet-operation"],"pred": "keys-all"},
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     ;; Define the collection!  
@@ -123,11 +116,11 @@
     "type-policies": [
       {
         "type": "king",
-        "policy-stack": "NON-FUNGIBLE INSTANT-MINT TRUSTED-CUSTODY FIXED-SALE AUCTION-SALE FIXED-SALE MARKETPLACE EXTRA-POLICIES"
+        "policy-stack": "NON-FUNGIBLE INSTANT-MINT TRUSTED-CUSTODY FIXED-SALE AUCTION-SALE MARKETPLACE EXTRA-POLICIES"
       },
       {
         "type": "monarch",
-        "policy-stack": "NON-FUNGIBLE INSTANT-MINT TRUSTED-CUSTODY FIXED-SALE AUCTION-SALE FIXED-SALE MARKETPLACE EXTRA-POLICIES"
+        "policy-stack": "NON-FUNGIBLE INSTANT-MINT TRUSTED-CUSTODY FIXED-SALE AUCTION-SALE MARKETPLACE EXTRA-POLICIES"
       },
       { 
         "type": "lord",
@@ -141,7 +134,10 @@
   ;;Now load the smart contract
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   (load "kingsmint.pact")
- 
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;Set the Date
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
+  (env-chain-data { "block-time": (time "2024-01-01T20:00:00Z")}) 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;Change the environmental data to operations and execute the
   ;;create collection function.
@@ -169,7 +165,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 (begin-tx "Create whitelist")
   (env-keys ["kdabet-operation"])
-  (free.kingsmint.add-whitelist-to-type "kadena-kings" (read-msg 'type-data))
+  (free.kingsmint.add-whitelist-by-type "kadena-kings" (read-msg 'type-data))
 (commit-tx)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

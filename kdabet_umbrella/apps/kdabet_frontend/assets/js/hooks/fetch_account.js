@@ -30,6 +30,7 @@ const FetchAccount = async (providerId) => {
     accountFetchResult = await provider.fetch_account();
 
     if (accountFetchResult.status === 'success') {
+      console.log(accountFetchResult) 
       /* extracting state variables fromwallet response*/
       let balance = typeof accountFetchResult.balance === "undefined" || !accountFetchResult.balance ? 0.0 : accountFetchResult.balance;
 

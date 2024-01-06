@@ -14,16 +14,19 @@ defmodule KdabetFrontendWeb.Components.KingModal do
 
   def render(assigns) do
     ~F"""
-      <div class={"modal", "is-active": @show} :on-window-keydown="hide" phx-key="Escape">
-        <div class="modal-background" />
-        <div class="modal-card">
-          <header class="modal-card-head flex flex-row justify-between">
-            <p class="modal-card-title">{@name}</p>
-            <button :on-click="hide" class="rounded-md ring-2 px-2 py-1 ring-stone-800 sans text-xl text-stone-200 bg-sky-600">close</button>
-          </header>
-          <img class="w-full" src={"/images/kings/"<>@uri<>".png"}>
-        </div>
+    <div class={"modal", "is-active": @show} :on-window-keydown="hide" phx-key="Escape">
+      <div class="modal-background" />
+      <div class="modal-card">
+        <header class="modal-card-head flex flex-row justify-between">
+          <p class="modal-card-title">{@name}</p>
+          <button
+            :on-click="hide"
+            class="rounded-md ring-2 px-2 py-1 ring-stone-800 sans text-xl text-stone-200 bg-sky-600"
+          >close</button>
+        </header>
+        <img class="w-full" src={"/images/kings/" <> @uri <> ".png"}>
       </div>
+    </div>
     """
   end
 

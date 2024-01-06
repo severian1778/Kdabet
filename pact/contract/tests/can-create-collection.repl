@@ -21,7 +21,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (begin-tx "create collection")
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; import the relevant kets that will be needed
+  ;; Import the relevant keys that will be needed
+  ;;
   ;; In the sandbox is can be strings like this but in the
   ;; real world they will be keysets (crypto hashes)
   ;; generated from your keypair software (kda-tool) 

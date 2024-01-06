@@ -10,7 +10,6 @@ const KoalaWallet = {
       method: "kda_connect",
       networkId: networkId,
     });
-    console.log("accountResult")
     /* return result */ 
     return accountResult;
   },
@@ -20,6 +19,15 @@ const KoalaWallet = {
       method: "kda_disconnect",
       networkId: networkId,
     });    
+  },
+  fetch_account: async function(){
+    /* Asyncronously make a get balance request to Koala Wallet */   
+    let account = await window.koala.request({
+      method: 'kda_requestAccount',
+      networkId,
+    });
+    /*  return result */
+    return account;
   },
   sign: async function(signingCommand) {
     /* Create a signing command, send it to Koala wallet

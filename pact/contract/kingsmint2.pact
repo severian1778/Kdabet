@@ -1,16 +1,23 @@
 ;; As always we must define the module under a namespace
 (namespace "free")
-
-;;make sure to use time utils and ng
-(use free.util-time)
-(use free.util-lists)
-(use marmalade-ng.ledger)
-
 ;; Define the critical keysets that are need to run smart contract operations
 (define-keyset "free.kdabet-admin" (read-keyset "kdabet-admin"))
 (define-keyset "free.kdabet-operation" (read-keyset "kdabet-operation"))
 
 (module kingsmint GOVERNANCE
+  ;;make sure to use time utils and ng
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; CAPABILITIES
+  ;;-------------------------------------------------------
+  ;; Capabilities are permissions granted to keysets to 
+  ;; access functions of the smart contract module
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  (use free.util-time)
+  (use free.util-lists)
+  ;;(use free.pay-oracle)
+  ;; Load marmalade-ng
+  (use marmalade-ng.ledger)
+  (use marmalade-ng.policy-collection)
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; CAPABILITIES
   ;;-------------------------------------------------------
@@ -197,7 +204,7 @@
     (with-capability (CREATECOL)
       
       ; Validate the collection tiers
-      (enforce (> collectionSize 0) "Total supply must be greater than 0")
+      ; (enforce (> collectionSize 0) "Total supply must be greater than 0")
       (enforce (= collectionSize 500) "Total supply must be 500")
 
       ;; Validate the types are correctly set.
@@ -232,19 +239,7 @@
           col-owner
           operator-guard
         )
-      (format "{}" [
-        (+                                 
-          { "fungible": fungible           
-          , "currentIndex": 1              
-          , "totalSupply": collectionSize  
-          , "id": collection-id            
-          , "creator": operator-account    
-          , "creatorGuard": operator-guard 
-          }                                
-          collection-data                  
-        ) 
-      ])
-      ;;"Collection successfully created" 
+      "Collection successfully created" 
       ) 
     )
   )
@@ -443,8 +438,8 @@
       ;;enumerate over list
       (let*
         (
-          ;;(collection-data (read collections collection))
-          ;;(currentIndex (at "currentIndex" collection-data))
+          (collection-data (read collections collection))
+          (currentIndex (at "currentIndex" collection-data))
           (mint-count (get-whitelist-mint-count collection "lord" account))
           (acguard:guard (at "guard" (fungible::details account)))
         )
@@ -511,30 +506,34 @@
 
           (let*
             (
-              (actual-cost:decimal 500.0);(if 
-                ;(= currencyType "USD") 
-                ;  (let ((kdausdprice:decimal (at "kda-usd-price" (free.pay-oracle.get-kda-usd-price)))) 
-                ;   (floor (/ cost kdausdprice) 2)) cost))
+              (actual-cost:decimal 
+                (if 
+                  (= currencyType "USD") 
+                  (let 
+                    (
+                      (kdausdprice:decimal 1.43);(at "kda-usd-price" (free.pay-oracle.get-kda-usd-price)))
+                    ) 
+                    (floor (/ cost kdausdprice) 2)
+                  ) 
+                  cost
+                )
+              )
               (mint-count (get-whitelist-mint-count collection id account))
               (total-cost:decimal actual-cost)
               (acguard:guard (at "guard" (fungible::details account)))
               (current-type:string (get-whitelist-type collection id account))
-              (is-whitelisted:bool (is-whitelisted collection id account))
             )
 
-            ;;The whitelisted account exists
-            (enforce is-whitelisted (format "The account {} does not exist" [account]))
- 
             ;;The whitelister must be within time bounds
             (enforce 
               (= id current-type)
               (format 
-                "The whitelister: {} cannot mint in invalid time range. \n Current type is {} \n The whitelister has type of {}" 
+                "The whitelister: {} cannot mint in invalid time range. \n Current type is {}" 
                 [account id current-type]
               )
             )
  
-            ;;The whitelisted account is not invalidated or or already minted
+            ;;The account must be whitelisted
             (enforce (= mint-count 0) (format "The account {} has already minted a king" [account]))
             
             ;;A whitelister cannot mint more than 1.
@@ -585,12 +584,9 @@
     )
     (require-capability (MINT))
 
-    ;;Updates the current NFT count in the collection
     (update collections collection
       { "currentIndex": (+ currentIndex amount) }
     )
-
-    ;;Maps 
     (map
       (mint-token collection account guard)
       (map (+ currentIndex) (enumerate 0 (- amount 1)))
@@ -641,7 +637,7 @@
   (defun create-marmalade-token:string
     (
       uri:string
-      precision:integer
+      precision:integer 
       collection:string
       marmToken:integer
     )
@@ -985,14 +981,14 @@
   ;; IO/General functions         
   ;;-------------------------------------------------
   ;; General Helper functions for unit testing
-  ;; > check-for-named-collection: checks for a certain collection of nft
+  ;; check-for-named-collection: checks for a certain collection of nft
   ;; > get-owned: retrieves all owned NFTs by a single address
   ;; > curr-time: retrieves the current block-time
   ;; > get-all-nft: gets all nfts in a list
   ;; > get-all-revealed-nft: gets all nfts on the NG ledger and are revealed
   ;; > get-wl-collection: gets all whitelisted people
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
- 
+
   (defun check-for-named-collection:string (idx:string) 
     @doc "Checks the collections object for a named collection"
     (with-read collections idx {"name":= name}
@@ -1017,12 +1013,12 @@
     @doc "Returns a list of all revealed tokens."
     (select minted-tokens (where "revealed" (= true)))
   )
-
+   
   (defun get-all-nft ([object:{minted-token}])
     @doc "Returns a list of all tokens."
     (keys minted-tokens)
   )
-
+   
   (defun get-wl-collection ([object:{whitelisted}])
     @doc "pull list of whitelist ID's for all collections."
     (keys whitelist-table)

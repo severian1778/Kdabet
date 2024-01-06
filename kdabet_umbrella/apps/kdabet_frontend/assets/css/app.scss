@@ -98,7 +98,7 @@ body{
 
 /* King Modal */
 .modal {
-  @apply w-full h-[100vh] z-40 top-0 left-0 fixed hidden flex-col justify-center items-center overflow-hidden bg-[rgba(0,0,0,0.8)];
+  @apply w-full h-[100vh] z-40 mt-0 top-0 left-0 fixed hidden flex-col justify-center items-center overflow-hidden bg-[rgba(0,0,0,0.8)];
 }
 
 .modal.is-active {
@@ -107,6 +107,10 @@ body{
 
 .modal-background {
     background-color: #0a0a0adb
+}
+
+.modal-text{
+  @apply font-exo2 text-lg bg-stone-300 p-10 rounded-b;
 }
 
 .modal-content,.modal-card {
@@ -205,6 +209,7 @@ body{
 .connectButton{
   @apply flex flex-row justify-center space-x-3 w-60 mx-auto mb-1 px-5 py-3 rounded ring-2 ring-offset-2 ring-slate-500 ring-offset-slate-300 bg-sky-500 hover:bg-sky-400 text-xl text-stone-200 font-bold font-exo2;
 }
+
 .wallet-select-list{
   @apply w-full border-sky-600 border-4;
 

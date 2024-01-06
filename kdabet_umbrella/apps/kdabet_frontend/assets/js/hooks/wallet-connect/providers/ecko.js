@@ -7,7 +7,7 @@ const EckoWallet = {
     /* Asyncronously make a wallet connect request to Ecko Wallet */
     let accountResult = await kadena.request({
       method: "kda_connect",
-      networkId: networkId,
+      networkId: networkId
     });
     /* return result */ 
     return accountResult;
@@ -16,16 +16,15 @@ const EckoWallet = {
     /* Asyncronously make a wallet disconnect request to Ecko Wallet */
     return await kadena.request({
       method: "kda_disconnect",
-      networkId: networkId,
+      networkId: networkId
     });    
   },
   fetch_account: async function(){
     /* Asyncronously make a get balance request to Ecko Wallet */   
     let account = await kadena.request({
       method: 'kda_requestAccount',
-      networkId,
+      networkId
     });
-    console.log(account)
     /*  return result */
     return account;
   }

@@ -17,6 +17,7 @@ defmodule KdabetFrontend.Application do
       # Start the Endpoint (http/https)
       KdabetFrontendWeb.Endpoint,
       # {KdabetFrontend.Worker, arg}
+      {KdabetFrontend.Kings, %{opts: [name: KdabetFrontend.Kings]}}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
