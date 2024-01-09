@@ -1,6 +1,8 @@
 import ConnectWithProvider from "./connect_with_provider"
 import DisconnectProvider from "./disconnect_provider"
 import FetchAccount from "./fetch_account"
+import SignTransaction from "./sign_transaction"
+
 /* Import web3modal for wallet connect*/
 import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi'
 //import { mainnet, kadena } from 'viem/chains'
@@ -57,6 +59,12 @@ const fetchAccount = async (scope, provider) => {
   scope.pushEvent("fetch-account-response", promise);
 }
 
+const signTransaction = async (scope, provider, unsigned_txn) => {
+  // We then await the wallet connection promise
+  promise = await SignTransaction(provider, unsigned_txn)
+  // When the promise is returned we can return the hook 
+  scope.pushEvent("return-signed", promise);
+}
 
 /* Exports listeners for various wallet functions */
 
@@ -76,6 +84,12 @@ WalletConnect = {
     window.addEventListener("phx:disconnect-wallet", (e) => {
       disconnectWallet(this, e.detail)
     })
+
+    /* The listener awaits for a signing message*/
+    window.addEventListener("phx:sign-transaction", (e) => {
+      signTransaction(this, e.detail.provider, e.detail.unsigned_txn)
+    })
+
   }
 }
 

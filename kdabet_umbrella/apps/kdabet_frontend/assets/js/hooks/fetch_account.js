@@ -26,7 +26,6 @@ const FetchAccount = async (providerId) => {
   let accountFetchResult
 
   try {
-    console.log(provider)
     accountFetchResult = await provider.fetch_account();
 
     if (accountFetchResult.status === 'success') {

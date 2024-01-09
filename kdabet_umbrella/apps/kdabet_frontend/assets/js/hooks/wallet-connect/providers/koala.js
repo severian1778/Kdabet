@@ -32,18 +32,18 @@ const KoalaWallet = {
   sign: async function(signingCommand) {
     /* Create a signing command, send it to Koala wallet
      * and return a signed transaction command */ 
-    let networkId = 'mainnet01';
+    console.log("we can at least fire the request")
     let req = {
       method: "kda_requestSign",
       networkId: networkId,
       data: {
-          networkId: networkId,
-          signingCmd: signingCommand
+        networkId: networkId,
+        signingCmd: signingCommand
       }
     }
-    
+    console.log("req", req)    
     var cmd = await window.koala.request(req);
-    // TODO: console.log("cmd inside try-catch:", cmd);
+    console.log("cmd inside try-catch:", cmd);
 
     return cmd.signedCmd;
   },

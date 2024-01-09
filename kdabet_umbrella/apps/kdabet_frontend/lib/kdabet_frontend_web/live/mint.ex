@@ -76,7 +76,9 @@ defmodule KdabetFrontendWeb.Mint do
     #################################################
     mintButton = %{
       has_loaded_nft: false,
-      has_confirmed_nft: false
+      has_confirmed_nft: false,
+      hook: "SignTransaction",
+      provider: ""
     }
 
     #################################################
@@ -299,7 +301,12 @@ defmodule KdabetFrontendWeb.Mint do
         <!-- Mint Button -->
         {#if assigns.mintButton.has_confirmed_nft}
           <div class="w-1/2 mt-5 mx-auto">
-            <button :on-click="mint_token" class="connectButton">Mint the King</button>
+            <button
+              :on-click="mintToken"
+              class="connectButton"
+              phx-value-wallet={assigns.mintButton.provider}
+              phx-hook={assigns.mintButton.hook}
+            >Mint the King</button>
           </div>
         {#else}
           <div class="w-1/2 mt-5 mx-auto">
@@ -462,7 +469,11 @@ defmodule KdabetFrontendWeb.Mint do
           }
 
         ## Flip Confirm Mint Button to on status
-        newMintButton = %{socket.assigns.mintButton | has_loaded_nft: true}
+        newMintButton = %{
+          socket.assigns.mintButton
+          | has_loaded_nft: true,
+            provider: response_from_client["provider"]
+        }
 
         ## Note: We push the wallet fetch balance event after connection is secure.
         {:noreply,
@@ -551,9 +562,20 @@ defmodule KdabetFrontendWeb.Mint do
   end
 
   @impl true
-  def handle_event("mint_token", _response, socket) do
-    IO.inspect("candace rides")
-    Transactions.mint_token(socket.assigns.walletState.pubkey) |> IO.inspect()
-    {:noreply, socket}
+  def handle_event("mintToken", %{"wallet" => provider}, socket) do
+    ## Forms an unsigned transactions
+    unsigned_txn = Transactions.prep_unsigned_txn(socket.assigns.walletState.pubkey)
+
+    safe_unsigned_txn =
+      unsigned_txn
+      |> Jason.encode!()
+
+    ## Send transaction to provider for signature
+    {:noreply,
+     socket
+     |> push_event("sign-transaction", %{
+       provider: provider,
+       unsigned_txn: safe_unsigned_txn
+     })}
   end
 end
