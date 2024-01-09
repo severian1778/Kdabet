@@ -12,6 +12,7 @@ defmodule KdabetUmbrella.MixProject do
           applications: [
             kdabet_frontend: :permanent,
             schedules: :permanent,
+            crashgame: :permanent,
             core: :permanent
           ]
         ],

@@ -1,6 +1,7 @@
 defmodule KdabetFrontendWeb.Mint do
   use KdabetFrontendWeb, :surface_live_view
   alias KdabetFrontendWeb.Components.{MintModal}
+  alias KdabetFrontend.Kings.{Transactions}
 
   @impl true
   def mount(_params, _session, socket) do
@@ -71,6 +72,16 @@ defmodule KdabetFrontendWeb.Mint do
     }
 
     #################################################
+    ## Connect Button Management
+    #################################################
+    mintButton = %{
+      has_loaded_nft: false,
+      has_confirmed_nft: false,
+      hook: "SignTransaction",
+      provider: ""
+    }
+
+    #################################################
     ## User Data
     #################################################
     userData = %{
@@ -86,6 +97,7 @@ defmodule KdabetFrontendWeb.Mint do
        kadenaState: kadenaState,
        wcState: wcState,
        connectButton: connectButton,
+       mintButton: mintButton,
        userData: userData
      )}
   end
@@ -149,7 +161,14 @@ defmodule KdabetFrontendWeb.Mint do
         </div>
         <div class="mx-auto lg:mx-0 w-1/2 max-width-1/2">
           <!-- Wallet Connect Dropdown -->
-          <section class="w-full" x-data="{ open: false }">
+          <section class="w-full space-y-10" x-data="{ open: false }">
+            <h2 class="font-exo2 text-stone-200 text-center w-100 text-3xl">Supported Wallets</h2>
+            <div class="mx-auto max-w-[320px] flex flex-row justify-between space-x-3">
+              <img class="w-[60px] h-[60px]" src="images/linx.png">
+              <img class="w-[60px] h-[60px]" src="images/koala.png">
+              <img class="w-[60px] h-[60px]" src="images/ecko.png">
+              <img class="w-[60px] h-[60px]" src="images/zelcore.png">
+            </div>
             <!-- Connect Button -->
             <button
               class="connectButton"
@@ -202,9 +221,15 @@ defmodule KdabetFrontendWeb.Mint do
             <h2 class="font-bold text-4xl text-center">Confirm Your King/Kween</h2>
             <h3 class="hidden md:block px-5 text-2xl">A king can only be minted if your wallet is recorded as immutable data in the Kadena Kings NG mint smart contract.  If you are not on the whitelist, you cannot mint.<br class="hidden lg:block"><br class="hidden lg:block">If a king has appeared in the prompt on the right hand side, this means you can mint a king.  Please confirm this is your Kadena king.</h3>
             <!-- Mint Button -->
-            <div class="hidden lg:block lg:w-1/2 !mt-10 mx-auto">
-              <button class="connectButton">This is my King</button>
-            </div>
+            {#if assigns.mintButton.has_loaded_nft}
+              <div class="hidden lg:block lg:w-1/2 !mt-16 mx-auto">
+                <button :on-click="confirm_nft" class="connectButton">This is my King</button>
+              </div>
+            {#else}
+              <div class="hidden lg:block lg:w-1/2 !mt-16 mx-auto">
+                <button class="disabledButton">This is my King</button>
+              </div>
+            {/if}
           </div>
         </div>
         <!-- King Data -->
@@ -233,15 +258,22 @@ defmodule KdabetFrontendWeb.Mint do
             </a>
           </h2>
           <!-- Mint Button -->
-          <div class="block lg:hidden lg:w-1/2 !mt-10 mx-auto lg:mx-0">
-            <button class="connectButton">This is my King</button>
-          </div>
+          {#if assigns.mintButton.has_loaded_nft}
+            <div class="block lg:hidden lg:w-1/2 !mt-10 mx-auto">
+              <button :on-click="confirm_nft" class="connectButton">This is my King</button>
+            </div>
+          {#else}
+            <div class="block lg:hidden lg:w-1/2 !mt-10 mx-auto">
+              <button class="disabledButton">This is my King</button>
+            </div>
+          {/if}
         </div>
       </div>
       <!-- Paragraph seperator -->
       <img class="mx-auto mt-[30px]" src="/images/crownseperator.png">
       <!-- Step 3 -->
-      <div class="flex flex-col lg:flex-row">
+      <div class={"flex flex-col lg:flex-row " <>
+        ((assigns.mintButton.has_confirmed_nft && "opacity-100") || "opacity-50")}>
         <div class="w-100 max-w-2xl lg:w-1/2 lg:max-w-1/2 font-exo2 text-stone-200">
           <div class="space-y-5">
             <h2 class="font-bold text-4xl text-center">Mint Your King:</h2>
@@ -267,9 +299,21 @@ defmodule KdabetFrontendWeb.Mint do
           </section>
         </div>
         <!-- Mint Button -->
-        <div class="w-1/2 mt-5 mx-auto">
-          <button class="connectButton">Mint the King</button>
-        </div>
+        {#if assigns.mintButton.has_confirmed_nft}
+          <div class="w-1/2 mt-5 mx-auto">
+            <button
+              :on-click="mintToken"
+              class="connectButton"
+              phx-value-wallet={assigns.mintButton.provider}
+              phx-hook={assigns.mintButton.hook}
+            >Mint the King</button>
+          </div>
+        {#else}
+          <div class="w-1/2 mt-5 mx-auto">
+            <!-- The Grayed out Button -->
+            <button class="disabledButton">Mint the King</button>
+          </div>
+        {/if}
       </div>
       <!-- Paragraph seperator -->
       <img class="mx-auto mt-[30px]" src="/images/crownseperator.png">
@@ -424,6 +468,13 @@ defmodule KdabetFrontendWeb.Mint do
               ipfs: ipfs
           }
 
+        ## Flip Confirm Mint Button to on status
+        newMintButton = %{
+          socket.assigns.mintButton
+          | has_loaded_nft: true,
+            provider: response_from_client["provider"]
+        }
+
         ## Note: We push the wallet fetch balance event after connection is secure.
         {:noreply,
          socket
@@ -431,6 +482,7 @@ defmodule KdabetFrontendWeb.Mint do
            walletState: newWalletState,
            kadenaState: newKadenaState,
            connectButton: newConnectButton,
+           mintButton: newMintButton,
            userData: newUserData
          )
          |> push_event("fetch-account", %{provider: response_from_client["provider"]})}
@@ -501,5 +553,29 @@ defmodule KdabetFrontendWeb.Mint do
        connectButton: newConnectButton,
        userData: newUserData
      )}
+  end
+
+  @impl true
+  def handle_event("confirm_nft", _response, socket) do
+    newMintButton = %{socket.assigns.mintButton | has_confirmed_nft: true}
+    {:noreply, assign(socket, mintButton: newMintButton)}
+  end
+
+  @impl true
+  def handle_event("mintToken", %{"wallet" => provider}, socket) do
+    ## Forms an unsigned transactions
+    unsigned_txn = Transactions.prep_unsigned_txn(socket.assigns.walletState.pubkey)
+
+    safe_unsigned_txn =
+      unsigned_txn
+      |> Jason.encode!()
+
+    ## Send transaction to provider for signature
+    {:noreply,
+     socket
+     |> push_event("sign-transaction", %{
+       provider: provider,
+       unsigned_txn: safe_unsigned_txn
+     })}
   end
 end

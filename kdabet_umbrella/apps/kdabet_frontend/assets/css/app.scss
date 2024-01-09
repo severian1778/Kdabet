@@ -25,7 +25,7 @@ html{
 body{
  	background: linear-gradient(0deg, #13409c, #0d2d63, #0d4263, #13409c);
 	background-size: 400% 400%;
-	animation: gradient 15s ease infinite;
+	/*animation: gradient 15s ease infinite;*/
   height: 100vh;  
   & >div{
     @apply h-full;
@@ -210,6 +210,12 @@ body{
   @apply flex flex-row justify-center space-x-3 w-60 mx-auto mb-1 px-5 py-3 rounded ring-2 ring-offset-2 ring-slate-500 ring-offset-slate-300 bg-sky-500 hover:bg-sky-400 text-xl text-stone-200 font-bold font-exo2;
 }
 
+/* Wallet Connect */
+.disabledButton{
+  @apply flex flex-row justify-center space-x-3 w-60 mx-auto mb-1 px-5 py-3 rounded ring-2 ring-offset-2 ring-slate-500 ring-offset-slate-300 bg-stone-500 text-xl text-stone-200 font-bold font-exo2 cursor-default;
+}
+
+
 .wallet-select-list{
   @apply w-full border-sky-600 border-4;
 
@@ -220,4 +226,7 @@ body{
       @apply w-[30px] h-[30px];
     }
   }
+}
+.graphcont{
+  @apply pt-5 w-full h-96 lg:h-full
 }
