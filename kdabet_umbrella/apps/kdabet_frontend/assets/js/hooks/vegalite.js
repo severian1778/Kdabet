@@ -16,6 +16,4 @@ const VegaLite = {
     },
 };
 
-console.log(VegaLite);
-
 export default VegaLite;
