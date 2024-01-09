@@ -22,14 +22,11 @@ const fetch_provider = (pid) => {
 
 /* A simple export for a hello world connectivity check */
 const SignTransaction = async (providerId, transaction) => {
-  console.log(transaction)
   let provider = fetch_provider(providerId);
   let signTransactionResult
 
   try {
-    console.log("megan")
     signTransactionResult = await provider.sign(transaction);
-    console.log("rides")
     console.log(signTransactionResult)
     return 
   }catch(e){
