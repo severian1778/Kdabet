@@ -56,6 +56,7 @@ defmodule KdabetFrontendWeb.Casino do
     end)
   end
 
+  @impl true
   def handle_info({:game_continues, message}, socket) do
     time =
       DateTime.from_naive!(DateTime.now!("Etc/UTC"), "Etc/UTC")
@@ -75,11 +76,13 @@ defmodule KdabetFrontendWeb.Casino do
      |> push_event("vega_lite:#{socket.id}:init", %{"spec" => spec})}
   end
 
-  def handle_info({:game_finished, message}, state) do
+  @impl true
+  def handle_info({:game_finished, _message}, state) do
     ## response to when a game round has finished "crashes"
     {:noreply, state}
   end
 
+  @impl true
   def handle_event("restart", _, socket) do
     GenServer.stop(GameServer)
     spec = create_chart_spec()

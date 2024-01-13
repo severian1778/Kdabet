@@ -27,8 +27,7 @@ const SignTransaction = async (providerId, transaction) => {
 
   try {
     signTransactionResult = await provider.sign(transaction);
-    console.log(signTransactionResult)
-    return 
+    return signTransactionResult
   }catch(e){
     console.log("Error signing transaction:", e);
   }

@@ -1,7 +1,7 @@
 defmodule KdabetFrontendWeb.Mint do
   use KdabetFrontendWeb, :surface_live_view
   alias KdabetFrontendWeb.Components.{MintModal}
-  alias KdabetFrontend.Kings.{Transactions}
+  alias KdabetFrontend.Kings.{Transactions, Cache}
 
   @impl true
   def mount(_params, _session, socket) do
@@ -20,7 +20,9 @@ defmodule KdabetFrontendWeb.Mint do
       guard: [],
       pubkey: "",
       provider: "",
-      balance: ""
+      balance_kda: 0,
+      balance_usd: 0,
+      balance_string: ""
     }
 
     ## Wallet Connect is a 3rd party app with its own state
@@ -29,6 +31,15 @@ defmodule KdabetFrontendWeb.Mint do
         selectedAccount: nil,
         signingType: "sign"
       }
+    }
+
+    ## Wallet Connect is a 3rd party app with its own state
+    txnState = %{
+      req_key: "",
+      poll: "",
+      is_confirmed: false,
+      blocktime: "",
+      response: ""
     }
 
     ## The Kadena State
@@ -96,6 +107,7 @@ defmodule KdabetFrontendWeb.Mint do
        walletState: walletState,
        kadenaState: kadenaState,
        wcState: wcState,
+       txnState: txnState,
        connectButton: connectButton,
        mintButton: mintButton,
        userData: userData
@@ -153,7 +165,7 @@ defmodule KdabetFrontendWeb.Mint do
               </li>
               <li class="flex flex-row justify-start">
                 <span class="w-24 font-bold">Balance:</span>
-                <span>{assigns.walletState.balance}</span>
+                <span>{assigns.walletState.balance_string}</span>
               </li>
               <!-- <li class="flex flex-row justify-between"><span>messages: {assigns.kadenaState.messages|>elem(0)}</span></li> -->
             </ul>
@@ -273,7 +285,8 @@ defmodule KdabetFrontendWeb.Mint do
       <img class="mx-auto mt-[30px]" src="/images/crownseperator.png">
       <!-- Step 3 -->
       <div class={"flex flex-col lg:flex-row " <>
-        ((assigns.mintButton.has_confirmed_nft && "opacity-100") || "opacity-50")}>
+        (((assigns.mintButton.has_confirmed_nft or assigns.txnState.is_confirmed) && "opacity-100") ||
+           "opacity-50")}>
         <div class="w-100 max-w-2xl lg:w-1/2 lg:max-w-1/2 font-exo2 text-stone-200">
           <div class="space-y-5">
             <h2 class="font-bold text-4xl text-center">Mint Your King:</h2>
@@ -283,36 +296,84 @@ defmodule KdabetFrontendWeb.Mint do
           <!-- Wallet Details -->
           <section class="glasscard w-full px-6 py-5 mt-10 mb-[30px]">
             <ul class="list-none font-exo2 text-stone-200 text-xl w-full space-y-1">
-              <li class="flex flex-row justify-start">
+              <li class="flex flex-row justify-between">
                 <span class="w-36 font-bold">Txn Sent:</span>
-                <span />
+                <span>
+                  {#if assigns.userData.ipfs != ""}
+                    {Enum.join([
+                      assigns.txnState.req_key |> String.slice(0, 5),
+                      "...",
+                      assigns.txnState.req_key |> String.reverse() |> String.slice(0, 5) |> String.reverse()
+                    ])}
+                  {/if}
+                </span>
               </li>
-              <li class="flex flex-row justify-start">
+              <li class="flex flex-row justify-between">
                 <span class="w-36 font-bold">Txn Confirmed:</span>
-                <span />
+                <span>{assigns.txnState.is_confirmed}</span>
               </li>
-              <li class="flex flex-row justify-start">
+              <li class="flex flex-row justify-between">
                 <span class="w-36 font-bold">Explorer:</span>
-                <span />
+                <span>
+                  <a
+                    class="text-sky-400 hover:text-pink-300"
+                    href={"https://explorer.chainweb.com/testnet/tx/" <> assigns.txnState.req_key}
+                  >
+                    {Enum.join([
+                      ("https://explorer.chainweb.com/testnet/tx/" <> assigns.txnState.req_key)
+                      |> String.slice(0, 10),
+                      "...",
+                      ("https://explorer.chainweb.com/testnet/tx/" <> assigns.txnState.req_key)
+                      |> String.reverse()
+                      |> String.slice(0, 5)
+                      |> String.reverse()
+                    ])}
+                  </a>
+                </span>
               </li>
             </ul>
           </section>
         </div>
         <!-- Mint Button -->
         {#if assigns.mintButton.has_confirmed_nft}
-          <div class="w-1/2 mt-5 mx-auto">
-            <button
-              :on-click="mintToken"
-              class="connectButton"
-              phx-value-wallet={assigns.mintButton.provider}
-              phx-hook={assigns.mintButton.hook}
-            >Mint the King</button>
-          </div>
+          {#if assigns.txnState.is_confirmed}
+            <div class="glasscard mx-auto">
+              <img class="" src="images/ThankYouForMinting.png">
+            </div>
+          {#else}
+            <div class="w-1/2 mt-5 mx-auto">
+              <div class="flex flex-col w-full text-center text-stone-200 font-bold font-exo2 mb-10 space-y-1">
+                <span class="text-4xl mb-2">Cost: $300 USD</span>
+                <span class="text-2xl">Wallet: {assigns.walletState.balance_string |> String.split("/") |> Enum.at(0)}</span>
+                <span class="text-2xl">Wallet: {assigns.walletState.balance_string |> String.split("/") |> Enum.at(1)}</span>
+              </div>
+              {#if assigns.walletState.balance_usd < 300.00}
+                <div class="text-red-300 text-center text-red-300 font-bold font-exo-2 my-10">Insufficient Funds</div>
+                <div class="w-1/2 mt-5 mx-auto">
+                  <!-- The Grayed out Button -->
+                  <button class="disabledButton">Mint the King</button>
+                </div>
+              {#else}
+                <button
+                  :on-click="mintToken"
+                  class="connectButton"
+                  phx-value-wallet={assigns.mintButton.provider}
+                  phx-hook={assigns.mintButton.hook}
+                >Mint the King</button>
+              {/if}
+            </div>
+          {/if}
         {#else}
-          <div class="w-1/2 mt-5 mx-auto">
-            <!-- The Grayed out Button -->
-            <button class="disabledButton">Mint the King</button>
-          </div>
+          {#if assigns.txnState.is_confirmed}
+            <div class="glasscard mx-auto">
+              <img class="" src="images/ThankYouForMinting.png">
+            </div>
+          {#else}
+            <div class="w-1/2 mt-5 mx-auto">
+              <!-- The Grayed out Button -->
+              <button class="disabledButton">Mint the King</button>
+            </div>
+          {/if}
         {/if}
       </div>
       <!-- Paragraph seperator -->
@@ -405,7 +466,10 @@ defmodule KdabetFrontendWeb.Mint do
   @impl true
   def handle_event("connect-response", response_from_client, socket) do
     # TODO: make sure to update the wc state
-
+    {:ok, raw_balance} = Transactions.get_balance(response_from_client["account"])
+    {:ok, raw_price} = Transactions.get_kda_price()
+    balance = raw_balance.result.data.balance
+    price = raw_price.result.data |> Map.get(:"kda-usd-price")
     ###########################################
     ## Update the socket states with the response
     ## from the wallet (javascript)
@@ -415,6 +479,25 @@ defmodule KdabetFrontendWeb.Mint do
       |> Map.update!(:account, fn _oldaccount -> response_from_client["account"] end)
       |> Map.update!(:pubkey, fn _oldaccount -> response_from_client["pubKey"] end)
       |> Map.update!(:provider, fn _oldaccount -> response_from_client["provider"] end)
+      |> Map.update!(:balance_kda, fn _oldaccount -> balance end)
+      |> Map.update!(:balance_usd, fn _oldaccount -> balance * price end)
+      |> Map.update!(:balance_string, fn _oldaccount ->
+        Enum.join([
+          balance
+          |> to_string
+          |> Float.parse()
+          |> elem(0)
+          |> Decimal.from_float()
+          |> Decimal.round(2)
+          |> to_string(),
+          " KDA / $",
+          (price * balance)
+          |> Decimal.from_float()
+          |> Decimal.round(2)
+          |> to_string(),
+          " USD"
+        ])
+      end)
 
     newKadenaState =
       socket.assigns.kadenaState
@@ -433,6 +516,45 @@ defmodule KdabetFrontendWeb.Mint do
           innertext: "Disconnect",
           working: false
       }
+
+    ###########################################
+    ## Set the transaction state
+    ###########################################
+    txnState =
+      Cache.get(:kings, response_from_client["account"])
+      |> case do
+        ## If no transaction recorded,  register it for the first time
+        {:ok, nil} ->
+          Cache.put(:kings, response_from_client["account"], socket.assigns.txnState)
+          socket.assigns.txnState
+
+        ## if transaction is recorded and poll is not populated,  poll
+        {:ok, response} ->
+          cond do
+            response.req_key == "" ->
+              socket.assigns.txnState
+
+            true ->
+              {:ok, poll} = Transactions.poll_transaction(response.req_key)
+
+              is_success =
+                case poll.results do
+                  [] -> "pending"
+                  a -> a |> Enum.at(0) |> Map.get(:result) |> Map.get(:status)
+                end
+
+              case is_success do
+                "failure" ->
+                  %{response | poll: poll, is_confirmed: false}
+
+                "success" ->
+                  %{response | poll: poll, is_confirmed: true}
+
+                _ ->
+                  response
+              end
+          end
+      end
 
     ###########################################
     ## Handle valid/invalid wallets
@@ -483,23 +605,33 @@ defmodule KdabetFrontendWeb.Mint do
            kadenaState: newKadenaState,
            connectButton: newConnectButton,
            mintButton: newMintButton,
-           userData: newUserData
-         )
-         |> push_event("fetch-account", %{provider: response_from_client["provider"]})}
+           userData: newUserData,
+           txnState: txnState
+         )}
     end
   end
 
   @impl true
-  def handle_event("fetch-account-response", response_from_client, socket) do
-    newWalletState =
-      %{
-        socket.assigns.walletState
-        | balance:
-            (response_from_client["balance"] |> Decimal.round(2) |> to_string()) <>
-              " KDA / $0.00 USD"
-      }
+  def handle_event("return-signed", response_from_client, socket) do
+    ## Forms an unsigned transactions
+    {:ok, response} =
+      Transactions.sign_and_send(response_from_client, :local)
 
-    {:noreply, assign(socket, walletState: newWalletState)}
+    ## Fetch request keys
+    req_key =
+      cond do
+        is_map_key(response, :request_keys) -> response.request_keys |> Enum.at(0)
+        true -> response.req_key
+      end
+
+    Cache.put(:kings, socket.assigns.walletState.account, %{
+      socket.assigns.txnState
+      | req_key: req_key
+    })
+
+    {:noreply,
+     socket
+     |> assign(txnState: %{socket.assigns.txnState | req_key: req_key})}
   end
 
   @impl true
@@ -515,7 +647,9 @@ defmodule KdabetFrontendWeb.Mint do
       |> Map.update!(:account, fn _oldaccount -> "" end)
       |> Map.update!(:pubkey, fn _oldaccount -> "" end)
       |> Map.update!(:provider, fn _oldaccount -> "" end)
-      |> Map.update!(:balance, fn _oldaccount -> "" end)
+      |> Map.update!(:balance_string, fn _oldaccount -> "" end)
+      |> Map.update!(:balance_kda, fn _oldaccount -> 0.0 end)
+      |> Map.update!(:balance_usd, fn _oldaccount -> 0.0 end)
 
     newKadenaState =
       socket.assigns.kadenaState

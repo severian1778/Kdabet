@@ -1,4 +1,5 @@
-const networkId = "mainnet01"
+import Pact from 'pact-lang-api';
+const networkId = "mainnet01";
 
 const ZelcoreWallet = {
   name: "Zelcore",
@@ -15,7 +16,7 @@ const ZelcoreWallet = {
       });
 
       const accountsJson = await accounts.json();
-
+      
       return {
         status: 'success',
         message: '',
@@ -43,6 +44,10 @@ const ZelcoreWallet = {
         message: '',
       }
     }
+  },
+  sign: async function(signingCommand) {
+    window.open('zel:', '_self');
+    return await Pact.wallet.sign(JSON.parse(signingCommand));
   }
 }
 

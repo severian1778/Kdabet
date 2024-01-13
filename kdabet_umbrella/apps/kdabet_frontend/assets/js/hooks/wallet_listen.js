@@ -3,33 +3,6 @@ import DisconnectProvider from "./disconnect_provider"
 import FetchAccount from "./fetch_account"
 import SignTransaction from "./sign_transaction"
 
-/* Import web3modal for wallet connect*/
-import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi'
-//import { mainnet, kadena } from 'viem/chains'
-
-//////////////////////////////////////////////////////
-// Make a Request to wallet connect to acquire provider
-// ---------------------------------------------------
-// This is the standard v3 method to connect to a wallet
-//////////////////////////////////////////////////////
-
-/*
-const projectId = '1d0464cb744fc1c491260051af7618f0'
-
-const metadata = {
-  name: 'Web3Modal',
-  description: 'Web3Modal Example',
-  url: 'https://web3modal.com',
-  icons: ['https://avatars.githubusercontent.com/u/37784886']
-}
-
-const chains = ["kadena:mainnet01"] //[mainnet, kadena]
-const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata })
-
-// 3. Create modal
-const modal = createWeb3Modal({ wagmiConfig, projectId, chains })
-*/
-
 //////////////////////////////////////////////////////
 // Define an async function for connection with supported wallets
 // ---------------------------------------------------
@@ -38,7 +11,6 @@ const modal = createWeb3Modal({ wagmiConfig, projectId, chains })
 // the state to the socket assigns.
 //////////////////////////////////////////////////////
 const connectWallet = async (scope, provider) => {
-  console.log(scope, provider)
   // We then await the wallet connection promise
   promise = await ConnectWithProvider(provider)
   // When the promise is returned we can return the hook 

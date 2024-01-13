@@ -37,13 +37,17 @@ const KoalaWallet = {
       networkId: networkId,
       data: {
         networkId: networkId,
-        signingCmd: signingCommand
+        signingCmd: JSON.parse(signingCommand)
       }
     }
+
+    console.log(req)
     var cmd = await window.koala.request(req);
 
     return cmd.signedCmd;
   },
+
+
   quickSign: async function(signingCommand) {
     /* Quick sign is a process that allows for intermiediary
     * partial transactions as a "test" to ensure a transaction

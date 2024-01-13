@@ -4,6 +4,8 @@ import EckoWallet from "./wallet-connect/providers/ecko"
 import ZelcoreWallet from "./wallet-connect/providers/zelcore"
 import WalletConnect from "./wallet-connect/providers/wc"
 /* Wallet Connection */
+const network_id = "testnet04"
+/* const network_id = "mainnet01" */
 
 
 /* Fetches the provider object from a string */
@@ -26,13 +28,13 @@ const fetch_provider = (pid) => {
 /* A simple export for a wallet connectivity */
 const ConnectWithProvider = async (providerID) => {
   /* TODO dynamically detect the network ID */
-  let networkID = "mainnet01";
+  let networkID = network_id;
   let provider = fetch_provider(providerID);
   let connectResult;
     
   try{
     connectResult = await provider.connect();
-   
+    console.log(connectResult)
     /* store Koala response in the state manager */
     if (connectResult.status === 'success') {
 

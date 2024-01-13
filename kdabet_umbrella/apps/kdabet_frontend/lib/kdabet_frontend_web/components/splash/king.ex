@@ -16,8 +16,16 @@ defmodule KdabetFrontendWeb.Components.King do
     <div class="flex flex-row w-full">
       <!-- Image has a clicky component for modal viewing -->
       <!-- Wide screen display -->
-      <div :on-click="show_modal" phx-value-uri={@discord} phx-value-name={@name} class="hidden lg:block rounded-md overflow-hidden border border-stone-200 hover:shadow-[0_0_3px_3px_rgba(255,20,147,1.0)]">
-        <img class="lg:w-[100px] lg:w-[100px] xl:w-[150px] xl:h-[150px] cursor-pointer" src={"/images/kings/"<>@discord<>".png"}>
+      <div
+        :on-click="show_modal"
+        phx-value-uri={@discord}
+        phx-value-name={@name}
+        class="hidden lg:block rounded-md overflow-hidden border border-stone-200 hover:shadow-[0_0_3px_3px_rgba(255,20,147,1.0)]"
+      >
+        <img
+          class="lg:w-[100px] lg:w-[100px] xl:w-[150px] xl:h-[150px] cursor-pointer"
+          src={"/images/kings/" <> @discord <> ".png"}
+        />
       </div>
       <!-- Text -->
       <div class="flex flex-col flex-1 lg:ml-5 lg:pr-5 xl:pl-5 xl:pr-10">
@@ -25,22 +33,27 @@ defmodule KdabetFrontendWeb.Components.King do
           <!-- Name -->
           <span>{@name}</span>
           <!-- Mint Status -->
-            <span class="flex flex-row space-x-2 xl:space-x-3">
-              <span>Minted:</span>
-              <img class="h-[25px] w-[25px] xl:h-[30px] xl:w-[30px] self-center" src={"/images/red-x-icon.svg"}/>
-            </span>
+          <span class="flex flex-row space-x-2 xl:space-x-3">
+            <span>Minted:</span>
+            <img class="h-[25px] w-[25px] xl:h-[25px] xl:w-[25px] self-center" src="/images/red-x-icon.svg">
+          </span>
         </h1>
         <div class="flex flex-row lg:flex-col">
-          <!-- small screen display-->
-          <div :on-click="show_modal" phx-value-uri={@discord} phx-value-name={@name} class="block lg:hidden m-5 rounded-md border border-stone-200 overflow-hidden">
-            <img class="w-[100px] w-[100px]" src={"/images/kings/"<>@discord<>".png"}>
+          <!-- small screen display -->
+          <div
+            :on-click="show_modal"
+            phx-value-uri={@discord}
+            phx-value-name={@name}
+            class="block lg:hidden m-5 rounded-md border border-stone-200 overflow-hidden"
+          >
+            <img class="w-[100px] w-[100px]" src={"/images/kings/" <> @discord <> ".png"}>
           </div>
           <p class="max-w-sm flex-1 flex flex-col text-xl lg:text-lg text-stone-200 mt-5 lg:mt-2 space-y-1">
             <span class="flex flex-row justify-between"><span>Votes:</span><span>0</span></span>
             <span class="flex flex-row justify-between"><span>Voting Rate:</span><span>0%</span></span>
             <span class="flex lg:hidden xl:flex flex-row justify-between"><span>Knights minted:</span><span>0</span></span>
           </p>
-       </div>
+        </div>
       </div>
     </div>
     """

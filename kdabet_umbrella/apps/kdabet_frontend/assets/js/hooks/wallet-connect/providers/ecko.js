@@ -1,5 +1,5 @@
 /*const networkId = "mainnet01"*/
-const networkId = "testnet01"
+const networkId = "testnet04"
 
 const EckoWallet = {
   /*window.addEventListener(`phx:connect-koala`, (e) => {*/
@@ -35,14 +35,11 @@ const EckoWallet = {
       networkId: networkId,
       data: {
           networkId: networkId,
-          signingCmd: signingCommand
+          signingCmd: JSON.parse(signingCommand)
       }
     }
-    // console.log("req", req)
     var cmd = await window.kadena.request(req);
-    // console.log("cmd inside try-catch:", cmd);
-
-    return cmd.signedCmd;
+    return cmd;
   }
 }
 
