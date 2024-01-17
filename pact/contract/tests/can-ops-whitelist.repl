@@ -122,15 +122,15 @@
     "type-policies": [
       {
         "type": "king",
-        "policy-stack": "NON-FUNGIBLE INSTANT-MINT TRUSTED-CUSTODY FIXED-SALE AUCTION-SALE MARKETPLACE EXTRA-POLICIES"
+        "policy_stack": "NON-FUNGIBLE INSTANT-MINT TRUSTED-CUSTODY FIXED-SALE AUCTION-SALE MARKETPLACE EXTRA-POLICIES"
       },
       {
         "type": "monarch",
-        "policy-stack": "NON-FUNGIBLE INSTANT-MINT TRUSTED-CUSTODY FIXED-SALE AUCTION-SALE MARKETPLACE EXTRA-POLICIES"
+        "policy_stack": "NON-FUNGIBLE INSTANT-MINT TRUSTED-CUSTODY FIXED-SALE AUCTION-SALE MARKETPLACE EXTRA-POLICIES"
       }, 
       { 
         "type": "lord",
-        "policy-stack": "NON-FUNGIBLE INSTANT-MINT TRUSTED-CUSTODY DISABLE-SALE DISABLE-TRANSFER EXTRA-POLICIES"
+        "policy_stack": "NON-FUNGIBLE INSTANT-MINT TRUSTED-CUSTODY DISABLE-SALE DISABLE-TRANSFER EXTRA-POLICIES"
       }
     ],
     "upgrade": false
@@ -139,7 +139,7 @@
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;Now load the smart contract
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  (load "../kingsmint.pact")
+  (load "../kingsmintv3.pact")
  
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;Change the environmental data to operations and execute the

@@ -15,11 +15,11 @@ defmodule KdabetFrontend.Kings.Transactions do
   @spec prep_unsigned_txn(String.t()) :: map()
   def prep_unsigned_txn(mint_account) do
     code =
-      "(use n_f871836427da13a92d7aa56aaf3387827444ca64.kingsmint_test) (n_f871836427da13a92d7aa56aaf3387827444ca64.kingsmint_test.reserve-mint \"kadena-kings-2\" \"k:#{mint_account}\")"
+      "(use n_5382b05312493cdadba55b2928f839127f3f1a7e.kingsmintv9) (n_5382b05312493cdadba55b2928f839127f3f1a7e.kingsmintv9.reserve-mint \"kadena-kings-ng7\" \"k:#{mint_account}\")"
 
     env_data =
       %{
-        minter: [mint_account]
+        kdabet_user: [mint_account]
       }
 
     ## return

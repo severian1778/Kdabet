@@ -4,6 +4,7 @@ defmodule KdabetUmbrella.MixProject do
   def project do
     [
       apps_path: "apps",
+      build_for_environment: true,
       version: "0.1.0",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -18,10 +19,10 @@ defmodule KdabetUmbrella.MixProject do
         ],
         frontend_only: [
           applications: [
-            kdabet_frontend: :permanent,
+            kdabet_frontend: :permanent
           ]
         ]
-     ]
+      ]
     ]
   end
 

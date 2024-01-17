@@ -24,3 +24,16 @@ erl_crash.dump
 
 #Leave out Elixir-ls as it is a programming aide
 /elixir-ls/
+/apps/kdabet_frontend/package-lock.json
+/apps/kdabet_frontend/*.lock
+/apps/kdabet_frontend/priv/static/kingsdata.txt
+/apps/kdabet_frontend/.pact-history
+/apps/kadenakings/
+/apps/crashgame/
+/apps/kdabet_frontend/node_modules/
+
+##static drops
+/apps/kdabet_frontend/priv/static/kingsdata.txt.gz
+/apps/kdabet_frontend/priv/static/kingsdata-*
+
+

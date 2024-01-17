@@ -615,7 +615,7 @@ defmodule KdabetFrontendWeb.Mint do
   def handle_event("return-signed", response_from_client, socket) do
     ## Forms an unsigned transactions
     {:ok, response} =
-      Transactions.sign_and_send(response_from_client, :local)
+      Transactions.sign_and_send(response_from_client, :send)
 
     ## Fetch request keys
     req_key =

@@ -123,15 +123,15 @@
     "type-policies": [
       {
         "type": "king",
-        "policy-stack": "NON-FUNGIBLE INSTANT-MINT TRUSTED-CUSTODY FIXED-SALE AUCTION-SALE FIXED-SALE MARKETPLACE EXTRA-POLICIES"
+        "policy_stack": "NON-FUNGIBLE INSTANT-MINT TRUSTED-CUSTODY FIXED-SALE AUCTION-SALE FIXED-SALE MARKETPLACE EXTRA-POLICIES"
       },
       {
         "type": "monarch",
-        "policy-stack": "NON-FUNGIBLE INSTANT-MINT TRUSTED-CUSTODY FIXED-SALE AUCTION-SALE FIXED-SALE MARKETPLACE EXTRA-POLICIES"
+        "policy_stack": "NON-FUNGIBLE INSTANT-MINT TRUSTED-CUSTODY FIXED-SALE AUCTION-SALE FIXED-SALE MARKETPLACE EXTRA-POLICIES"
       },
       { 
         "type": "lord",
-        "policy-stack": "NON-FUNGIBLE INSTANT-MINT TRUSTED-CUSTODY DISABLE-SALE DISABLE-TRANSFER EXTRA-POLICIES"
+        "policy_stack": "NON-FUNGIBLE INSTANT-MINT TRUSTED-CUSTODY DISABLE-SALE DISABLE-TRANSFER EXTRA-POLICIES"
       }
     ],
     "upgrade": false
@@ -140,7 +140,7 @@
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;Now load the smart contract
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  (load "../kingsmint.pact")
+  (load "../kingsmintv3.pact")
  
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;Change the environmental data to operations and execute the
@@ -226,8 +226,9 @@
   (print "\nCarol mints a monarch\n")
   (free.kingsmint.reserve-mint "kadena-kings" "carol")
 
+
   (expect-that "Amounts were transferred"
-    (= [500.0 500.0])
+    (= [300.0 700.0])
     [
       (coin.get-balance "kdabet-operation")
       (coin.get-balance "carol")

@@ -41,12 +41,14 @@
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     "kdabet-admin": {"keys": ["kdabet-admin"],"pred": "keys-any"},
     "kdabet-operation": {"keys": ["kdabet-operation"],"pred": "keys-any"},
+    "kdabet-bank": {"keys": ["kdabet-bank"],"pred": "keys-all"},
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     ;; Describe any guards you want in the form of a key
     ;; Here we have the bankguard (only governance here) 
     ;; we also have the collection creator guard which in our case
     ;; is the operations keyset.
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
+    "bank-guard": {"keys": ["kdabet-admin"],"pred": "keys-all"},
     "creatorGuard": {"keys": ["kdabet-operation"],"pred": "keys-all"},
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     ;; Define the collection!  
@@ -73,16 +75,8 @@
       "types": [
          {
           "id": "king",
-          "startTime": {"time": "2023-12-03T20:00:00Z"},
+          "startTime": {"time": "2023-01-03T20:00:00Z"},
           "endTime": {"time": "2024-01-04T00:00:00Z"},
-          "cost": 300.0,
-          "limit": 1,
-          "currencyType": "USD"
-        },
-        {
-          "id": "monarch",
-          "startTime": {"time": "2024-02-04T20:00:00Z"},
-          "endTime": {"time": "2028-02-04T00:00:00Z"},
           "cost": 300.0,
           "limit": 1,
           "currencyType": "USD"
@@ -93,6 +87,14 @@
           "endTime": {"time": "2024-02-04T00:00:00Z"},
           "cost": 0.0,
           "limit": 500,
+          "currencyType": "USD"
+        },
+        {
+          "id": "monarch",
+          "startTime": {"time": "2024-02-04T00:00:01Z"},
+          "endTime": {"time": "2028-02-04T00:00:00Z"},
+          "cost": 300.0,
+          "limit": 1,
           "currencyType": "USD"
         }
       ]
@@ -153,62 +155,11 @@
   (env-gas)
 (commit-tx)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;Adds the kdabet operations account for recieving money
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
-(begin-tx "Add Operations Account")
-  (env-keys ["kdabet-operation"])
-  (coin.create-account "kdabet-operation" (read-keyset "kdabet-operation"))
+(begin-tx "check if policies are added")
+  (print "Policies for the king")
+  (print (format "{}" [(free.kingsmint.fetch-policies "king")]))
+  (print "Policies for the lord")
+  (print (format "{}" [(free.kingsmint.fetch-policies "lord")]))
+  (print "Policies for the monarch")
+  (print (format "{}" [(free.kingsmint.fetch-policies "monarch")]))
 (commit-tx)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;Add the whitelist to the whitelist table
-;;This requires that the collection is already made
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
-(begin-tx "Create whitelist")
-  (env-chain-data { "block-time": (time "2023-12-25T00:00:01Z")})
-  (env-keys ["kdabet-operation"])
-  (free.kingsmint.add-whitelist-by-type "kadena-kings" (read-msg 'type-data))
-(commit-tx)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;The Creator emits a token for the owner to mint on NG
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
-(begin-tx "Bob pays KDAbet to mint a king NFT")
-  ;;we set the time to be in the legitimate range
-  (env-keys ["bob-key"])
-  (env-sigs
-    [{
-      "key": "bob-key",
-      "caps": [
-        (coin.TRANSFER "bob" "kdabet-operation" 500.0)
-      ]
-    }]
-  )
- 
-  ;;Is Bobs Mint count 0;
-  (print 
-    (format 
-      "bobs mint count is {}" 
-      [(free.kingsmint.get-whitelist-mint-count "kadena-kings" "king" "bob")]
-    )
-  )
-
-  ;;Mint the token 
-  (free.kingsmint.reserve-mint "kadena-kings" "bob")
-
-  ;;Was the mint properly paid for?
-  (expect-that "Amounts were transferred"
-    (= [300.0 700.0])
-    [
-      (coin.get-balance "kdabet-operation")
-      (coin.get-balance "bob")
-    ]
-  )
-  (print "\nBob has successfuly paid for and minted a king\n")
-
-  (print "\nBob tries to mint again\n")
-  ;;Try to mint a second token
-  (free.kingsmint.reserve-mint "kadena-kings" "bob")
-(commit-tx)
-

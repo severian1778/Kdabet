@@ -1,4 +1,5 @@
-const networkId = "mainnet01"
+//const networkId = "mainnet01"
+const networkId = "testnet04"
 
 const KoalaWallet = {
   /*window.addEventListener(`phx:connect-koala`, (e) => {*/

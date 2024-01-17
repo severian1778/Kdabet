@@ -26,7 +26,7 @@
   ;; real world they will be keysets (crypto hashes)
   ;; generated from your keypair software (kda-tool) 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  (env-keys ["kdabet-admin" "kdabet-operation" "kdabet-bank"])
+  (env-keys ["kdabet-admin" "kdabet-operation"])
   
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Load up environmental data.  This data is usually send in a 
@@ -36,16 +36,11 @@
   (env-data {
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     ;; Describe the keys you want to add to the simulation
-    ;; Generally we have admin (governance) ops (operations) and
-    ;; banking which is a special key for financial ops.
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     "kdabet-admin": {"keys": ["kdabet-admin"],"pred": "keys-any"},
     "kdabet-operation": {"keys": ["kdabet-operation"],"pred": "keys-any"},
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     ;; Describe any guards you want in the form of a key
-    ;; Here we have the bankguard (only governance here) 
-    ;; we also have the collection creator guard which in our case
-    ;; is the operations keyset.
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
     "creatorGuard": {"keys": ["kdabet-operation"],"pred": "keys-all"},
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -73,16 +68,8 @@
       "types": [
          {
           "id": "king",
-          "startTime": {"time": "2023-12-03T20:00:00Z"},
-          "endTime": {"time": "2024-01-04T00:00:00Z"},
-          "cost": 300.0,
-          "limit": 1,
-          "currencyType": "USD"
-        },
-        {
-          "id": "monarch",
-          "startTime": {"time": "2024-02-04T20:00:00Z"},
-          "endTime": {"time": "2028-02-04T00:00:00Z"},
+          "startTime": {"time": "2023-01-03T20:00:00Z"},
+          "endTime": {"time": "2024-01-03T00:00:00Z"},
           "cost": 300.0,
           "limit": 1,
           "currencyType": "USD"
@@ -90,9 +77,17 @@
         {
           "id": "lord",
           "startTime": {"time": "2024-01-04T00:00:01Z"},
-          "endTime": {"time": "2024-02-04T00:00:00Z"},
+          "endTime": {"time": "2024-01-09T00:00:00Z"},
           "cost": 0.0,
           "limit": 500,
+          "currencyType": "USD"
+        },
+        {
+          "id": "monarch",
+          "startTime": {"time": "2025-01-04T00:00:01Z"},
+          "endTime": {"time": "2028-01-04T00:00:00Z"},
+          "cost": 300.0,
+          "limit": 1,
           "currencyType": "USD"
         }
       ]
@@ -121,11 +116,11 @@
     "type-policies": [
       {
         "type": "king",
-        "policy_stack": "NON-FUNGIBLE INSTANT-MINT TRUSTED-CUSTODY FIXED-SALE AUCTION-SALE FIXED-SALE MARKETPLACE EXTRA-POLICIES"
+        "policy_stack": "NON-FUNGIBLE INSTANT-MINT TRUSTED-CUSTODY FIXED-SALE AUCTION-SALE MARKETPLACE EXTRA-POLICIES"
       },
       {
         "type": "monarch",
-        "policy_stack": "NON-FUNGIBLE INSTANT-MINT TRUSTED-CUSTODY FIXED-SALE AUCTION-SALE FIXED-SALE MARKETPLACE EXTRA-POLICIES"
+        "policy_stack": "NON-FUNGIBLE INSTANT-MINT TRUSTED-CUSTODY FIXED-SALE AUCTION-SALE MARKETPLACE EXTRA-POLICIES"
       },
       { 
         "type": "lord",
@@ -138,8 +133,11 @@
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;Now load the smart contract
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  (load "../kingsmintv3.pact")
- 
+  (load "../kingsmintv4.pact")
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;Set the Date
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
+  (env-chain-data { "block-time": (time "2024-01-01T20:00:00Z")}) 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;Change the environmental data to operations and execute the
   ;;create collection function.
@@ -166,49 +164,15 @@
 ;;This requires that the collection is already made
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 (begin-tx "Create whitelist")
-  (env-chain-data { "block-time": (time "2023-12-25T00:00:01Z")})
   (env-keys ["kdabet-operation"])
   (free.kingsmint.add-whitelist-by-type "kadena-kings" (read-msg 'type-data))
 (commit-tx)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;The Creator emits a token for the owner to mint on NG
+;;Add the whitelist to the whitelist table
+;;This requires that the collection is already made
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
-(begin-tx "Bob pays KDAbet to mint a king NFT")
-  ;;we set the time to be in the legitimate range
-  (env-keys ["bob-key"])
-  (env-sigs
-    [{
-      "key": "bob-key",
-      "caps": [
-        (coin.TRANSFER "bob" "kdabet-operation" 500.0)
-      ]
-    }]
-  )
- 
-  ;;Is Bobs Mint count 0;
-  (print 
-    (format 
-      "bobs mint count is {}" 
-      [(free.kingsmint.get-whitelist-mint-count "kadena-kings" "king" "bob")]
-    )
-  )
-
-  ;;Mint the token 
-  (free.kingsmint.reserve-mint "kadena-kings" "bob")
-
-  ;;Was the mint properly paid for?
-  (expect-that "Amounts were transferred"
-    (= [300.0 700.0])
-    [
-      (coin.get-balance "kdabet-operation")
-      (coin.get-balance "bob")
-    ]
-  )
-  (print "\nBob has successfuly paid for and minted a king\n")
-
-  (print "\nBob tries to mint again\n")
-  ;;Try to mint a second token
-  (free.kingsmint.reserve-mint "kadena-kings" "bob")
+(begin-tx "Create whitelist")
+  (env-keys ["kdabet-operation"])
+  (free.kingsmint.add-whitelist-by-type "kadena-kings" (read-msg 'type-data))
 (commit-tx)
-

@@ -12,7 +12,7 @@
 ;;----------------------------------------------------------------------------
 ;;Use git clone to pull down the library and place it in the respective path.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(load "../kadena_repl_sandbox/kda-env/init.repl")
+(load "../../kadena_repl_sandbox/kda-env/init.repl")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;We will set up the relevant environmental data to set up the collection
@@ -111,11 +111,11 @@
     "type-policies": [
       {
         "type": "king",
-        "policy-stack": "NON-FUNGIBLE INSTANT-MINT TRUSTED-CUSTODY FIXED-SALE AUCTION-SALE FIXED-SALE MARKETPLACE EXTRA-POLICIES"
+        "policy_stack": "NON-FUNGIBLE INSTANT-MINT TRUSTED-CUSTODY FIXED-SALE AUCTION-SALE FIXED-SALE MARKETPLACE EXTRA-POLICIES"
       },
       { 
         "type": "lord",
-        "policy-stack": "NON-FUNGIBLE INSTANT-MINT TRUSTED-CUSTODY DISABLE-SALE DISABLE-TRANSFER EXTRA-POLICIES"
+        "policy_stack": "NON-FUNGIBLE INSTANT-MINT TRUSTED-CUSTODY DISABLE-SALE DISABLE-TRANSFER EXTRA-POLICIES"
       }
     ],
     "upgrade": false
@@ -124,7 +124,7 @@
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;Now load the smart contract
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  (load "kingsmint.pact")
+  (load "../kingsmintv3.pact")
  
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;Change the environmental data to operations and execute the
@@ -143,7 +143,7 @@
 ;;Adds the kdabet operations account for recieving money
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 (begin-tx "Add Operations Account")
-  (env-keys ["kdabet-operations"])
+  (env-keys ["kdabet-operation"])
   (coin.create-account "kdabet-operation" (read-keyset "kdabet-operation"))
 (commit-tx)
 
@@ -153,21 +153,5 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 (begin-tx "Create whitelist")
   (env-keys ["some-account"])
-  (free.kingsmint.add-whitelist-to-type "kadena-kings" (read-msg 'type-data))
+  (free.kingsmint.add-whitelist-by-type "kadena-kings" (read-msg 'type-data))
 (commit-tx)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;Check the Whitelist for addition of accounts
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
-(begin-tx "Checks whitelist for account addition")
-  (env-keys ["kdabet-operation"])
-  (print "\nIs alice whitelisted for a king??\n")
-  (print (format "{}" [(free.kingsmint.is-whitelisted "kadena-kings" "king" "alice")]))
-  (print "\nIs bob whitelisted for a king??\n")
-  (print (format "{}" [(free.kingsmint.is-whitelisted "kadena-kings" "king" "bob")]))
-  (print "\nIs bob2 whitelisted for a king??\n")
-  (print (format "{}" [(free.kingsmint.is-whitelisted "kadena-kings" "king" "bob2")]))
-  (print "\nIs kdabet-operations whitelisted for a lord??\n")
-  (print (format "{}" [(free.kingsmint.is-whitelisted "kadena-kings" "lord" "kdabet-operation")]))
-(commit-tx)
-

@@ -365,7 +365,7 @@
       account:string
       lords-guard:guard
     ) 
-    @doc "Converts overdue kings to lords and updates whitelst"
+    @doc "Converts overdue kings to lords and updates whitelist"
     (with-capability (OPS)
       (with-read collections collection 
         {
@@ -443,8 +443,8 @@
       ;;enumerate over list
       (let*
         (
-          ;;(collection-data (read collections collection))
-          ;;(currentIndex (at "currentIndex" collection-data))
+          (collection-data (read collections collection))
+          (currentIndex (at "currentIndex" collection-data))
           (mint-count (get-whitelist-mint-count collection "lord" account))
           (acguard:guard (at "guard" (fungible::details account)))
         )
@@ -1016,6 +1016,11 @@
   (defun get-all-revealed:[object:{minted-token}]()
     @doc "Returns a list of all revealed tokens."
     (select minted-tokens (where "revealed" (= true)))
+  )
+
+  (defun fetch-policies:string (type:string)
+    @doc "Returns a policy list based on type"
+    (at "policy-stack" (first (select policies (where "type" (= type)))))
   )
 
   (defun get-all-nft ([object:{minted-token}])
