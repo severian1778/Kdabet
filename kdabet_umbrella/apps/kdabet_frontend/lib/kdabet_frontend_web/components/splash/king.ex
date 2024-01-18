@@ -10,45 +10,60 @@ defmodule KdabetFrontendWeb.Components.King do
   @doc "The kings name"
   prop(name, :string, required: true)
 
+  @doc "The kings name"
+  prop(minted, :boolean, required: true)
+
   def render(assigns) do
     ~F"""
     <!-- Each king is a card component -->
-    <div class="flex flex-row w-full">
+    <div class="flex flex-row w-full glassy_modal">
       <!-- Image has a clicky component for modal viewing -->
       <!-- Wide screen display -->
       <div
         :on-click="show_modal"
         phx-value-uri={@discord}
         phx-value-name={@name}
-        class="hidden lg:block rounded-md overflow-hidden border border-stone-200 hover:shadow-[0_0_3px_3px_rgba(255,20,147,1.0)]"
+        class="hidden lg:block rounded-md overflow-hidden border border-stone-200 md:w-[100px] md:w-[100px] lg:w-[120px] lg:w-[120px] xl:w-[150px] xl:h-[150px] hover:shadow-[0_0_3px_3px_rgba(255,20,147,1.0)]"
       >
         <img
-          class="lg:w-[100px] lg:w-[100px] xl:w-[150px] xl:h-[150px] cursor-pointer"
+          class="w-[100px] w-[100px] lg:w-[120px] lg:w-[120px] xl:w-[150px] xl:h-[150px] cursor-pointer"
           src={"/images/kings/" <> @discord <> ".png"}
         />
       </div>
       <!-- Text -->
       <div class="flex flex-col flex-1 lg:ml-5 lg:pr-5 xl:pl-5 xl:pr-10">
-        <h1 class="w-full flex justify-between font-bold text-2xl lg:text-xl xl:text-2xl text-stone-200 border-b border-stone-600 pb-2">
+        <h1 class="w-full flex justify-between font-bold text-xl lg:text-xl xl:text-2xl text-stone-200 border-b border-stone-600 py-2 px-5 lg:px-0">
           <!-- Name -->
           <span>{@name}</span>
           <!-- Mint Status -->
           <span class="flex flex-row space-x-2 xl:space-x-3">
-            <span>Minted:</span>
-            <img class="h-[25px] w-[25px] xl:h-[25px] xl:w-[25px] self-center" src="/images/red-x-icon.svg">
+            <img
+              title="minted"
+              class="block 2xl:hidden h-[25px] w-[25px] xl:h-[25px] xl:w-[25px] self-center"
+              src="/images/mint.png"
+            />
+            <span class="hidden 2xl:block">Minted:</span>
+            {#if @minted}
+              <img
+                class="h-[25px] w-[25px] xl:h-[25px] xl:w-[25px] self-center"
+                src="/images/green-checkmark-icon.svg"
+              />
+            {#else}
+              <img class="h-[25px] w-[25px] xl:h-[25px] xl:w-[25px] self-center" src="/images/red-x-icon.svg">
+            {/if}
           </span>
         </h1>
-        <div class="flex flex-row lg:flex-col">
+        <div class="flex flex-row">
           <!-- small screen display -->
           <div
             :on-click="show_modal"
             phx-value-uri={@discord}
             phx-value-name={@name}
-            class="block lg:hidden m-5 rounded-md border border-stone-200 overflow-hidden"
+            class="block lg:hidden m-5 lg:ml-10 rounded-md border border-stone-200 overflow-hidden"
           >
             <img class="w-[100px] w-[100px]" src={"/images/kings/" <> @discord <> ".png"}>
           </div>
-          <p class="max-w-sm flex-1 flex flex-col text-xl lg:text-lg text-stone-200 mt-5 lg:mt-2 space-y-1">
+          <p class="max-w-md flex-1 flex flex-col text-xl lg:text-lg text-stone-200 mt-5 lg:mt-1 space-y-1 xl:space-y-0 pr-5 lg:pr-0">
             <span class="flex flex-row justify-between"><span>Votes:</span><span>0</span></span>
             <span class="flex flex-row justify-between"><span>Voting Rate:</span><span>0%</span></span>
             <span class="flex lg:hidden xl:flex flex-row justify-between"><span>Knights minted:</span><span>0</span></span>

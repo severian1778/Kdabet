@@ -1,7 +1,9 @@
 defmodule KdabetFrontendWeb.Kings do
   use KdabetFrontendWeb, :surface_live_view
 
+  alias KdabetFrontendWeb.Kings
   alias KdabetFrontendWeb.Components.{King, KingModal}
+  alias KdabetFrontend.Kings
 
   @impl true
   def mount(_params, _session, socket) do
@@ -9,11 +11,14 @@ defmodule KdabetFrontendWeb.Kings do
     kings = kingslist()
     lords = lordslist()
 
+    mint_status = Kings.get_state() |> Map.get(:minted)
+
     {:ok,
      socket
      |> assign(id: socket.id)
      |> assign(kings: kings)
-     |> assign(lords: lords)}
+     |> assign(lords: lords)
+     |> assign(minted: mint_status)}
   end
 
   @impl true
@@ -41,7 +46,7 @@ defmodule KdabetFrontendWeb.Kings do
           </div>
         </div>
         <hr class="w-[85%] mx-auto border-t-slate-700 border-b-slate-600 my-4 block md:hidden">
-        <div class="glasscard glowtext font-exo-2 px-5 lg:px-10 mt-[10px] m-auto md:m-0 w-[400px] min-h-[250px] items-center lg:w-[400px] xl:w-[500px] align-center items-center">
+        <div class="glasscard glowtext font-exo-2 px-5 lg:px-10 mt-[10px] m-auto md:m-0 w-[340px] md:w-[360px] sm:w-[400px] min-h-[250px] items-center lg:w-[400px] xl:w-[500px] align-center items-center">
           <h3 class="text-[1.6em] py-2 font-bold">Benefits</h3>
           <hr class="w-full border-t-slate-700 border-b-slate-600 mb-3">
           <ul class="text-[1.1em] xl:text-[1.4em]">
@@ -58,12 +63,14 @@ defmodule KdabetFrontendWeb.Kings do
       <!-- nft rows -->
       <section class="font-exo2 w-full flex flex-col mx-auto max-w-[1600px]">
         <!-- Kings Section -->
-        <div class="glowtext w-full flex flex-row justify-between">
-          <h1 class="text-[1.75em] lg:text-[2.15em] xl:text-[2.7em] flex flex-row font-bold justify-start space-x-1 sm:space-x-2 lg:space-x-3">
+        <div class="glowtext w-full flex flex-col sm:flex-row justify-between text-center sm:text-left">
+          <h1 class="w-full sm:w-[50%] text-[1.75em] lg:text-[2.15em] xl:text-[2.7em] flex flex-row font-bold justify-center sm:justify-start space-x-1 sm:space-x-2 lg:space-x-3">
             <span class="h-[40px] w-[40px] lg:h-[50px] lg:w-[50px] xl:h-[60px] xl:w-[60px]"><FontAwesome.LiveView.icon name="scroll" type="solid" class="crownicon" /></span>
             <span>Kings Collection</span>
+            <span class="block sm:hidden h-[40px] w-[40px] lg:h-[50px] lg:w-[50px] xl:h-[60px] xl:w-[60px]"><FontAwesome.LiveView.icon name="scroll" type="solid" class="crownicon" /></span>
           </h1>
-          <p class="glowtext text-[1.75em] lg:text-[2.15em] xl:text-[2.7em]">{@kings |> length}/440</p>
+
+          <p class="glowtext w-full sm:w-auto text-[1.75em] lg:text-[2.15em] xl:text-[2.7em]">{@kings |> length}/453 Minted</p>
         </div>
 
         <!-- Seperator -->
@@ -72,8 +79,11 @@ defmodule KdabetFrontendWeb.Kings do
         <!-- Kings Collection List -->
         <div class="kingcontainer flex flex-wrap justify-center">
           <!-- Iterate through the kings -->
-          <div class="w-full lg:mb-5 lg:w-[50%] my-2 max-w-2xl mx-auto" :for={{discord, name} <- @kings}>
-            <King name={name} discord={discord} />
+          <div
+            class="w-full lg:mb-5 lg:w-[50%] my-2 sm:max-w-xl lg:max-w-md xl:max-w-xl 2xl:max-w-2xl mx-auto"
+            :for={{{discord, name}, index} <- @kings |> Enum.with_index()}
+          >
+            <King name={name} discord={discord} minted={@minted |> Enum.at(index)} />
           </div>
         </div>
 
@@ -83,7 +93,7 @@ defmodule KdabetFrontendWeb.Kings do
             <span class="h-[40px] w-[40px] lg:h-[50px] lg:w-[50px] xl:h-[60px] xl:w-[60px]"><FontAwesome.LiveView.icon name="scroll" type="solid" class="crownicon" /></span>
             <span>Lords Row</span>
           </h1>
-          <p class="glowtext text-[1.75em] lg:text-[2.15em] xl:text-[2.7em]">{@lords |> length}/57</p>
+          <p class="glowtext text-[1.75em] lg:text-[2.15em] xl:text-[2.7em]">{@lords |> length}/48</p>
         </div>
         <!-- Seperator -->
         <hr class="border-stone-700 my-4">
@@ -119,7 +129,7 @@ defmodule KdabetFrontendWeb.Kings do
       {"crob1985", "Peter K. Pact"},
       {"KDXLain", "Queen of Pixels"},
       {"teensfrommarz", "Mephisto"},
-      {"RaiSM129", "Home Lezz"},
+      {"RaiSM129", "King HomeLezz"},
       {"Arunroohaayil", "King George"},
       {"Reese", "King RedBeard"},
       {"rafuael", "BuilderKing"},
@@ -351,13 +361,17 @@ defmodule KdabetFrontendWeb.Kings do
       {"Mooni23", "Kush King"},
       {"OldCoder", "TaiAnBu"},
       {"Rihaan", "Flash King"},
-      {"Sybil", "Archival Queen"},
+      {"Sybil", "Paper Queen"},
       {"CaptainInsane", "The Dark Uncle"},
       {"Screens32", "Phoenix King"},
       {"Bushman", "King of Dice"},
       {"AgentZero", "Cypherpunk King"},
       {"MikeHerron", "Fossil King"},
-      {"RyanCronin", "Table Tennis King"}
+      {"RyanCronin", "Table Tennis King"},
+      {"Liam", "Tea King"},
+      {"Andrea", "King Italia"},
+      {"Bendy", "Penguin King"},
+      {"sunnyjim28", "King Angel Eyes"}
     ]
   end
 

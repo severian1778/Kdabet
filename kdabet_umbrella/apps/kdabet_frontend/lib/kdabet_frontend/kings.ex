@@ -1,6 +1,7 @@
 defmodule KdabetFrontend.Kings do
   use GenServer
 
+  alias KdabetFrontend.Kings.Transactions
   #############################
   # Client API
   #############################
@@ -21,6 +22,10 @@ defmodule KdabetFrontend.Kings do
     GenServer.call(__MODULE__, {:getking, address})
   end
 
+  def poll_kings() do
+    GenServer.cast(__MODULE__, {:pollkings})
+  end
+
   ##############################
   # SERVER CALLBACKS
   ##############################
@@ -36,9 +41,11 @@ defmodule KdabetFrontend.Kings do
       last_updated: 0,
       heartbeat: 0,
       date: Date.to_iso8601(DateTime.utc_now() |> DateTime.add(-7 * 3600, :second)),
-      kings: kings
+      kings: kings,
+      minted: Enum.map(kings, fn _k -> false end)
     }
 
+    __MODULE__.poll_kings()
     {:ok, config}
   end
 
@@ -54,6 +61,22 @@ defmodule KdabetFrontend.Kings do
 
   def handle_call(:getstate, _from, state), do: {:reply, state, state}
   def handle_call(:stop, _from, state), do: {:stop, :normal, :ok, state}
+
+  def handle_cast({:pollkings}, state) do
+    ## we enumerate throught he kings and update the state for is minted status
+    minted =
+      Enum.map(state.kings, fn king ->
+        account = king |> elem(0)
+
+        {:ok, response} =
+          Transactions.has_minted(account)
+
+        response.result
+        |> Map.get(:data)
+      end)
+
+    {:noreply, %{state | minted: minted}}
+  end
 end
 
 # tables = [

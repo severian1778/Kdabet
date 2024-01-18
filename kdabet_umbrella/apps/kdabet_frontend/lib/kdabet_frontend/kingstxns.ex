@@ -77,6 +77,34 @@ defmodule KdabetFrontend.Kings.Transactions do
     call_chainweb(:local, command)
   end
 
+  @doc """
+  Function: get_owned(account)
+
+  Inputs: account: String.t() -> A Kadena k: accuont
+
+  Return: list
+  """
+  # spec get_owned(String.t()) :: map()
+  def has_minted(account) do
+    {:ok, keypair} = KeyPair.generate()
+    metadata = metadata(account)
+    env_data = %{}
+
+    code =
+      "(use n_5382b05312493cdadba55b2928f839127f3f1a7e.kingsmintv9) (n_5382b05312493cdadba55b2928f839127f3f1a7e.kingsmintv9.has-minted \"kadena-kings-ng7\" \"king\" \"#{account}\")"
+
+    {:ok, %Command{} = command} =
+      Pact.ExecCommand.new()
+      |> Pact.ExecCommand.set_network(@network_id)
+      |> Pact.ExecCommand.set_metadata(metadata)
+      |> Pact.ExecCommand.set_code(code)
+      |> Pact.ExecCommand.set_data(env_data)
+      |> Pact.ExecCommand.add_keypair(keypair)
+      |> Pact.ExecCommand.build()
+
+    call_chainweb(:local, command)
+  end
+
   def get_balance(account) do
     {:ok, keypair} = KeyPair.generate()
     metadata = metadata(account)

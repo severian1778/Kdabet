@@ -76,7 +76,7 @@ defmodule KdabetFrontendWeb.Mint do
     connectButton = %{
       func: "",
       hook: "WalletConnect",
-      innertext: "WalletConnect",
+      innertext: "Connect Wallet",
       working: false,
       provider: "",
       event: "open = true"
@@ -174,9 +174,9 @@ defmodule KdabetFrontendWeb.Mint do
         <div class="mx-auto lg:mx-0 w-1/2 max-width-1/2">
           <!-- Wallet Connect Dropdown -->
           <section class="w-full space-y-10" x-data="{ open: false }">
-            <h2 class="font-exo2 text-stone-200 text-center w-100 text-3xl">Supported Wallets</h2>
+            <h2 class="font-exo2 text-stone-200 text-center w-full text-3xl">Supported Wallets</h2>
             <div class="mx-auto max-w-[320px] flex flex-row justify-between space-x-3">
-              <img class="w-[60px] h-[60px]" src="images/linx.png">
+              <!-- <img class="w-[60px] h-[60px]" src="images/linx.png"> -->
               <img class="w-[60px] h-[60px]" src="images/koala.png">
               <img class="w-[60px] h-[60px]" src="images/ecko.png">
               <img class="w-[60px] h-[60px]" src="images/zelcore.png">
@@ -287,7 +287,7 @@ defmodule KdabetFrontendWeb.Mint do
       <div class={"flex flex-col lg:flex-row " <>
         (((assigns.mintButton.has_confirmed_nft or assigns.txnState.is_confirmed) && "opacity-100") ||
            "opacity-50")}>
-        <div class="w-100 max-w-2xl lg:w-1/2 lg:max-w-1/2 font-exo2 text-stone-200">
+        <div class="w-full max-w-2xl lg:w-1/2 lg:max-w-1/2 font-exo2 text-stone-200">
           <div class="space-y-5">
             <h2 class="font-bold text-4xl text-center">Mint Your King:</h2>
             <h3 class="text-2xl px-5 lg:px-0">Take your rightful throne and mint the king.
@@ -341,7 +341,7 @@ defmodule KdabetFrontendWeb.Mint do
               <img class="" src="images/ThankYouForMinting.png">
             </div>
           {#else}
-            <div class="w-1/2 mt-5 mx-auto">
+            <div class="lg:w-1/2 mt-5 mx-auto">
               <div class="flex flex-col w-full text-center text-stone-200 font-bold font-exo2 mb-10 space-y-1">
                 <span class="text-4xl mb-2">Cost: $300 USD</span>
                 <span class="text-2xl">Wallet: {assigns.walletState.balance_string |> String.split("/") |> Enum.at(0)}</span>
@@ -349,7 +349,7 @@ defmodule KdabetFrontendWeb.Mint do
               </div>
               {#if assigns.walletState.balance_usd < 300.00}
                 <div class="text-red-300 text-center text-red-300 font-bold font-exo-2 my-10">Insufficient Funds</div>
-                <div class="w-1/2 mt-5 mx-auto">
+                <div class="lg:w-1/2 mt-5 mx-auto">
                   <!-- The Grayed out Button -->
                   <button class="disabledButton">Mint the King</button>
                 </div>
