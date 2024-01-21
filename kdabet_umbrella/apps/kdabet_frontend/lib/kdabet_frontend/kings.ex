@@ -1,7 +1,7 @@
 defmodule KdabetFrontend.Kings do
   use GenServer
 
-  alias KdabetFrontend.Kings.Transactions
+  alias KdabetFrontend.Kings.{Transactions, Cache}
   #############################
   # Client API
   #############################
@@ -36,7 +36,28 @@ defmodule KdabetFrontend.Kings do
   ##############################
 
   def init(:ok) do
-    {kings, _binding} = Code.eval_file("priv/static/kingsdata.txt")
+    ## wait at least 1 second for cache to load
+    :timer.sleep(100)
+
+    {kings, minted} =
+      case :dets.lookup(:kings, "kings") do
+        [] ->
+          ## save the cache to the kings dets table
+          {kings, _binding} = Code.eval_file("priv/static/kingsdata.txt")
+          ## puts in cache for the first time
+          Cache.put("kings", kings)
+          ## puts in cache for the first time
+          minted = Cache.put("minted", Enum.map(kings, fn _k -> false end))
+          ## return the pertinent data
+          {kings, minted}
+
+        _ ->
+          ## get the kings cache
+          {:ok, kings} = Cache.get("kings")
+          {:ok, minted} = Cache.get("minted")
+          {kings, minted}
+      end
+
     #################
     # Constants
     #################
@@ -46,10 +67,9 @@ defmodule KdabetFrontend.Kings do
       heartbeat: 0,
       date: Date.to_iso8601(DateTime.utc_now() |> DateTime.add(-7 * 3600, :second)),
       kings: kings,
-      minted: Enum.map(kings, fn _k -> false end)
+      minted: minted
     }
 
-    __MODULE__.poll_kings()
     {:ok, config}
   end
 
@@ -83,6 +103,10 @@ defmodule KdabetFrontend.Kings do
         |> Map.get(:data)
       end)
 
+    ## save to cache
+    Cache.put(:minted, minted)
+
+    ## return
     {:noreply, %{state | minted: minted}}
   end
 end
