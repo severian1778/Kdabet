@@ -40,3 +40,7 @@ assets/js/_hooks/
 
 # Ignore generated CSS file for components
 assets/css/_components.css
+
+# Ignore Spurious Ingested images
+#
+priv/static/images/kings/*-*.png

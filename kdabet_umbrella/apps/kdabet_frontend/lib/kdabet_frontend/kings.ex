@@ -22,8 +22,12 @@ defmodule KdabetFrontend.Kings do
     GenServer.call(__MODULE__, {:getking, address})
   end
 
+  def get_kings() do
+    GenServer.call(__MODULE__, :getkings)
+  end
+
   def poll_kings() do
-    GenServer.cast(__MODULE__, {:pollkings})
+    GenServer.cast(__MODULE__, :pollkings)
   end
 
   ##############################
@@ -59,10 +63,14 @@ defmodule KdabetFrontend.Kings do
     {:reply, kingdata, state}
   end
 
+  def handle_call(:getkings, _from, state) do
+    {:reply, state.kings, state}
+  end
+
   def handle_call(:getstate, _from, state), do: {:reply, state, state}
   def handle_call(:stop, _from, state), do: {:stop, :normal, :ok, state}
 
-  def handle_cast({:pollkings}, state) do
+  def handle_cast(:pollkings, state) do
     ## we enumerate throught he kings and update the state for is minted status
     minted =
       Enum.map(state.kings, fn king ->
@@ -78,22 +86,3 @@ defmodule KdabetFrontend.Kings do
     {:noreply, %{state | minted: minted}}
   end
 end
-
-# tables = [
-##  :schedule
-## ]
-
-# gamedataslug = []
-
-# Enum.each(tables, fn table ->
-# :ets.new(table, [
-#   :set,
-#   :named_table,
-#   :public,
-#   read_concurrency: true,
-#   write_concurrency: true
-# ])
-
-# # initialize slugs
-# :ets.insert(table, {table |> Atom.to_string(), gamedataslug})
-# nd)

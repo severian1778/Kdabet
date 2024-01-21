@@ -8,7 +8,7 @@ defmodule KdabetFrontendWeb.Kings do
   @impl true
   def mount(_params, _session, socket) do
     ## return the assigns
-    kings = kingslist()
+    kings = Kings.get_kings()
     lords = lordslist()
 
     mint_status = Kings.get_state() |> Map.get(:minted)
@@ -81,7 +81,7 @@ defmodule KdabetFrontendWeb.Kings do
           <!-- Iterate through the kings -->
           <div
             class="w-full lg:mb-5 lg:w-[50%] my-2 sm:max-w-xl lg:max-w-md xl:max-w-xl 2xl:max-w-2xl mx-auto"
-            :for={{{discord, name}, index} <- @kings |> Enum.with_index()}
+            :for={{{_address, discord, name, _has_minted, _ipfs}, index} <- @kings |> Enum.with_index()}
           >
             <King name={name} discord={discord} minted={@minted |> Enum.at(index)} />
           </div>

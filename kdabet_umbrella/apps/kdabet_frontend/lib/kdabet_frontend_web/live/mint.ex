@@ -26,7 +26,7 @@ defmodule KdabetFrontendWeb.Mint do
     }
 
     ## Wallet Connect is a 3rd party app with its own state
-    walletConnect = %{
+    _walletConnect = %{
       useWalletConnectStore: %{
         selectedAccount: nil,
         signingType: "sign"

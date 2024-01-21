@@ -60,9 +60,10 @@ defmodule KdabetFrontend.MixProject do
       {:jason, "~> 1.3"},
       {:kadena, "~> 0.19.0"},
       {:vega_lite, "~> 0.1.8"},
+      {:nx, "~> 0.5"},
       {:kino_vega_lite, "~> 0.1.8"},
       ## import umbrella apps
-      {:crashgame,  in_umbrella: true},
+      ##{:crashgame,  in_umbrella: true},
       {:schedules, in_umbrella: true}
     ]
   end
