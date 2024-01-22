@@ -1,4 +1,5 @@
 ;; As always we must define the module under a namespace
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (namespace "free")
 
 ;; Define the critical keysets that are need to run smart contract operations
