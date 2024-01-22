@@ -44,3 +44,5 @@ assets/css/_components.css
 # Ignore Spurious Ingested images
 #
 priv/static/images/kings/*-*.png
+
+kings

@@ -368,9 +368,8 @@
       collection:string
       id:string
       account:string
-      lords-guard:guard
     ) 
-    @doc "Converts overdue kings to lords and updates whitelst"
+    @doc "Converts overdue kings to lords and updates whitelist"
     (with-capability (OPS)
       (with-read collections collection 
         {
