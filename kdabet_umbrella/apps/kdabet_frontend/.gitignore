@@ -45,4 +45,4 @@ assets/css/_components.css
 #
 priv/static/images/kings/*-*.png
 
-kings
+/kings
