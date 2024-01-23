@@ -256,15 +256,48 @@
   )
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;Updates the NFT types in case of neede change
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  (defun update-collection-types
+    (
+      collection:string
+      types:[object:{type}]
+    )
+    @doc "Updates the types of the given collection"
+    (with-capability (CREATECOL collection)
+      (validate-types types)
+      (let 
+        (
+          (kingobj:object{type} {"cost": 300.0,"currencyType": "USD","endTime": (time "2024-01-04T00:00:00Z"),"id": "king","limit": 1,"startTime": (time "2023-12-03T20:00:00Z")}) 
+        )
+
+        ;;Cannot change the king immutable type
+        (enforce 
+          (contains kingobj types)
+          "Any change to types must contain the immutable king object"
+        )
+
+        (update collections collection
+          { "types": types }
+        )
+      )
+    )
+    true
+  )
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Adds policy stack string to the DB for a type
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   (defun add-policies (collection:string policies: [object{policy-data}])
     @doc "records nft type policies in the db"
-    (map (add-policy collection) policies)
+    (with-capability (CREATECOL)
+      (map (add-policy collection) policies)
+    )
   )
 
   (defun add-policy:string (collection:string policy:object{policy-data})
     @doc "Add a policy stack to the policies table"
+    (require-capability (CREATECOL))
     (let 
       (
         (type:string (at "type" policy))
@@ -414,7 +447,7 @@
     ;; Only available to ops
     (with-capability (OPS) 
       ;;The amount of lords are exactly capped 
-      (enforce (= amount 48) "Must mint an exact number of lords")
+      (enforce (= amount 47) "Must mint an exact number of lords")
       (map (mint-lord collection account) (enumerate 1 amount))
     )
     "Lords have been minted"
@@ -440,8 +473,6 @@
         "currentIndex":= currentIndex, 
         "totalSupply":= totalSupply, 
         "fungible":= fungible:module{fungible-v2}, 
-        "creator":= creator:string, 
-        "creatorGuard":= creatorGuard, 
         "types":= types
       }
 
@@ -965,6 +996,7 @@
       (
         (whitelist-id (get-whitelist-id collection id account))
       )
+      
       (with-default-read whitelist-table whitelist-id
         { "mint-count": -1 }
         { "mint-count":= mint-count }

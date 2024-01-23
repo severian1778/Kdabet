@@ -21,7 +21,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (begin-tx "create collection")
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; import the relevant kets that will be needed
+  ;; Import the relevant keys that will be needed
+  ;;
   ;; In the sandbox is can be strings like this but in the
   ;; real world they will be keysets (crypto hashes)
   ;; generated from your keypair software (kda-tool) 
@@ -30,11 +31,13 @@
   
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Load up environmental data.  This data is usually send in a 
-  ;; transactions with (env-data ...).
+  ;; transaction "command" but in the repl here we are simulating
+  ;; these transactions with (env-data ...).
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   (env-data {
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     ;; Describe the keys you want to add to the simulation
+    ;; Generally we have admin (governance) ops (operations)
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     "kdabet-admin": {"keys": ["kdabet-admin"],"pred": "keys-any"},
     "kdabet-operation": {"keys": ["kdabet-operation"],"pred": "keys-any"},
@@ -55,7 +58,8 @@
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
     "collection": {
       "name": "kadena-kings",
-      "creator": "kdabet-operation",
+      "creator": "k:ff512a9c7eb9041ef1e604d262e4f80fb4078d5e801ae83bb8465ec3bcb689c8",
+      ;;"creator": "kdabet_operation",
       "creatorGuard": {
         "keys": ["kdabet-operation"],
         "pred": "keys-any"
@@ -75,7 +79,7 @@
         },
         {
           "id": "monarch",
-          "startTime": {"time": "2024-02-04T00:00:01Z"},
+          "startTime": {"time": "2024-02-04T20:00:00Z"},
           "endTime": {"time": "2028-02-04T00:00:00Z"},
           "cost": 300.0,
           "limit": 1,
@@ -100,12 +104,12 @@
         "accounts": ["bob", "alice"]
       },
       {
-        "id": "monarch",
-        "accounts": []
-      },
-      {
         "id": "lord",
         "accounts": ["kdabet-operation"]
+      },
+      {
+        "id": "monarch",
+        "accounts": []
       }
     ],
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -136,50 +140,76 @@
  
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;Change the environmental data to operations and execute the
-  ;;create collection function.
+  ;;create collection function and add policies.
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   (env-keys ["kdabet-operation"])
   (env-gasmodel "table") 
   (env-gaslimit 150000)
   (env-gas 0)
     (free.kingsmint.create-collection 500 (read-msg 'collection) coin) 
-    (free.kingsmint.add-policies "kadena-kings" (read-msg 'type-policies)) 
+    (free.kingsmint.add-policies "kadena-kings" (read-msg 'type-policies))
   (env-gas)
 (commit-tx)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;Adds the kdabet operations account for recieving money
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(begin-tx "Add Operations Account")
-  (env-keys ["kdabet-operation"])
-  (coin.create-account "kdabet-operation" (read-keyset "kdabet-operation"))
-(commit-tx)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;The Creator emits a token for the owner to mint on NG
+;;Check if the created collection exists 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
-(begin-tx "KDAbet operations mints mass lords")
-  ;;we set the time to be in the illegitimate range
-  (env-chain-data { "block-time": (time "2023-12-25T20:00:00Z")})
-  (env-keys ["kdabet-operation"])
-
-  ;;Adding lists of pre-determined accounts to the whitelist for lords and kings
-  (free.kingsmint.add-whitelist-by-type "kadena-kings" (read-msg 'type-data))
-  (print "\nIs kdabet-operation whitelisted for a lord??\n")
-  (print (format "{}" [(free.kingsmint.is-whitelisted "kadena-kings" "lord" "kdabet-operation")]))
-  ;;Mint the token 
-  (free.kingsmint.mint-all-lords "kadena-kings" "kdabet-operation" 47)
+(begin-tx "Check if collection is created")
+  (print "\nCHECKING COLLECTION EXISTANCE\n")
+  (print (free.kingsmint.check-for-named-collection "kadena-kings"))
 (commit-tx)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;Check the Whitelist for addition of lords account
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;  
-(begin-tx "Checks if lords are minted")
-  (print "\nIs kdabet-operation whitelisted for a lord??\n")
-  (print (format "{}" [(free.kingsmint.is-whitelisted "kadena-kings" "lord" "kdabet-operation")]))
-  (print "\nHow many lords did kdabet-operations mint??\n")
-  (print (format "account {} has minted {} lords" ["kdabet-operation" (length (free.kingsmint.get-owned "kdabet-operation"))])) 
+;;Print out the formatted data
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
+(begin-tx "Check collection data")
+  (print "\nPRINTING OUT THE COLLECTION DATA\n")
+  (print (free.kingsmint.check-collection-data "kadena-kings"))
 (commit-tx)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;Change the Types
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
+(begin-tx "Change collection types")
+  (env-data {
+      "types": [
+        {
+          "id": "king",
+          "startTime": {"time": "2023-12-03T20:00:00Z"},
+          "endTime": {"time": "2024-01-04T00:00:00Z"},
+          "cost": 301.0,
+          "limit": 1,
+          "currencyType": "USD"
+        },
+        {
+          "id": "monarch",
+          "startTime": {"time": "2024-02-04T20:00:00Z"},
+          "endTime": {"time": "2028-02-04T00:00:00Z"},
+          "cost": 1300.0,
+          "limit": 1,
+          "currencyType": "USD"
+        },
+        {
+          "id": "lord",
+          "startTime": {"time": "2024-01-04T00:00:01Z"},
+          "endTime": {"time": "2024-02-04T00:00:00Z"},
+          "cost": 0.0,
+          "limit": 300,
+          "currencyType": "USD"
+        }
+      ]
+
+  }) 
+  (print "\nChanging the collection types \n")
+  (print (free.kingsmint.update-collection-types "kadena-kings" (read-msg 'types)))
+(commit-tx)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;Print out the formatted data
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
+(begin-tx "Check collection data")
+  (print "\nPRINTING OUT THE COLLECTION DATA\n")
+  (print (free.kingsmint.check-collection-data "kadena-kings"))
+(commit-tx)
 
 
