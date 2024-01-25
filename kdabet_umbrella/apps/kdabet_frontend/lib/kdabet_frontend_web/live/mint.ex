@@ -1,5 +1,6 @@
 defmodule KdabetFrontendWeb.Mint do
   use KdabetFrontendWeb, :surface_live_view
+  alias Credo.CLI.Output.UI
   alias KdabetFrontendWeb.Components.{MintModal}
   alias KdabetFrontend.Kings.{Transactions, Cache}
 
@@ -354,12 +355,20 @@ defmodule KdabetFrontendWeb.Mint do
                   <button class="disabledButton">Mint the King</button>
                 </div>
               {#else}
-                <button
+                {#if (!assigns.txnState.is_confirmed and assigns.txnState.req_key != "")}
+                  <div class="text-red-300 text-center text-red-300 font-bold font-exo-2 my-10">Insufficient Funds</div>
+                  <div class="lg:w-1/2 mt-5 mx-auto">
+                    <!-- The Grayed out Button -->
+                    <button class="disabledButton">Mint the King</button>
+                  </div>
+                {#else}
+                  <button
                   :on-click="mintToken"
                   class="connectButton"
                   phx-value-wallet={assigns.mintButton.provider}
                   phx-hook={assigns.mintButton.hook}
-                >Mint the King</button>
+                  >Mint the King</button>
+                {/if}
               {/if}
             </div>
           {/if}

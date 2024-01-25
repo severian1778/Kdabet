@@ -264,7 +264,7 @@
       types:[object:{type}]
     )
     @doc "Updates the types of the given collection"
-    (with-capability (CREATECOL collection)
+    (with-capability (CREATECOL)
       (validate-types types)
       (let 
         (

@@ -15,7 +15,7 @@ defmodule KdabetFrontend.Kings.Transactions do
   @spec prep_unsigned_txn(String.t()) :: map()
   def prep_unsigned_txn(mint_account) do
     code =
-      "(use n_5382b05312493cdadba55b2928f839127f3f1a7e.kingsmintv9) (n_5382b05312493cdadba55b2928f839127f3f1a7e.kingsmintv9.reserve-mint \"kadena-kings-ng7\" \"k:#{mint_account}\")"
+      "(use n_5382b05312493cdadba55b2928f839127f3f1a7e.kingsmintv11) (n_5382b05312493cdadba55b2928f839127f3f1a7e.kingsmintv11.reserve-mint \"kadena-kings-ng9\" \"k:#{mint_account}\")"
 
     env_data =
       %{
@@ -42,7 +42,7 @@ defmodule KdabetFrontend.Kings.Transactions do
             name: "coin.TRANSFER",
             args: [
               "k:#{mint_account}",
-              "kdabet_operation",
+              "k:ff512a9c7eb9041ef1e604d262e4f80fb4078d5e801ae83bb8465ec3bcb689c8",
               @transfercap
             ]
           }
@@ -57,6 +57,26 @@ defmodule KdabetFrontend.Kings.Transactions do
         }
       ]
     }
+  end
+
+  def check_dao_members() do
+    {:ok, keypair} = KeyPair.generate()
+    metadata = metadata(keypair.pub_key)
+    env_data = %{}
+
+    code =
+      "(n_7763cd0330f59f3c66e431dcd63a2c5c5e2e0b70.dao-hive-factory.get-all-dao-members \"0l8AnwhJQ9KUE4VVtdj9Xkkk6XFT_vtZjaie1k5gdd0\")"
+
+    {:ok, %Command{} = command} =
+      Pact.ExecCommand.new()
+      |> Pact.ExecCommand.set_network(@network_id)
+      |> Pact.ExecCommand.set_metadata(metadata)
+      |> Pact.ExecCommand.set_code(code)
+      |> Pact.ExecCommand.set_data(env_data)
+      |> Pact.ExecCommand.add_keypair(keypair)
+      |> Pact.ExecCommand.build()
+
+    call_chainweb(:local, command)
   end
 
   def get_kda_price() do
@@ -91,7 +111,7 @@ defmodule KdabetFrontend.Kings.Transactions do
     env_data = %{}
 
     code =
-      "(use n_5382b05312493cdadba55b2928f839127f3f1a7e.kingsmintv9) (n_5382b05312493cdadba55b2928f839127f3f1a7e.kingsmintv9.has-minted \"kadena-kings-ng7\" \"king\" \"#{account}\")"
+      "(use n_5382b05312493cdadba55b2928f839127f3f1a7e.kingsmintv11) (n_5382b05312493cdadba55b2928f839127f3f1a7e.kingsmintv9.has-minted \"kadena-kings-ng11\" \"king\" \"#{account}\")"
 
     {:ok, %Command{} = command} =
       Pact.ExecCommand.new()
