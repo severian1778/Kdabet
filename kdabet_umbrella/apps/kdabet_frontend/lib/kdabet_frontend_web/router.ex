@@ -25,6 +25,8 @@ defmodule KdabetFrontendWeb.Router do
     live("/kings", Kings)
     live("/mint", Mint)
     live("/casino", Casino)
+
+    get("/sitemap.xml", SitemapController, :index)
   end
 
   # Other scopes may use custom stacks.

@@ -39,7 +39,7 @@ defmodule KdabetFrontendWeb do
   def controller do
     quote do
       use Phoenix.Controller,
-        formats: [:html, :json],
+        formats: [:html, :json, :xml],
         layouts: [html: KdabetFrontendWeb.Layouts]
 
       import Plug.Conn
@@ -63,6 +63,13 @@ defmodule KdabetFrontendWeb do
       use Phoenix.LiveComponent
 
       unquote(html_helpers())
+    end
+  end
+
+  def view do
+    quote do
+      use Phoenix.Controller, formats: [:xml]
+      import Plug.Conn
     end
   end
 
