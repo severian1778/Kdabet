@@ -1,5 +1,5 @@
-/*const networkId = "mainnet01"*/
-const networkId = "testnet04"
+const networkId = "mainnet01"
+/*const networkId = "testnet04"*/
 
 const EckoWallet = {
   /*window.addEventListener(`phx:connect-koala`, (e) => {*/

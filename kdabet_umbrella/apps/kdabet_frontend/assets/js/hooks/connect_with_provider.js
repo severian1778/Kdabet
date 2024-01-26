@@ -3,9 +3,10 @@ import KoalaWallet from "./wallet-connect/providers/koala"
 import EckoWallet from "./wallet-connect/providers/ecko"
 import ZelcoreWallet from "./wallet-connect/providers/zelcore"
 import WalletConnect from "./wallet-connect/providers/wc"
+
 /* Wallet Connection */
-const network_id = "testnet04"
-/* const network_id = "mainnet01" */
+/*const network_id = "testnet04"*/
+const network_id = "mainnet01"
 
 
 /* Fetches the provider object from a string */
