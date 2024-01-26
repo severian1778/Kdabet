@@ -111,7 +111,7 @@ defmodule KdabetFrontend.Kings.Transactions do
     env_data = %{}
 
     code =
-      "(use n_5382b05312493cdadba55b2928f839127f3f1a7e.kingsmintv11) (n_5382b05312493cdadba55b2928f839127f3f1a7e.kingsmintv9.has-minted \"kadena-kings-ng11\" \"king\" \"#{account}\")"
+      "(use n_5382b05312493cdadba55b2928f839127f3f1a7e.kingsmintv11) (n_5382b05312493cdadba55b2928f839127f3f1a7e.kingsmintv11.has-minted \"kadena-kings-ng0\" \"king\" \"#{account}\")"
 
     {:ok, %Command{} = command} =
       Pact.ExecCommand.new()
