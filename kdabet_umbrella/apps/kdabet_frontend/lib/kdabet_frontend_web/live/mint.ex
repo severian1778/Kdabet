@@ -1,6 +1,5 @@
 defmodule KdabetFrontendWeb.Mint do
   use KdabetFrontendWeb, :surface_live_view
-  alias Credo.CLI.Output.UI
   alias KdabetFrontendWeb.Components.{MintModal}
   alias KdabetFrontend.Kings.{Transactions, Cache}
 
@@ -39,7 +38,7 @@ defmodule KdabetFrontendWeb.Mint do
       req_key: "",
       poll: "",
       is_confirmed: false,
-      blocktime: "",
+      blocktime: DateTime.utc_now(),
       response: ""
     }
 
@@ -318,13 +317,13 @@ defmodule KdabetFrontendWeb.Mint do
                 <span>
                   <a
                     class="text-sky-400 hover:text-pink-300"
-                    href={"https://explorer.chainweb.com/testnet/tx/" <> assigns.txnState.req_key}
+                    href={"https://explorer.chainweb.com/mainnet/tx/" <> assigns.txnState.req_key}
                   >
                     {Enum.join([
-                      ("https://explorer.chainweb.com/testnet/tx/" <> assigns.txnState.req_key)
+                      ("https://explorer.chainweb.com/mainnet/tx/" <> assigns.txnState.req_key)
                       |> String.slice(0, 10),
                       "...",
-                      ("https://explorer.chainweb.com/testnet/tx/" <> assigns.txnState.req_key)
+                      ("https://explorer.chainweb.com/mainnet/tx/" <> assigns.txnState.req_key)
                       |> String.reverse()
                       |> String.slice(0, 5)
                       |> String.reverse()
@@ -349,17 +348,28 @@ defmodule KdabetFrontendWeb.Mint do
                 <span class="text-2xl">Wallet: {assigns.walletState.balance_string |> String.split("/") |> Enum.at(1)}</span>
               </div>
               {#if assigns.walletState.balance_usd < 300.00}
-                <div class="text-red-300 text-center text-red-300 font-bold font-exo-2 my-10">Insufficient Funds</div>
+                <div class="text-red-300 text-center font-bold font-exo-2 my-10">Insufficient Funds: {assigns.walletState.balance_usd|>Decimal.from_float|>Decimal.round(2)|>to_string} USD</div>
                 <div class="lg:w-1/2 mt-5 mx-auto">
                   <!-- The Grayed out Button -->
                   <button class="disabledButton">Mint the King</button>
                 </div>
               {#else}
-                {#if (!assigns.txnState.is_confirmed and assigns.txnState.req_key != "")}
-                  <div class="text-red-300 text-center text-red-300 font-bold font-exo-2 my-10">Insufficient Funds</div>
+                {#if (!assigns.txnState.is_confirmed and assigns.txnState.response == "pending")}
+                  <div class="text-red-300 text-center font-bold font-exo-2 my-10">Transaction in Progress</div>
                   <div class="lg:w-1/2 mt-5 mx-auto">
                     <!-- The Grayed out Button -->
                     <button class="disabledButton">Mint the King</button>
+                  </div>
+                {#elseif (!assigns.txnState.is_confirmed and assigns.txnState.response == "failed")}
+                  <div class="text-red-300 text-center font-bold font-exo-2 my-10">Transaction Failed</div>
+                  <div class="lg:w-1/2 mt-5 mx-auto">
+                    <!-- You May Mint Again -->
+                    <button
+                    :on-click="mintToken"
+                    class="connectButton"
+                    phx-value-wallet={assigns.mintButton.provider}
+                    phx-hook={assigns.mintButton.hook}
+                    >Mint the King</button>
                   </div>
                 {#else}
                   <button
@@ -475,10 +485,45 @@ defmodule KdabetFrontendWeb.Mint do
   @impl true
   def handle_event("connect-response", response_from_client, socket) do
     # TODO: make sure to update the wc state
-    {:ok, raw_balance} = Transactions.get_balance(response_from_client["account"])
     {:ok, raw_price} = Transactions.get_kda_price()
-    balance = raw_balance.result.data.balance
     price = raw_price.result.data |> Map.get(:"kda-usd-price")
+ 
+    {:ok, raw_balance} = Transactions.get_balance(response_from_client["account"])
+    IO.inspect(raw_balance)
+    balance = 
+      cond do
+	raw_balance.result|>Map.has_key?(:data) ->
+	  raw_balance.result.data.balance   
+ 	true -> 
+          0
+      end
+
+    balance_string =
+      cond do  
+	raw_balance.result|>Map.has_key?(:data) ->
+	
+          Enum.join([
+            balance
+            |> to_string
+            |> Float.parse()
+            |> elem(0)
+            |> Decimal.from_float()
+            |> Decimal.round(2)
+            |> to_string(),
+            " KDA / $",
+            (price * balance)
+           |> Decimal.from_float()
+            |> Decimal.round(2)
+            |> to_string(),
+            " USD"
+          ])
+
+ 	true -> 
+          "Acc DNE:  Please fund your wallet"
+      end
+
+
+    IO.inspect([balance: balance]) 
     ###########################################
     ## Update the socket states with the response
     ## from the wallet (javascript)
@@ -490,23 +535,7 @@ defmodule KdabetFrontendWeb.Mint do
       |> Map.update!(:provider, fn _oldaccount -> response_from_client["provider"] end)
       |> Map.update!(:balance_kda, fn _oldaccount -> balance end)
       |> Map.update!(:balance_usd, fn _oldaccount -> balance * price end)
-      |> Map.update!(:balance_string, fn _oldaccount ->
-        Enum.join([
-          balance
-          |> to_string
-          |> Float.parse()
-          |> elem(0)
-          |> Decimal.from_float()
-          |> Decimal.round(2)
-          |> to_string(),
-          " KDA / $",
-          (price * balance)
-          |> Decimal.from_float()
-          |> Decimal.round(2)
-          |> to_string(),
-          " USD"
-        ])
-      end)
+      |> Map.update!(:balance_string, fn _oldaccount -> balance_string end)
 
     newKadenaState =
       socket.assigns.kadenaState
@@ -548,16 +577,29 @@ defmodule KdabetFrontendWeb.Mint do
 
               is_success =
                 case poll.results do
-                  [] -> "pending"
-                  a -> a |> Enum.at(0) |> Map.get(:result) |> Map.get(:status)
+                  [] ->
+                    cond do 
+ 		      DateTime.diff(DateTime.utc_now(), socket.assigns.txnState.blocktime) > 120 ->
+			"expired"
+                      true -> 
+                        "pending"
+                    end
+                  a -> 
+		    a |> Enum.at(0) |> Map.get(:result) |> Map.get(:status)
                 end
 
               case is_success do
-                "failure" ->
-                  %{response | poll: poll, is_confirmed: false}
+                "failed" ->
+                  %{response | poll: poll.results, is_confirmed: false, response: "failed"}
 
                 "success" ->
-                  %{response | poll: poll, is_confirmed: true}
+                  %{response | poll: poll.results, is_confirmed: true, response: "sucess"}
+
+                "pending" ->
+                  %{response | poll: poll.results, is_confirmed: false, response: "pending"}
+
+                "expired" ->
+                  %{response | poll: "", is_confirmed: false, req_key: "", blocktime: "", response: "expired"}
 
                 _ ->
                   response
@@ -565,6 +607,11 @@ defmodule KdabetFrontendWeb.Mint do
           end
       end
 
+    ###########################################
+    ## Handle valid/invalid wallets
+    ########################################### 
+    Cache.put(:kings, response_from_client["account"], txnState)
+ 
     ###########################################
     ## Handle valid/invalid wallets
     ###########################################
@@ -622,9 +669,10 @@ defmodule KdabetFrontendWeb.Mint do
 
   @impl true
   def handle_event("return-signed", response_from_client, socket) do
+    txn_type = :send
     ## Forms an unsigned transactions
     {:ok, response} =
-      Transactions.sign_and_send(response_from_client, :send)
+      Transactions.sign_and_send(response_from_client, txn_type)
 
     ## Fetch request keys
     req_key =
@@ -638,9 +686,16 @@ defmodule KdabetFrontendWeb.Mint do
       | req_key: req_key
     })
 
-    {:noreply,
-     socket
-     |> assign(txnState: %{socket.assigns.txnState | req_key: req_key})}
+    case txn_type do
+      :local -> 
+        {:noreply, socket}
+      :send -> 
+	{:noreply,
+         socket
+         |> assign(txnState: %{socket.assigns.txnState | req_key: req_key, blocktime: DateTime.utc_now()})}
+      _ ->
+         {:noreply, socket}
+    end
   end
 
   @impl true

@@ -44,6 +44,7 @@ WalletConnect = {
   mounted() {
     /* The listener awaits for a connect message*/
     window.addEventListener("phx:connect-wallet", (e) => {
+      console.log(e)	
       connectWallet(this, e.detail.provider)
     })
 

@@ -94,6 +94,7 @@ defmodule KdabetFrontend.Kings do
     ## we enumerate throught he kings and update the state for is minted status
     minted =
       Enum.map(state.kings, fn king ->
+	:timer.sleep(100)
         account = king |> elem(0)
 
         {:ok, response} =
