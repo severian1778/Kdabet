@@ -20,6 +20,7 @@ defmodule KdabetFrontend.MixProject do
   def application do
     [
       mod: {KdabetFrontend.Application, []},
+      # , :sitemap]
       extra_applications: [:logger, :runtime_tools]
     ]
   end
@@ -61,9 +62,8 @@ defmodule KdabetFrontend.MixProject do
       {:kadena, "~> 0.19.0"},
       {:vega_lite, "~> 0.1.8"},
       {:kino_vega_lite, "~> 0.1.8"},
-      {:sitemap, "~> 1.1"},
       ## import umbrella apps
-      {:crashgame,  in_umbrella: true},
+      {:crashgame, in_umbrella: true},
       {:schedules, in_umbrella: true}
     ]
   end
