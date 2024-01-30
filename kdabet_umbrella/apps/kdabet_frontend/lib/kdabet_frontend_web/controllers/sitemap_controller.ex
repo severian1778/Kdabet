@@ -1,6 +1,5 @@
 defmodule KdabetFrontendWeb.SitemapController do
   use KdabetFrontendWeb, :controller
-  alias KdabetFrontendWeb.Sitemap
 
   def index(conn, _params) do
     conn

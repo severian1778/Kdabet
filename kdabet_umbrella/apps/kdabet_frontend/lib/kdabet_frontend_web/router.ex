@@ -26,6 +26,7 @@ defmodule KdabetFrontendWeb.Router do
     live("/mint", Mint)
     live("/casino", Casino)
 
+    ##sitmap has been reduced to a single http response 
     get("/sitemap.xml", SitemapController, :index)
   end
 
