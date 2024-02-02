@@ -118,6 +118,10 @@ defmodule KdabetFrontendWeb.Kings do
     """
   end
 
+  def lordslist() do
+    []
+  end
+
   @impl true
   def handle_event("show_modal", %{"uri" => uri, "name" => name}, socket) do
     KingModal.show("modal", uri, name)
