@@ -117,7 +117,7 @@
   {"k:3ce0304e4eaef9c6f8f75a14737a0e4a8e1eff69a478237b885e60f6cb531a76", "Tmg1", "Cactus King",false,"QmWbGC9kQapDv1xJK79U22omKB4FSt1PpaKGVStnunBFjw"},
   {"k:ac4c03e316cf240bd4d1f151265656970d34d743abd6506b2ef10b4a989fa07b", "Tmg2", "Philly King",false,"QmbB9Zy2QZ8QYexHAjwYqcAMdvcrtxKJd6Z6qtNemv8qEe"},
   {"k:795d00ae0c076480ab55478bd05283692a2178aaa8c6d74d042ec4a1846afc77", "Tmg3", "Kings of Crypto",false,"QmP9Pc9uy4NTe6BKpNXEJnntJyDa77VkGqPvSJ8aD4knaA"},
-  {"k:b0efd2d565a521c92b7ea2992d558ed36a8b944228638e1d33fb84b7f056f238", "Frog", "King of Frogs",false,"QmXKjxBco1TGvpygzT3Q3qXGWCKDYG1orDgWNGMnXYicDr"},
+  {"k:f30dbc75c7aa037ae8c90cfac39a0d20e27b601ada86f3fe5085de6f95416f84", "Frog", "King of Frogs",false,"QmXKjxBco1TGvpygzT3Q3qXGWCKDYG1orDgWNGMnXYicDr"},
   {"k:28d7384cbb5ec5c436e41c262977ce08748a583adbf7366f934bdec443ab0779", "Pineappleaura", "Lifting King",false,"QmZFVyyWpQ7VMBqgXRnGHjnxso9eXYrDAxWjTwihswaSLo"},
   {"k:2debe1d912c9a0a9987a50e387f046a9be5a8db56d1a58f7f79908b5e651e2fe", "Coop100", "King Kazoma",false,"Qmaj8SNQYFMtPKiH6PMCZj2k8BdzL1LdMAfGEMcjzBrsXx"},
   {"k:9ea8e45689fb78eef74afcc354bd9533aef73446af4068724419adbc12697f8f", "Aaron63", "King Teslatoshi",false,"QmTtLsDZdccB9UwnLH7t2UWM97CSRZ6CyXtWkSiDDJT2eP"},
@@ -156,7 +156,7 @@
   {"k:cade5780f282562deab8a347c7bfe30a6b23269821f38c0462523a41b86bdc4c", "Headshot", "King Niall",false,"QmUjM9LoCAuQLiRCEqc7WnEzkunnU1dfpEqHuWyKyoX6nh"},
   {"k:ca45f5ab50d3aa97c93b7871d51e878c5c096964d9bd53649407e870533d1cfb", "Mrs.C", "La Reine du Pari Sûr",false,"QmP6SqgACpAx8FH2tT7iA3WgSPfb5jSFRchkbmGbjzHzUj"},
   {"k:57232a4d134e5844d54ca6868849255a40a90bc452ab554bee85ed8000c64346", "Ennead", "The Recondite",false,"QmSzkdB31CThj6eyZj4DrumtTgfBXhUj8efkq8JyF5X4Eg"},
-  {"k:322fc42b5ba31ee80f1e0b53a1d147592cca31a6b1566c9cb3e68d663cd407aa", "Leander", "King Leander",false,"QmRxZCy6CN4VHXjJx8FFukb4UKWCcgXKHBhm11sCChEr7U"},
+  {"k:322fc42b5ba31ee80f1e0b53a1d147592cca31a6b1566c9cb3e68d663cd407aa", "Leander", "King Leander",false,"QmSDCC8MA5wUMRQrSxPMVdaSPisVV6wtSXe6udoebUsPQi"},
   {"k:bd0cc2f16855a4477b1aec7947e8c77364b689e8ea84c5f07061dcfd7b8bb8cd", "Kadtoshi", "The Goat",false,"QmYK2JSV2GEy5ZcUUknxdEmJEZ7waHhHmYC2zQPCchD6aw"},
   {"k:5bb560e324e5f36cb5e775f9f0380da8f1a117b700c563881d8dfb3016f1fc43", "Thenewtypetrader", "The Newtype King",false,"QmcchvjyAgboDRPfozzqtaXQC3h64wFNcUHzdPiKgPM6GY"},
   {"k:9b66a583929b7620e0b3ea1590c5cbb44aa0f64ef0239f5e960c21d4bc8e2833", "Iskander", "Panther King",false,"QmWRxpH8pdERnvor4ozHbCZybMmQKdFXU6UeTHvjKLz6tM"},
@@ -252,5 +252,6 @@
   {"k:001a79427fc95af459b57fd2a80edaca4da315f0b7bc91fba0b3cbf7567a1ddd", "Bendy", "Penguin King", false, "QmZhPKvC3W86Lf5TKonZuUenGkX2C7bnA2X3qen8mxKRAo"},
   {"k:7113bfacd62bbfb6e065856a9aadc97aaa07c87435e431d1d1072309770afc13", "Mahines", "The Last King", false, "QmRkQBPa7u1Eghx759tk91mVeF8mYUdsvEGFPVKvaqqcLE"},
   {"k:25633aeb56faf979c1b6791105c4f671d234419dbe05ea02249df8b12ab5eaa6", "Adrian", "King Alajandro Nieve", false, "QmT442nfxxe8ykZFcwvTseZBActaA7CEQWMCokA5zacrJM"},
+  {"k:70fac636de6c5a972d96b9079aae7e22fc14ca76ea2137ee57d3f0ef255e28dc", "CarlParker", "King of Golf", false, "QmeaSgAbXiAtghMsFFzG2QVG9XATc4swSxky4jqtVtcdY6"},
   {"k:1f5442746f3cf587a8b150e27f21b6c1e814391ab230f1d4e18bb2f09df657c0", "Sunnyjim23", "King Angel Eyes", false, "Qmc1MBwx8LATMewoowq6iEx6o8TEVGeJ6zBoSPP83PFsWe"}
 ]
