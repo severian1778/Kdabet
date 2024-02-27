@@ -55,7 +55,9 @@ config :nx, :default_backend, EXLA.Backend
 ################################################
 config :kdabet_frontend, KdabetFrontendWeb.Endpoint,
   url: [host: "localhost"],
-  http: [port: 4000],
+  ihttp: [port: 4000],
+  debug_errors: false,
+  code_reloader: true,
   check_origin: ["localhost:4000", "http://70.79.233.233:4000"],
   # http: [port: 80],
   # check_origin: ["http://ec2-34-217-76-52.us-west-2.compute.amazonaws.com:80","http://kdabet.com"],
