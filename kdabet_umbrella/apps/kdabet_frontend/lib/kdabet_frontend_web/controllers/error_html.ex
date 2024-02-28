@@ -14,5 +14,6 @@ defmodule KdabetFrontendWeb.ErrorView do
   # the template name. For example, "404.html" becomes
   # "Not Found".
   #
-  embed_templates("error_html/*")
+  # embed_templates("error_html/*")
+  embed_sface("../components/layouts/404.sface")
 end
