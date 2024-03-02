@@ -1,4 +1,4 @@
-defmodule KdabetFrontendWeb.ErrorHTML do
+defmodule KdabetFrontendWeb.ErrorView do
   use KdabetFrontendWeb, :html
 
   # If you want to customize your error pages,
@@ -13,7 +13,7 @@ defmodule KdabetFrontendWeb.ErrorHTML do
   # The default is to render a plain text page based on
   # the template name. For example, "404.html" becomes
   # "Not Found".
-  def render(template, _assigns) do
-    Phoenix.Controller.status_message_from_template(template)
-  end
+  #
+  # embed_templates("error_html/*")
+  embed_sface("../components/layouts/404.sface")
 end

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" style="scrollbar-gutter: stable;">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content={get_csrf_token()}>
+    <.live_title suffix="· KDABET.COM">
+      {"Page Not Found"}
+    </.live_title>
+    <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"}/>
+    <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}></script>
+  </head>
+  <body> 
+<div class="w-full h-full antialiased">
+  <header class="relative z-10">
+    <nav
+      class="glasscard2 shadow-md flex items-center justify-between flex-wrap px-3 md:px-10 bg-gradient-to-b from-blue-900"
+      x-data="{ isOpen: false }"
+      @keydown.escape="isOpen = false"
+      @resize.window="
+      width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+      if (width > 760) {
+       isOpen = false
+      }"
+    >
+      <a href="/">
+        <img src="/images/logo.png" class="py-2 w-[150px] md:w-[175px] lg:w-[200px]">
+      </a>
+      <!--Toggle button (hidden on large screens)-->
+      <button
+        @click="isOpen = !isOpen"
+        type="button"
+        class="block md:hidden px-2 glowtext hover:text-teal-100 focus:outline-none focus:text-teal-100"
+        x-bind:class="{ 'transition transform-180': isOpen }"
+      >
+        <svg
+          class="h-6 w-6 fill-current"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+        >
+          <path
+            x-show="isOpen"
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M18.278 16.864a1 1 0 0 1-1.414 1.414l-4.829-4.828-4.828 4.828a1 1 0 0 1-1.414-1.414l4.828-4.829-4.828-4.828a1 1 0 0 1 1.414-1.414l4.829 4.828 4.828-4.828a1 1 0 1 1 1.414 1.414l-4.828 4.829 4.828 4.828z"
+          />
+          <path
+            x-show="!isOpen"
+            fill-rule="evenodd"
+            d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"
+          />
+        </svg>
+      </button>
+      <!-- Menu -->
+      <ul class="md:flex glowtext text-xl font-bold sans origin-top" x-bind:class="{ 'block absolute m-0 top-[60px] left-0 border-b border-slate-800 glasscard2 w-full': isOpen, 'hidden mr-3': !isOpen}" x-cloak>
+        <li class="px-3 cursor-pointer flex items-center hover:text-pink-200" x-bind:class="{'bg-slate-700 indent-5 py-3 border-b border-slate-500 hover:bg-slate-600': isOpen, '': !isOpen}">
+          <a class="w-full" title="About" href="/about">About</a>
+        </li>
+        <li class="px-3 cursor-pointer flex items-center hover:text-pink-200" x-bind:class="{'bg-slate-700 indent-5 py-3 border-b border-slate-500 hover:bg-slate-600': isOpen, '': !isOpen}">
+          <a class="w-full" title="Kings" href="/kings">Kings</a>
+        </li>
+        <li class="px-3 cursor-pointer flex items-center hover:text-pink-200" x-bind:class="{'bg-slate-700 indent-5 py-3 border-b border-slate-500 hover:bg-slate-600': isOpen, '': !isOpen}">
+          <a class="w-full" title="Docs" href="https://doc.kdabet.com">Docs</a>
+        </li>
+        <li class="px-3 cursor-pointer flex items-center hover:text-pink-200" x-bind:class="{'bg-slate-700 indent-5 py-3 border-b border-slate-500 hover:bg-slate-600': isOpen, '': !isOpen}">
+          <a class="w-full" title="Mint" href="/mint">Mint</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="px-4 sm:px-6 lg:px-8 relative z-0">
+  <div class="relative flex justify-center items-center uppercase h-[88vh] text-[4rem] md:text-[6rem] flex-col z-10">
+    <section class="title">
+      <span>K</span>
+      <span>D</span>
+      <span>A</span>
+      <span>B</span>
+      <span>E</span>
+      <span>T</span>
+    </section>  
+
+    <section class="subtitle text-[1.7rem] md:text-[2rem] px-14 md:px-4 min-w-[40%] max-w-[90%] space-x-5">
+      <span class="inline-block">
+        <span class="letter sl1">P</span>
+        <span class="letter sl2">a</span>
+        <span class="letter sl3">g</span>
+        <span class="letter sl4">e</span>
+      </span>
+      <span display="inline-block">
+        <span class="letter sl6">n</span>
+        <span class="letter sl7">o</span>
+        <span class="letter sl8">t</span>
+      </span>
+      <span class="inline-block">
+        <span class="letter sl9">f</span>
+        <span class="letter sl10">o</span>
+        <span class="letter sl11">u</span>
+        <span class="letter sl12">n</span>
+        <span class="letter sl13">d</span>
+      </span>
+      <img class="mx-auto" src="images/404-king.png" alt="King not Found" width="500" height="600">
+
+    </section> 
+    
+    <section class="subtitle2 mt-3">
+      Error Code: 404
+    </section>
+
+      </div>
+
+ </main>
+
+  <footer class="flex flex-row justify-between pt-10 px-3 md:px-10">
+      <p class="glowtext text-sm">©2023 KDAbet DAO</p>
+      <p class="pb-1 glowtext glowtext2 text-sm flex flex-row flex-start"><span>powered by</span> <a href="https://kadena.io/"><img src="images/kadena.png" class="ml-2 h-6 w-6"></a></p>
+  </footer>
+</div>
+
+  </body>
+</html>
