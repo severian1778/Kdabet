@@ -23,7 +23,6 @@ defmodule KdabetFrontendWeb.Router do
     live("/demo", Demo)
     live("/about", About)
     live("/kings", Kings)
-    live("/mint", Mint)
   end
 
   # Other scopes may use custom stacks.

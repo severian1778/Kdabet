@@ -10,30 +10,30 @@ defmodule KdabetFrontendWeb.About do
         <h2 class="fade_title w-full mt-5 xl:mt-0 text-center xl:text-left pb-5 text-[3em] md:text-[4em] xl:text-[5.5em]">ABOUT US</h2>
         <article class="glasscard p-[30px] lg:p-[50px]">
           <h2 class="glowtext mb-8 text-2xl">KDAbet is a pure, decentralized sportsbook.</h2>
-          <p class="glowtext mb-3">KDAbet is an experimental U.S sports and E-sports entertainment platform running on the Kadena L1 network.</p>
-          <p class="glowtext mb-3">The KDAbet platform is the first prediction market of its kind, where the operation has no owners, board of directors, company structure or token.  The automated bookmaking system is overseen only via a decentralized autonomous organization (DAO) that collectivizes its progression over time via a fair vote.</p>
+          <p class="glowtext mb-3 text-xl">KDAbet is an experimental U.S sports and E-sports entertainment platform running on the Kadena L1 network.</p>
+          <p class="glowtext mb-3 text-xl">The KDAbet platform is the first prediction market of its kind, where the operation has no owners, board of directors, company structure or token.  The automated bookmaking system is overseen only via a decentralized autonomous organization (DAO) that collectivizes its progression over time via a fair vote.</p>
           <span class="hidden md:block">
-            <p class="glowtext mb-3">The DAO is run by the community of NFT holders whose hash unlocks part of a open and observable smart contract in order to benefit from stewardship of the operation's profitability</p>
-            <p class="glowtext mb-3">As the network increases in size, so does its decentralization and the distribution of its rewards via the generation of more NFTs by the Kadena King NFT.  Unlike traditional bookmaking and recent attempts to make web3 style prediction markets, We as a community optimize this system to maximize growth and decentralization of the network while minimizing costs to the end consumer.</p>
-            <p class="glowtext mb-3">KDAbet is completely open source and has no ownership.   Our Network is our strength.</p>
+            <p class="glowtext mb-3 text-xl">The DAO is run by the community of NFT holders whose hash unlocks part of a open and observable smart contract in order to benefit from stewardship of the operation's profitability</p>
+            <p class="glowtext mb-3 text-xl">As the network increases in size, so does its decentralization and the distribution of its rewards via the generation of more NFTs by the Kadena King NFT.  Unlike traditional bookmaking and recent attempts to make web3 style prediction markets, We as a community optimize this system to maximize growth and decentralization of the network while minimizing costs to the end consumer.</p>
+            <p class="glowtext mb-3 text-xl">KDAbet is completely open source and has no ownership.   Our Network is our strength.</p>
           </span>
         </article>
         <article class="glasscard block md:hidden mt-10 p-[30px] lg:p-[50px]">
           <h2 class="glowtext mb-8 text-2xl">Strict DAO based management.</h2>
-          <p class="glowtext mb-3">The DAO is run by the community of NFT holders whose hash unlocks part of a open and observable smart contract in order to benefit from stewardship of the operation's profitability</p>
-          <p class="glowtext mb-3">As the network increases in size, so does its decentralization and the distribution of its rewards via the generation of more NFTs by the Kadena King NFT.  Unlike traditional bookmaking and recent attempts to make web3 style prediction markets, We as a community optimize this system to maximize growth and decentralization of the network while minimizing costs to the end consumer.</p>
-          <p class="glowtext mb-3">KDAbet is completely open source and has no ownership.   Our Network is our strength.</p>
+          <p class="glowtext mb-3 text-xl">The DAO is run by the community of NFT holders whose hash unlocks part of a open and observable smart contract in order to benefit from stewardship of the operation's profitability</p>
+          <p class="glowtext mb-3 text-xl">As the network increases in size, so does its decentralization and the distribution of its rewards via the generation of more NFTs by the Kadena King NFT.  Unlike traditional bookmaking and recent attempts to make web3 style prediction markets, We as a community optimize this system to maximize growth and decentralization of the network while minimizing costs to the end consumer.</p>
+          <p class="glowtext mb-3 text-xl">KDAbet is completely open source and has no ownership.   Our Network is our strength.</p>
         </article>
       </section>
       <hr class="block xl:hidden mt-10 mb-5 border-sky-900">
       <!-- side image -->
       <section class="flex flex-col w-full xl:w-1/2">
         <h2 class="fade_title w-full text-center xl:text-right pb-5 text-[3em] md:text-[4em] xl:text-[5.5em]">DAO BOARD</h2>
-        <BoardMember twitterurl="https://twitter.com/Kadenabet">
-          <:name>Stephen Rothwell</:name>
+        <BoardMember twitterurl="https://twitter.com/">
+          <:name>Ian Balchin</:name>
           <:twitter><FontAwesome.LiveView.icon name="twitter" type="brands" class="social-icon2" /></:twitter>
-          <:image><img class="w-[100px] h-[100px]" src="/images/stephen.png"></:image>
-          <:blurb>15+ yrs experience in professional sports betting. 10+ years experience building PAM systems and AI driven oddsmaking software. 3 Exits in sports betting and 1 IPO in 2020.</:blurb>
+          <:image><img class="w-[100px] h-[100px]" src="/images/ian.png"></:image>
+          <:blurb>15+ yrs experience in Bookmaking operation from the ground level up.  Ian is a generalist in all areas of operation and deal-making with a specialization in affiliate marketing.</:blurb>
         </BoardMember>
         <BoardMember twitterurl="https://twitter.com/DeFifutures">
           <:name>Sam Bradbury</:name>
@@ -41,11 +41,17 @@ defmodule KdabetFrontendWeb.About do
           <:image><img class="w-[100px] h-[100px]" src="/images/sam.png"></:image>
           <:blurb>10+ yrs experience in Casino Gaming. Owner of <a class="text-blue-400" href="https://www.bbgamesltd.com/">BB games</a>, managing and selling over 3 dozen slot games to large scale operators. 10+ years business development in the I-gaming space.</:blurb>
         </BoardMember>
-        <BoardMember twitterurl="https://twitter.com/">
-          <:name>Ian Balchin</:name>
+        <BoardMember twitterurl="https://twitter.com/bettingncrypto">
+          <:name>James McLoughlin</:name>
           <:twitter><FontAwesome.LiveView.icon name="twitter" type="brands" class="social-icon2" /></:twitter>
-          <:image><img class="w-[100px] h-[100px]" src="/images/ian.png"></:image>
-          <:blurb>15+ yrs experience in Bookmaking operation from the ground level up.  Ian is a generalist in all areas of operation and deal-making with a specialization in affiliate marketing.</:blurb>
+          <:image><img class="w-[100px] h-[100px]" src="/images/James.png"></:image>
+          <:blurb>15+ years mastering sportsbook acquisition. Broad level experience in executive and mangement postions at Matchbook, Betfair Austrialia, Boom Sports and Sportsbook.com.</:blurb>
+        </BoardMember>
+        <BoardMember twitterurl="https://twitter.com/nueromancer_t">
+          <:name>Stephen Rothwell</:name>
+          <:twitter><FontAwesome.LiveView.icon name="twitter" type="brands" class="social-icon2" /></:twitter>
+          <:image><img class="w-[100px] h-[100px]" src="/images/stephen.png"></:image>
+          <:blurb>15+ yrs experience in professional sports betting. 10+ years experience building PAM systems and AI driven oddsmaking software. 3 Exits in sports betting and 1 IPO in 2020.</:blurb>
         </BoardMember>
         <h2 class="fade_title w-full text-center xl:text-right pb-5 text-[3em] md:text-[4em] xl:text-[5.5em]">AFFILIATES</h2>
         <BoardMember twitterurl="/about">
