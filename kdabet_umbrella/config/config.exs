@@ -22,6 +22,13 @@ config :core, Core.Repo,
   show_sensitive_data_on_connection_error: true,
   pool_size: 30
 
+config :kdabet_frontend, ecto_repos: [KdabetFrontend.Repo]
+
+config :kdabet_frontend, KdabetFrontend.Repo,
+  username: "postgres",
+  password: "postgres",
+  database: "kdabet_repo",
+  hostname: "localhost"
 ################################################
 ## CONFIGURE TESLA CLIENT
 ################################################
