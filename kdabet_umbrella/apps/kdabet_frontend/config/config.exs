@@ -6,6 +6,13 @@
 
 # General application configuration
 import Config
+config :kdabet_frontend, ecto_repos: [KdabetFrontend.Repo]
+
+config :kdabet_frontend, KdabetFrontend.Repo,
+  username: "postgres",
+  password: "postgres",
+  database: "kdabet_repo",
+  hostname: "localhost"
 
 # Configures the endpoint
 config :kdabet_frontend, KdabetFrontendWeb.Endpoint,

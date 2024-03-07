@@ -21,7 +21,8 @@ defmodule KdabetFrontend.Application do
         start: {KdabetFrontend.Kings.Cache, :start_link, []}
       },
       # {KdabetFrontend.Worker, arg}
-      {KdabetFrontend.Kings, %{opts: [name: KdabetFrontend.Kings]}}
+      {KdabetFrontend.Kings, %{opts: [name: KdabetFrontend.Kings]}},
+      KdabetFrontend.Repo 
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
